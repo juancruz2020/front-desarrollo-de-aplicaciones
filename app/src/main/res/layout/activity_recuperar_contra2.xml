@@ -207,7 +207,7 @@
         app:layout_constraintTop_toTopOf="@+id/contrasena_nueva2"
         app:srcCompat="@drawable/lock__1_" />
 
-    <Button
+       <Button
         android:id="@+id/aceptar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -223,6 +223,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.2"
+
+        android:onClick="iniciarSesion"
 
         />
 
