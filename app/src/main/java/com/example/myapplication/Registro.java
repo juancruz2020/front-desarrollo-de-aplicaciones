@@ -1,158 +1,104 @@
 package com.example.myapplication;
 
-
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import java.util.Random;
+import com.example.myapplication.conection.ApiClient;
+import com.example.myapplication.conection.ApiService;
+import com.example.myapplication.dto.RegistroUsuarioDTO;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Registro extends AppCompatActivity {
 
-    Button btnUsuario, btnAlumno, inicioSesion; ImageButton btnVolver; EditText mail, alias; TextView notifAlias, mailEnUso;
+    private Button btnUsuario;
+    private Button btnAlumno;
+    private String tipoSeleccionado = ""; // "usuario" o "alumno"
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
         setContentView(R.layout.activity_registro);
 
-
-        mail = findViewById(R.id.mail);
-        alias = findViewById(R.id.ingreseAlias);
         btnUsuario = findViewById(R.id.btn_usuario);
         btnAlumno = findViewById(R.id.btn_alumno);
-        btnVolver = findViewById(R.id.btn_volver);
-        notifAlias = findViewById(R.id.notifText1);
-        mailEnUso = findViewById(R.id.mailEnUso);
-        inicioSesion = findViewById(R.id.btn_inicioSesionMailEnUso);
-
-
-
-
-    }
-    public boolean validarMail(){
-        SesionManager sesionManager = new SesionManager(this);
-        String texto_mail= mail.getText().toString().trim();
-        boolean valido = true;
-        if (texto_mail.isEmpty()){
-            mail.setError("El campo no puede estar vacio");
-            valido = false;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(texto_mail).matches()){
-            mail.setError("Correo inválido");
-            valido = false;
-        }if (sesionManager.obtenerEmail().equals(texto_mail)){
-            mail.setError("Correo inválido");
-            mailEnUso.setVisibility(View.VISIBLE);
-            inicioSesion.setVisibility(View.VISIBLE);
-            valido = false;
-        }else{
-            sesionManager.guardarEmail(texto_mail);
-        }
-        return valido;
     }
 
-    int recom = 0;
-    String[] aliasRecom = new String[5];
+    public void btn_volver(View view) {
+        finish();
+    }
 
-    public boolean validarAlias() {
-        SesionManager sesionManager = new SesionManager(this);
-        String texto_alias = alias.getText().toString().trim();
-        boolean valido = true;
+    public void btnVolverInicio(View view) {
+        Toast.makeText(this, "Volviendo al inicio de sesión...", Toast.LENGTH_SHORT).show();
+        finish();
+    }
 
-        if (texto_alias.isEmpty()) {
-            alias.setError("El campo no puede estar vacío");
-            valido = false;
-        }if (sesionManager.obtenerAlias().equals(texto_alias)) {
-            recom = 0;
-            aliasRecom = new String[5];
-            while (recom < 5) {
-                aliasRecom[recom] = generarRecomendacionesAlias();
-                recom++;
+    public void seleccionarUsuario(View view) {
+        tipoSeleccionado = "usuario";
+        btnUsuario.setBackgroundResource(R.drawable.btn_ok);
+        btnAlumno.setBackgroundResource(R.drawable.btn_off);
+        Toast.makeText(this, "Seleccionaste Usuario", Toast.LENGTH_SHORT).show();
+    }
+
+    public void seleccionarAlumno(View view) {
+        tipoSeleccionado = "alumno";
+        btnAlumno.setBackgroundResource(R.drawable.btn_ok);
+        btnUsuario.setBackgroundResource(R.drawable.btn_off);
+        Toast.makeText(this, "Seleccionaste Alumno", Toast.LENGTH_SHORT).show();
+    }
+
+    public void verificarDatos(View view) {
+        EditText mail = findViewById(R.id.mail);
+        EditText alias = findViewById(R.id.ingreseAlias);
+        TextView notif = findViewById(R.id.notifText1);
+
+        String emailText = mail.getText().toString().trim();
+        String aliasText = alias.getText().toString().trim();
+
+
+        if (emailText.isEmpty() || aliasText.isEmpty() || tipoSeleccionado.isEmpty()) {
+            notif.setVisibility(View.VISIBLE);
+            notif.setText("Todos los campos son obligatorios.");
+            return;
+        }
+
+        notif.setVisibility(View.INVISIBLE);
+
+        RegistroUsuarioDTO dto = new RegistroUsuarioDTO(emailText, aliasText);
+
+        ApiService apiService = ApiClient.getInstance().getApiService();
+        Call<ResponseBody> call = apiService.registrarUsuario(dto);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(Registro.this, "Registro exitoso", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Registro.this, Codigo.class);
+                    intent.putExtra("tipoUsuario", tipoSeleccionado);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    notif.setVisibility(View.VISIBLE);
+                    notif.setText("Error en el registro. Código: " + response.code());
+                }
             }
-            String aliasOpciones = String.join("\n", aliasRecom);
 
-            SpannableString spannable = new SpannableString("El alias \"" + texto_alias + "\" ya se encuentra en uso.  \n Por favor, elige otro. \n Aquí tienes algunas opciones disponibles: \n" + aliasOpciones);
-            spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 9, 11 + texto_alias.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spannable.setSpan(new ForegroundColorSpan(Color.WHITE), spannable.length() - aliasOpciones.length(), spannable.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            notifAlias.setText(spannable);
-            notifAlias.setVisibility(View.VISIBLE);
-            valido = false;
-        }else {
-            sesionManager.guardarAlias(texto_alias);
-        }
-        return valido;
-    }
-
-    //las recomendaciones vienen del back
-    public String generarRecomendacionesAlias(){
-        String texto_alias = alias.getText().toString().trim();
-        String[] alternativas= {"2025","_123","_777","001","_Tasty","_Magic","_Express","_Yummy","_Master","_Chef","_Cook","_Gourmet","_Kitchen","_Recipe","_Delicious"};
-        int randomIndex= new Random().nextInt(alternativas.length);
-        return texto_alias+alternativas[randomIndex];
-
-    }
-
-    private String tipoUsuario = "";
-    public void seleccionarUsuario (View view) {
-        btnUsuario.setBackground(ContextCompat.getDrawable(this, R.drawable.btn_ok));
-        btnAlumno.setBackground(ContextCompat.getDrawable(this, R.drawable.btn_off));
-
-        tipoUsuario = "usuario";
-    }
-
-    public void seleccionarAlumno (View view) {
-        btnAlumno.setBackground(ContextCompat.getDrawable(this, R.drawable.btn_ok));
-        btnUsuario.setBackground(ContextCompat.getDrawable(this, R.drawable.btn_off));
-
-        tipoUsuario="alumno";
-    }
-
-    public void verificarDatos(View view){
-
-        Intent intentUser = new Intent(this, RegistroUsuario.class);
-        Intent intentAlum = new Intent(this, RegistroAlumno.class);
-        if (validarMail()&&validarAlias()){
-            Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show();
-            if (tipoUsuario.isEmpty()) {
-                Toast.makeText(this, "elija como se quiere registrar",Toast.LENGTH_SHORT).show();
-
-            }else if(tipoUsuario.trim().equals("usuario")){
-                startActivity(intentUser);
-            }else { startActivity(intentAlum);}
-
-        }else{
-            Toast.makeText(this,"No puede continuar con el registro",Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    public void btnVolverInicio(View view){
-        Intent inicio = new Intent(this, Login.class);
-            startActivity(inicio);
-    }
-
-    public void btn_volver(View view){
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                notif.setVisibility(View.VISIBLE);
+                notif.setText("Fallo de conexión: " + t.getMessage());
+            }
+        });
     }
 }

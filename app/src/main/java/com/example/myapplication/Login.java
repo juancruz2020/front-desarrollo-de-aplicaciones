@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void irACrearCuenta(View view) {
-        Intent intent = new Intent(Login.this, RecuperarContra2.class);
+        Intent intent = new Intent(Login.this, Registro.class);
         startActivity(intent);
     }
 }

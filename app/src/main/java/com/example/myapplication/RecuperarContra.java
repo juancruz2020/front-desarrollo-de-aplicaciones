@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -24,6 +26,11 @@ public class RecuperarContra extends AppCompatActivity {
     ImageButton btnVolver;
     EditText editTextMail;
 
+    // Nombre del archivo SharedPreferences
+    private static final String PREFS_NAME = "MyAppPrefs";
+    // Clave para guardar el mail
+    private static final String KEY_MAIL = "user_mail";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +39,11 @@ public class RecuperarContra extends AppCompatActivity {
         setContentView(R.layout.activity_recuperar_contra);
 
         btnVolver = findViewById(R.id.btn_volver);
-        editTextMail = findViewById(R.id.mail);  // este es el ID del EditText
+        editTextMail = findViewById(R.id.mail);
     }
 
     public void volver(View view) {
-        finish(); // vuelve a la actividad anterior
+        finish();
     }
 
     public void enviarCodigoRecuperacion(View view) {
@@ -55,8 +62,14 @@ public class RecuperarContra extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
+                    // Guardar el mail en SharedPreferences
+                    SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString(KEY_MAIL, mail);
+                    editor.apply(); // o commit()
+
                     Toast.makeText(RecuperarContra.this, "Código enviado a tu mail", Toast.LENGTH_LONG).show();
-                    irACodigo(view);
+                    runOnUiThread(() -> irACodigo());
                 } else {
                     Toast.makeText(RecuperarContra.this, "No se pudo enviar el código", Toast.LENGTH_SHORT).show();
                 }
@@ -69,7 +82,7 @@ public class RecuperarContra extends AppCompatActivity {
         });
     }
 
-    public void irACodigo(View view) {
+    public void irACodigo() {
         Intent intent = new Intent(RecuperarContra.this, RecuperarContra2.class);
         startActivity(intent);
     }

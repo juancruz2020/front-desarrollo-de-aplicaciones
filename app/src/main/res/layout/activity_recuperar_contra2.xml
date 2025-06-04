@@ -10,7 +10,21 @@
     android:background="@drawable/background">
 
 
-
+    <Button
+        android:id="@+id/confirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="260dp"
+        android:background="@drawable/boton_iniciar_sesion"
+        android:fontFamily="@font/quicksand_bold"
+        android:onClick="iniciarSesion"
+        android:text="@string/iniciarSesion"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
 
     <ImageButton
         android:id="@+id/btn_volver"
@@ -28,26 +42,6 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:srcCompat="@drawable/outline_arrow_back_ios" />
 
-    <Button
-        android:id="@+id/volverInicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:fontFamily="@font/quicksand_book"
-        android:text="@string/iniciarSesion"
-        android:textAllCaps="false"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintVertical_bias="0.02"
-        android:letterSpacing="0.05"
-
-        />
 
 
     <TextView
@@ -125,6 +119,50 @@
         />
 
         -->
+
+    <EditText
+        android:id="@+id/contrasena_nueva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/marco_edit_text"
+        android:fontFamily="@font/quicksand_book"
+        android:hint="@string/codigo"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:paddingStart="42dp"
+        android:paddingEnd="2dp"
+        android:textColorHint="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mensajeCodigo"
+
+        app:layout_constraintVertical_bias="0.223" />
+
+    <EditText
+        android:id="@+id/contrasena_nueva2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/marco_edit_text"
+        android:fontFamily="@font/quicksand_book"
+        android:hint="@string/codigo"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:paddingStart="42dp"
+        android:paddingEnd="2dp"
+        android:textColorHint="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mensajeCodigo"
+
+        app:layout_constraintVertical_bias="0.37" />
 
     <ImageView
         android:id="@+id/contra_image"

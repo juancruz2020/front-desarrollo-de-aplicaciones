@@ -17,7 +17,7 @@ public interface ApiService {
 
     // POST /usuarios/validar_codigo
     @POST("usuarios/validar_codigo")
-    Call<String> validarCodigo(@Body CodigoDTO dto);
+    Call<ResponseBody> validarCodigo(@Body CodigoDTO dto);
 
     // POST /usuarios/registro-datos
     @POST("usuarios/registro-datos")
