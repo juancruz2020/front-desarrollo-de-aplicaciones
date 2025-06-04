@@ -10,7 +10,8 @@
     <string name="hint_mail">Ingresa tu Mail</string>
 
     <string name="hint_contraseña">Ingresa tu Contraseña</string>
-
+    
+    <string name="codigoValidacionUsuario">Validar Cuenta</string>
 
     <string name="checkbox">Recordarme</string>
 
