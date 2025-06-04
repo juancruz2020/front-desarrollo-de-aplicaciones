@@ -26,6 +26,9 @@ public class RegistroUsuario extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_registro_usuario);
 
         nombreUsuario = findViewById(R.id.nombreUsuario);
