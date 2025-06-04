@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecuperarContra"
+
+    android:background="@drawable/background">
+
+
+    <ImageButton
+        android:id="@+id/btn_volver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_volver"
+        android:contentDescription="@string/regresar"
+        android:contextClickable="true"
+        android:onClick="volver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:srcCompat="@drawable/outline_arrow_back_ios" />
+
+    <Button
+        android:id="@+id/volverInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:fontFamily="@font/quicksand_book"
+        android:text="@string/iniciarSesion"
+        android:textAllCaps="false"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintVertical_bias="0.02"
+        android:letterSpacing="0.05"
+
+        />
+
+
+    <TextView
+        android:id="@+id/saludo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="@string/saludoRecuperarContra"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.12" />
+
+
+    <TextView
+        android:id="@+id/texto1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/info_layoutRecuperarContra"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/saludo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        />
+
+    <EditText
+        android:id="@+id/mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/marco_edit_text"
+        android:hint="@string/hint_mail"
+        android:paddingStart="42dp"
+        android:paddingEnd="2dp"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColorHint="@color/white"
+        android:autofillHints="emailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/texto1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+
+        />
+
+    <ImageView
+        android:id="@+id/mail_image"
+        android:layout_width="32dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/hint_mail"
+        app:layout_constraintBottom_toBottomOf="@id/mail"
+        app:layout_constraintEnd_toEndOf="@id/mail"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="@id/mail"
+        app:layout_constraintTop_toTopOf="@id/mail"
+        app:srcCompat="@drawable/mail__1_" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boton_iniciar_sesion"
+        android:text="@string/enviarCodigo"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColorHint="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/mail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+
+        android:onClick="enviarCodigoRecuperacion"
+        />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

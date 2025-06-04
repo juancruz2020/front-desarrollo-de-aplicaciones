@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login"
+
+    android:background="@drawable/background">
+
+    <TextView
+        android:id="@+id/saludo"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/saludo"
+        android:textSize="40sp"
+        android:fontFamily="@font/quicksand_bold"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        />
+
+    <TextView
+        android:id="@+id/texto1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/info"
+        android:textSize="20sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="@+id/saludo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        />
+
+    <EditText
+        android:id="@+id/mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/marco_edit_text"
+        android:hint="@string/hint_mail"
+        android:paddingStart="42dp"
+        android:paddingEnd="2dp"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColorHint="@color/white"
+        android:autofillHints="emailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/texto1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+
+
+        />
+
+    <ImageView
+        android:id="@+id/mail_image"
+        android:layout_width="32dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/hint_mail"
+        app:layout_constraintBottom_toBottomOf="@id/mail"
+        app:layout_constraintEnd_toEndOf="@id/mail"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="@id/mail"
+        app:layout_constraintTop_toTopOf="@id/mail"
+        app:srcCompat="@drawable/mail__1_" />
+
+    <TextView
+        android:id="@+id/o"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="O"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColorHint="@color/white"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/mail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+
+    <EditText
+        android:id="@+id/user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/marco_edit_text"
+        android:hint="@string/Usuario"
+        android:paddingStart="42dp"
+        android:paddingEnd="2dp"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColorHint="@color/white"
+        android:autofillHints="emailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/o"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+
+
+        />
+
+    <ImageView
+        android:id="@+id/userImage"
+        android:layout_width="32dp"
+        android:layout_height="45dp"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintTop_toTopOf="@id/user"
+        app:layout_constraintBottom_toBottomOf="@id/user"
+        app:layout_constraintStart_toStartOf="@id/user"
+        app:layout_constraintEnd_toEndOf="@id/user"
+        app:srcCompat="@drawable/user"/>
+
+
+
+
+    <EditText
+        android:id="@+id/contra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:background="@drawable/marco_edit_text"
+        android:hint="@string/hint_contraseña"
+        android:padding="10dp"
+        android:paddingStart="42dp"
+        android:paddingEnd="2dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColorHint="@color/white"
+        android:autofillHints="emailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+
+        />
+
+    <ImageView
+        android:id="@+id/contra_image"
+        android:layout_width="32dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/hint_contraseña"
+        app:layout_constraintBottom_toBottomOf="@id/contra"
+        app:layout_constraintEnd_toEndOf="@id/contra"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="@id/contra"
+        app:layout_constraintTop_toTopOf="@id/contra"
+        app:srcCompat="@drawable/lock__1_" />
+
+    <TextView
+        android:id="@+id/olvidasteContra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/contra"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        android:visibility="invisible"
+        />
+
+    <CheckBox
+        android:id="@+id/recuerdame"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:buttonTint="@color/white"
+        android:text="@string/checkbox"
+        android:fontFamily="@font/quicksand_bold"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/olvidasteContra"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.25"
+
+        android:onClick="recordarUsuario"
+        />
+
+    <Button
+        android:id="@+id/IniciarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boton_iniciar_sesion"
+        android:text="@string/iniciarSesion"
+        android:textAllCaps="false"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/recuerdame"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+
+        android:onClick="iniciarSesion"
+        />
+
+    <TextView
+        android:id="@+id/datosOlvidados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/datosOlvidados"
+        android:fontFamily="@font/quicksand_bold"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/IniciarSesion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_chainStyle="packed"
+
+
+        />
+
+    <TextView
+        android:id="@+id/crearCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/boton_crearCuenta"
+        android:fontFamily="@font/quicksand_bold"
+        android:textColor="@color/rosa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/datosOlvidados"
+        app:layout_constraintTop_toBottomOf="@+id/IniciarSesion"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.1"
+
+        android:onClick="irACrearCuenta"
+        />
+    <TextView
+        android:id="@+id/datosOlvidados2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contraOlvidada"
+        android:fontFamily="@font/quicksand_bold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datosOlvidados"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.25"
+
+        />
+
+    <TextView
+        android:id="@+id/claveNueva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/boton_claveNueva"
+        android:fontFamily="@font/quicksand_bold"
+        android:textColor="@color/rosa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/datosOlvidados2"
+        app:layout_constraintTop_toBottomOf="@+id/crearCuenta"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.1"
+
+
+        android:onClick="irARecuperarContrasena"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

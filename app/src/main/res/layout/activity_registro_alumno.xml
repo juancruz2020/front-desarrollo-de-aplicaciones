@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistroAlumno"
+
+    android:background="@drawable/background">
+
+
+    <ImageButton
+        android:id="@+id/btn_volver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_volver"
+        android:contentDescription="@string/regresar"
+        android:contextClickable="true"
+        app:layout_constraintBottom_toTopOf="@id/saludo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.05"
+
+        android:onClick="volverARegistro"
+        app:srcCompat="@drawable/outline_arrow_back_ios"
+        />
+
+    <Button
+        android:id="@+id/volverInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:fontFamily="@font/quicksand_book"
+        android:text="@string/iniciarSesion"
+        android:textAllCaps="false"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintVertical_bias="0.02"
+        android:letterSpacing="0.05"
+
+        android:onClick="inicio"
+        />
+
+    <TextView
+        android:id="@+id/saludo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="@string/titulo_registroAlumno"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.12" />
+
+    <TextView
+        android:id="@+id/infoRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/quicksand_book"
+        android:text="@string/infoRegistroAlumno"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/saludo"
+        app:layout_constraintVertical_bias="0.02" />
+
+
+
+    <EditText
+        android:id="@+id/nroTarjeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/marco_edit_text"
+        android:hint="@string/numeroTarjeta"
+        android:autofillHints="creditCardNumber"
+        android:inputType="number"
+        android:paddingStart="35dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/infoRegistro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.03"
+        />
+
+    <ImageView
+        android:id="@+id/imagenTarjeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/numeroTarjeta"
+        app:layout_constraintTop_toTopOf="@+id/nroTarjeta"
+        app:layout_constraintStart_toStartOf="@+id/nroTarjeta"
+        app:layout_constraintEnd_toEndOf="@+id/nroTarjeta"
+        app:layout_constraintBottom_toBottomOf="@+id/nroTarjeta"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:srcCompat="@drawable/outline_add_card_24" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/infoDni"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/corriente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        />
+
+
+    <Button
+        android:id="@+id/fotoFrente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_short"
+        android:hint="@string/fotoFrente"
+        android:paddingStart="15dp"
+        android:paddingEnd="5dp"
+        android:textAllCaps="false"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/corriente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.14"
+        />
+
+
+
+    <Button
+        android:id="@+id/fotoDorso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_short"
+        android:hint="@string/fotoDorso"
+        android:paddingStart="15dp"
+        android:paddingEnd="5dp"
+        android:textAllCaps="false"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/corriente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.86"
+
+        />
+
+    <ImageView
+        android:id="@+id/imagenCamara"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/dni"
+        app:layout_constraintTop_toTopOf="@+id/fotoFrente"
+        app:layout_constraintStart_toStartOf="@+id/fotoFrente"
+        app:layout_constraintEnd_toEndOf="@+id/fotoFrente"
+        app:layout_constraintBottom_toBottomOf="@+id/fotoFrente"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:srcCompat="@drawable/baseline_add_a_photo_24" />
+
+    <ImageView
+        android:id="@+id/imagenCamara2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/dni"
+        app:layout_constraintTop_toTopOf="@+id/fotoDorso"
+        app:layout_constraintStart_toStartOf="@+id/fotoDorso"
+        app:layout_constraintEnd_toEndOf="@+id/fotoDorso"
+        app:layout_constraintBottom_toBottomOf="@+id/fotoDorso"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:srcCompat="@drawable/baseline_add_a_photo_24" />
+
+    <EditText
+        android:id="@+id/nTramite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/marco_edit_text"
+        android:hint="@string/nroTramite"
+        android:paddingStart="45dp"
+        android:paddingEnd="5dp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/nroTarjeta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.03"/>
+
+    <ImageView
+        android:id="@+id/contra_image2"
+        android:layout_width="32dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/hint_contraseña"
+        app:layout_constraintBottom_toBottomOf="@+id/nTramite"
+        app:layout_constraintEnd_toEndOf="@+id/nTramite"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="@+id/nTramite"
+        app:layout_constraintTop_toTopOf="@+id/nTramite"
+        app:srcCompat="@drawable/lock__1_" />
+
+    <EditText
+        android:id="@+id/corriente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/marco_edit_text"
+        android:hint="@string/cuentacorriente"
+        android:paddingStart="45dp"
+        android:paddingEnd="5dp"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/nTramite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.03"
+        />
+
+    <ImageView
+        android:id="@+id/imagecuenta"
+        android:layout_width="32dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/hint_contraseña"
+        app:layout_constraintBottom_toBottomOf="@+id/corriente"
+        app:layout_constraintEnd_toEndOf="@+id/corriente"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="@+id/corriente"
+        app:layout_constraintTop_toTopOf="@+id/corriente"
+        app:srcCompat="@drawable/outline_account_balance_wallet_24" />
+
+    <Button
+        android:id="@+id/btnCrearCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/boton_iniciar_sesion"
+        android:text="@string/crearcuenta"
+        android:textAllCaps="false"
+        android:fontFamily="@font/quicksand_book"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/fotoFrente"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+
+        android:onClick="registrarAlumno"
+        />
+
+    <TextView
+        android:id="@+id/notif1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:text="@string/notifRegisAlumno"
+        android:fontFamily="@font/quicksand_bold"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/btnCrearCuenta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        />
+
+    <TextView
+        android:id="@+id/notif2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:text="@string/terminos"
+        android:fontFamily="@font/quicksand_bold"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/btnCrearCuenta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
