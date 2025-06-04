@@ -5,7 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Codigo">
+    tools:context=".RecuperarContra"
+
+    android:background="@drawable/background">
+
 
     <ImageButton
         android:id="@+id/btn_volver"
@@ -50,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_bold"
-        android:text="@string/saludoRecuperarContra"
+        android:text="@string/codigoValidacionUsuario"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -88,7 +91,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:background="@drawable/marco_edit_text"
-        android:hint="@string/hint_mail"
+        android:hint="@string/codigo"
         android:paddingStart="42dp"
         android:paddingEnd="2dp"
         android:padding="10dp"
@@ -105,20 +108,39 @@
 
         />
 
+    <TextView
+        android:id="@+id/validarCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow"
+        android:padding="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/codigo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        android:visibility="invisible"
+
+        />
+
+
     <ImageView
-        android:id="@+id/mail_image"
+        android:id="@+id/codigo_image"
         android:layout_width="32dp"
         android:layout_height="45dp"
         android:contentDescription="@string/hint_mail"
-        app:layout_constraintBottom_toBottomOf="@id/mail"
-        app:layout_constraintEnd_toEndOf="@id/mail"
+        app:layout_constraintBottom_toBottomOf="@id/codigo"
+        app:layout_constraintEnd_toEndOf="@id/codigo"
         app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="@id/mail"
-        app:layout_constraintTop_toTopOf="@id/mail"
-        app:srcCompat="@drawable/mail__1_" />
+        app:layout_constraintStart_toStartOf="@id/codigo"
+        app:layout_constraintTop_toTopOf="@id/codigo"
+        app:srcCompat="@drawable/lock__1_" />
 
 
     <Button
+        android:id="@+id/enviar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/boton_iniciar_sesion"
@@ -128,16 +150,12 @@
         android:fontFamily="@font/quicksand_book"
         android:textStyle="bold"
         android:textColorHint="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/mail"
+        app:layout_constraintTop_toBottomOf="@id/validarCodigo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.1"
 
-        android:onClick="validarcodigo"
         />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
