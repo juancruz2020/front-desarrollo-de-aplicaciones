@@ -66,13 +66,13 @@
         app:layout_constraintVertical_bias="0.12" />
 
 
-    <TextView
+     <TextView
         android:id="@+id/texto1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:text="@string/mail"
+        android:text="@string/hint_mail"
         android:textSize="18sp"
         android:fontFamily="@font/quicksand_book"
         android:textStyle="bold"
