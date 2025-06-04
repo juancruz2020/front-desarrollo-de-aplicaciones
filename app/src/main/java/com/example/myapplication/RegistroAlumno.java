@@ -1,141 +1,205 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.graphics.Color;
-
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.conection.ApiClient;
+import com.example.myapplication.dto.RegistroAlumnoDTO;
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistroAlumno extends AppCompatActivity {
 
-    ImageButton btnVolver; Button inicio_btn, crearCuenta_btn; EditText nro_tarjeta, nro_tramite,cCorriente;
+    private static final int PICK_FRENTE = 1;
+    private static final int PICK_DORSO = 2;
+
+    private EditText nroTarjeta, nTramite, corriente;
+    private Button btnCrearCuenta, fotoFrente, fotoDorso;
+    private ImageButton btnVolver;
+    private Button volverInicio;
+
+    private ImageView imageViewFrente, imageViewDorso;
+
+    private Uri uriFrente, uriDorso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
         setContentView(R.layout.activity_registro_alumno);
 
+        nroTarjeta = findViewById(R.id.nroTarjeta);
+        nTramite = findViewById(R.id.nTramite);
+        corriente = findViewById(R.id.corriente);
+        btnCrearCuenta = findViewById(R.id.btnCrearCuenta);
+        fotoFrente = findViewById(R.id.fotoFrente);
+        fotoDorso = findViewById(R.id.fotoDorso);
         btnVolver = findViewById(R.id.btn_volver);
-        inicio_btn = findViewById(R.id.volverInicio);
-        nro_tarjeta = findViewById(R.id.nroTarjeta);
-        nro_tramite = findViewById(R.id.nTramite);
-        cCorriente = findViewById(R.id.corriente);
-        crearCuenta_btn = findViewById(R.id.btnCrearCuenta);
+        volverInicio = findViewById(R.id.volverInicio);
+        imageViewFrente = findViewById(R.id.imageViewFrente);
+        imageViewDorso = findViewById(R.id.imageViewDorso);
 
+        fotoFrente.setOnClickListener(v -> seleccionarImagen(PICK_FRENTE));
+        fotoDorso.setOnClickListener(v -> seleccionarImagen(PICK_DORSO));
+        btnCrearCuenta.setOnClickListener(this::registrarAlumno);
     }
 
-
-    public boolean validarNumeroTramite(String numeroTramite) {
-        return numeroTramite.matches("\\d{11}"); // Verifica que tenga exactamente 11 dígitos numéricos
+    public void volverARegistro(View view) {
+        finish();
     }
 
-    public boolean verificarNroTramite(EditText nro_tramite){
-        String tramite = nro_tramite.getText().toString().trim();
-        if (!validarNumeroTramite(tramite)) {
-            nro_tramite.setError("El número debe tener 11 digitos");
-            return false;
-        } else{
-            return true;
-        }
+    public void inicio(View view) {
+        startActivity(new Intent(this, Login.class));
     }
 
-    public boolean validarNumeroTarjeta(String numeroTarjeta) {
+    private void seleccionarImagen(int codigo) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen"), codigo);
+    }
 
-        int suma = 0;
-        boolean alternar = false;
-
-        for (int i = numeroTarjeta.length() - 1; i >= 0; i--) {
-            int digito = Character.getNumericValue(numeroTarjeta.charAt(i));
-
-            if (alternar) {
-                digito *= 2;
-                if (digito > 9) digito -= 9;
+    @Override
+    protected void onActivityResult(int codigo, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(codigo, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            if (codigo == PICK_FRENTE) {
+                Uri selectedImageUri = data.getData();
+                uriFrente = selectedImageUri;
+                imageViewFrente.setImageURI(uriFrente);
+                uriFrente = data.getData();
+                Toast.makeText(this, "Foto frente seleccionada", Toast.LENGTH_SHORT).show();
+            } else if (codigo == PICK_DORSO) {
+                Uri selectedImageUri = data.getData();
+                uriDorso = selectedImageUri;
+                imageViewDorso.setImageURI(uriDorso);
+                uriDorso = data.getData();
+                Toast.makeText(this, "Foto dorso seleccionada", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
 
-            suma += digito;
-            alternar = !alternar;
+    public void registrarAlumno(View view) {
+        String tarjeta = nroTarjeta.getText().toString().trim();
+        String tramite = nTramite.getText().toString().trim();
+        String cuenta = corriente.getText().toString().trim();
+
+        if (tarjeta.isEmpty() || tramite.isEmpty() || cuenta.isEmpty() || uriFrente == null || uriDorso == null) {
+            Toast.makeText(this, "Complete todos los campos y seleccione ambas fotos", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        return suma % 10 == 0; // Si el resultado es múltiplo de 10, la tarjeta es válida
-    }
-    public boolean verificarTarjeta(EditText nro_tarjeta){
-        String tarjeta = nro_tarjeta.getText().toString().trim();
-        boolean valido = true;
-        if (!validarNumeroTarjeta(tarjeta)) {
-            nro_tarjeta.setError("ERROR! Por favor, ingrese un número válido");
-            valido = false;
-        }if(tarjeta.isEmpty()){
-            nro_tarjeta.setError("El campo no puede estar vacio");
-            valido = false;
-        }if(tarjeta.length()!=9){
-            nro_tarjeta.setError("El número debe tener 9 digitos");
-            valido = false;
-        }
+        SharedPreferences preferences = getSharedPreferences("mis_preferencias", MODE_PRIVATE);
+        String emailGuardado = preferences.getString("email", "");
 
-        return  valido;
-    }
-
-    public boolean validarCuentaCorriente(String cuentaCorriente) {
-        return cuentaCorriente.matches("\\d{13}"); // Asegura que tenga exactamente 13 dígitos
-    }
-    public boolean verificarCuenta(EditText cCorriente) {
-        String cuenta = cCorriente.getText().toString().trim();
-        boolean valido = true;
-
-        if(cuenta.isEmpty()) {
-            cCorriente.setError("El campo es obligatorio");
-            valido = false;
-        }
-        else if (!validarCuentaCorriente(cuenta)) {
-            cCorriente.setError("El número de cuenta corriente debe tener 13 dígitos");
-            valido = false;
-        }
-        return valido;
-    }
-    
-
-    // Hacer DNI_Foto (Frente y Dorso) max 20mb, multipartFile
-
-    public void volverARegistro(View view){
-        Intent intent = new Intent(this,Registro.class);
-        startActivity(intent);
-    }
-
-    public void inicio(View view){
-        inicio_btn.setTextColor(Color.parseColor("#E25683"));
-        Intent intent = new Intent(this,Login.class);
-        startActivity(intent);
-    }
-
-    public void registrarAlumno(View view){
+        BigDecimal bdCuenta;
         try {
-            boolean tarjetaValida = verificarTarjeta(nro_tarjeta);
-            boolean tramiteValido = verificarNroTramite(nro_tramite);
-            boolean cuentaValida = verificarCuenta(cCorriente);
-            //verificarDNI
-
-            if (!tarjetaValida||!tramiteValido||!cuentaValida){
-                Toast.makeText(this,"Error al crear la cuenta, revise los campos",Toast.LENGTH_SHORT).show();
-            }
-            Toast.makeText(this,"registro con exito",Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
-            Toast.makeText(this,"Error al crear la cuenta, revise los campos",Toast.LENGTH_SHORT).show();
+            String cuentaNormalized = cuenta.replace(",", ".");
+            bdCuenta = new BigDecimal(cuentaNormalized);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "El valor ingresado en corriente no es válido", Toast.LENGTH_SHORT).show();
+            return;
         }
 
+        RegistroAlumnoDTO dto = new RegistroAlumnoDTO(emailGuardado, tramite, tarjeta, bdCuenta);
+
+        String json = new Gson().toJson(dto);
+        RequestBody datosJson = RequestBody.create(json, MediaType.parse("application/json"));
+
+        try {
+            MultipartBody.Part archivoFrente = crearParteArchivo("DniFrente", uriFrente);
+            MultipartBody.Part archivoDorso = crearParteArchivo("DniDorso", uriDorso);
+
+            ApiClient.getInstance().getApiService()
+                    .registrarAlumno(datosJson, archivoFrente, archivoDorso)
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(RegistroAlumno.this, "Alumno registrado", Toast.LENGTH_SHORT).show();
+                                limpiarCampos();
+                                Intent intent = new Intent(RegistroAlumno.this, Login.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(RegistroAlumno.this, "Error al registrar", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Toast.makeText(RegistroAlumno.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Error preparando archivos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
+    private MultipartBody.Part crearParteArchivo(String nombreParte, Uri uri) throws Exception {
+        String nombreArchivo = getNombreArchivo(uri);
+        String extension = "";
 
+        int i = nombreArchivo.lastIndexOf('.');
+        if (i > 0) {
+            extension = nombreArchivo.substring(i);
+        }
+
+        File archivo = File.createTempFile("temp", extension, getCacheDir());
+
+        try (InputStream is = getContentResolver().openInputStream(uri);
+             OutputStream os = new java.io.FileOutputStream(archivo)) {
+            byte[] buffer = new byte[4096];
+            int len;
+            while ((len = is.read(buffer)) > 0) {
+                os.write(buffer, 0, len);
+            }
+        }
+
+        RequestBody body = RequestBody.create(archivo, MediaType.parse("image/*"));
+        return MultipartBody.Part.createFormData(nombreParte, nombreArchivo, body);
+    }
+
+    private String getNombreArchivo(Uri uri) {
+        String nombre = "foto.jpg";
+        try (android.database.Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int nombreIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                if (nombreIndex >= 0) {
+                    nombre = cursor.getString(nombreIndex);
+                }
+            }
+        }
+        return nombre;
+    }
+
+    private void limpiarCampos() {
+        nroTarjeta.setText("");
+        nTramite.setText("");
+        corriente.setText("");
+        uriFrente = null;
+        uriDorso = null;
+    }
 }
