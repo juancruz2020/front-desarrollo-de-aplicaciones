@@ -13,6 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.conection.ApiClient;
 import com.example.myapplication.conection.ApiService;
 import com.example.myapplication.dto.RegistroUsuarioDTO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -89,8 +94,29 @@ public class Registro extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    notif.setVisibility(View.VISIBLE);
-                    notif.setText("Error en el registro. Código: " + response.code());
+                    // Parsear el JSON de error
+                    try {
+                        String errorJson = response.errorBody().string();
+
+                        Gson gson = new Gson();
+
+                        // Parseamos el JSON como List<String>
+                        Type listType = new TypeToken<List<String>>() {}.getType();
+                        List<String> errores = gson.fromJson(errorJson, listType);
+
+                        // Concatenamos todos los mensajes en un solo string
+                        StringBuilder mensajeError = new StringBuilder("Nombres Posibles:\n");
+                        for (String error : errores) {
+                            mensajeError.append("- ").append(error).append("\n");
+                        }
+
+                        notif.setVisibility(View.VISIBLE);
+                        notif.setText(mensajeError.toString());
+
+                    } catch (Exception e) {
+                        notif.setVisibility(View.VISIBLE);
+                        notif.setText("Error inesperado: " + e.getMessage());
+                    }
                 }
             }
 

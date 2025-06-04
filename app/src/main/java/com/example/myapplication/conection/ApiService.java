@@ -26,7 +26,7 @@ public interface ApiService {
     // POST /usuarios/registro-alumno con Multipart (archivos + datos)
     @Multipart
     @POST("usuarios/registro-alumno")
-    Call<String> registrarAlumno(
+    Call<ResponseBody> registrarAlumno(
             @Part("datos") RequestBody datos,
             @Part MultipartBody.Part dniFrente,
             @Part MultipartBody.Part dniDorso

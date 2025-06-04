@@ -67,8 +67,16 @@ public class Codigo extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(Codigo.this, "Código válido. ¡Bienvenido!", Toast.LENGTH_LONG).show();
-                    // Aquí podés ir a la pantalla siguiente, por ejemplo:
-                    // startActivity(new Intent(Codigo.this, PantallaSiguiente.class));
+
+                    Intent intent = getIntent();
+                    String tipoUsuario = intent.getStringExtra("tipoUsuario");
+                    if (tipoUsuario.equals("usuario")){
+                        startActivity(new Intent(Codigo.this, RegistroUsuario.class));
+                    }
+                    else if (tipoUsuario.equals("alumno")){
+                        startActivity(new Intent(Codigo.this, RegistroAlumno.class));
+                    }
+
                     finish();
                 } else {
                     Toast.makeText(Codigo.this, "Código inválido o expirado", Toast.LENGTH_LONG).show();
