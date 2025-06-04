@@ -49,6 +49,9 @@ public class RegistroAlumno extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_registro_alumno);
 
         nroTarjeta = findViewById(R.id.nroTarjeta);
