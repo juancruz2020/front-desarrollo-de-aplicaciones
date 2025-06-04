@@ -81,20 +81,12 @@
         app:srcCompat="@drawable/mail__1_" />
 
 
-    <ImageView
-        android:id="@+id/userImage"
-        android:layout_width="32dp"
-        android:layout_height="45dp"
-        app:srcCompat="@drawable/user"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="408dp" />
 
 
     <EditText
         android:id="@+id/contra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="444dp"
         android:autofillHints="emailAddress"
         android:background="@drawable/marco_edit_text"
         android:fontFamily="@font/quicksand_book"
@@ -108,8 +100,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintTop_toBottomOf="@id/mail"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -154,7 +146,6 @@
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintHorizontal_bias="0.25"
 
-        android:onClick="recordarUsuario"
         />
 
     <Button
@@ -242,8 +233,6 @@
 
         android:onClick="irARecuperarContrasena"
         />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
