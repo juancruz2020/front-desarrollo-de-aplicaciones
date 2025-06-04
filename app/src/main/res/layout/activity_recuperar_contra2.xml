@@ -138,7 +138,7 @@
         app:srcCompat="@drawable/lock__1_" />
 
     <EditText
-        android:id="@+id/contra"
+        android:id="@+id/contrasena_nueva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
@@ -164,15 +164,15 @@
         android:layout_width="32dp"
         android:layout_height="45dp"
         android:contentDescription="@string/hint_contraseña"
-        app:layout_constraintBottom_toBottomOf="@+id/contra"
-        app:layout_constraintEnd_toEndOf="@+id/contra"
+        app:layout_constraintBottom_toBottomOf="@+id/contrasena_nueva"
+        app:layout_constraintEnd_toEndOf="@+id/contrasena_nueva"
         app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="@+id/contra"
-        app:layout_constraintTop_toTopOf="@+id/contra"
+        app:layout_constraintStart_toStartOf="@+id/contrasena_nueva"
+        app:layout_constraintTop_toTopOf="@+id/contrasena_nueva"
         app:srcCompat="@drawable/lock__1_" />
 
     <EditText
-        android:id="@+id/confirmarContra"
+        android:id="@+id/contrasena_nueva2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
@@ -185,7 +185,7 @@
         android:fontFamily="@font/quicksand_book"
         android:textStyle="bold"
         android:textColorHint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/contra"
+        app:layout_constraintTop_toBottomOf="@+id/contrasena_nueva"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -198,11 +198,11 @@
         android:layout_width="32dp"
         android:layout_height="45dp"
         android:contentDescription="@string/hint_contraseña"
-        app:layout_constraintBottom_toBottomOf="@+id/confirmarContra"
-        app:layout_constraintEnd_toEndOf="@+id/confirmarContra"
+        app:layout_constraintBottom_toBottomOf="@+id/contrasena_nueva2"
+        app:layout_constraintEnd_toEndOf="@+id/contrasena_nueva2"
         app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="@+id/confirmarContra"
-        app:layout_constraintTop_toTopOf="@+id/confirmarContra"
+        app:layout_constraintStart_toStartOf="@+id/contrasena_nueva2"
+        app:layout_constraintTop_toTopOf="@+id/contrasena_nueva2"
         app:srcCompat="@drawable/lock__1_" />
 
     <Button
@@ -216,12 +216,12 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/confirmarContra"
+        app:layout_constraintTop_toBottomOf="@+id/contrasena_nueva2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.2"
-        
+
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
