@@ -21,7 +21,7 @@ public interface ApiService {
 
     // POST /usuarios/registro-datos
     @POST("usuarios/registro-datos")
-    Call<String> registrarDatosPersonales(@Body RegistroDatosPersonalesDTO dto);
+    Call<ResponseBody> registrarDatosPersonales(@Body RegistroDatosPersonalesDTO dto);
 
     // POST /usuarios/registro-alumno con Multipart (archivos + datos)
     @Multipart

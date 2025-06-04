@@ -1,182 +1,127 @@
 package com.example.myapplication;
 
-import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.conection.ApiClient;
+import com.example.myapplication.conection.ApiService;
+import com.example.myapplication.dto.RegistroDatosPersonalesDTO;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistroUsuario extends AppCompatActivity {
 
-    ImageButton btnVolver; EditText nombre, apellido, edad, contra, confirContra, dniNum; Button inicio_btn;
+    private EditText nombreUsuario, apellidoUsuario, edad, dni, contra, confirmarContra;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
         setContentView(R.layout.activity_registro_usuario);
 
-        btnVolver = findViewById(R.id.btn_volver);
-        nombre = findViewById(R.id.nombreUsuario);
-        apellido = findViewById(R.id.apellidoUsuario);
+        nombreUsuario = findViewById(R.id.nombreUsuario);
+        apellidoUsuario = findViewById(R.id.apellidoUsuario);
         edad = findViewById(R.id.edad);
+        dni = findViewById(R.id.dni);
         contra = findViewById(R.id.contra);
-        confirContra = findViewById(R.id.confirmarContra);
-        dniNum = findViewById(R.id.dni);
-        inicio_btn = findViewById(R.id.volverInicio);
+        confirmarContra = findViewById(R.id.confirmarContra);
     }
 
-
-
-    public boolean verificarNombreApellido() {
-        String texto_nombre = nombre.getText().toString().trim();
-        String texto_apellido = apellido.getText().toString().trim();
-        boolean valido = true;
-        String patron = "^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$";
-
-        if (!texto_nombre.matches(patron)) {
-            nombre.setError("Nombre inválido. Solo letras.");
-            valido = false;
-        }
-        if (texto_nombre.length() < 3) {
-            nombre.setError("El nombre debe tener al menos 3 caracteres.");
-            valido = false;
-        }
-
-        if (!texto_apellido.matches(patron)) {
-            apellido.setError("Apellido inválido. Solo letras.");
-            valido = false;
-        }
-        if (texto_apellido.length() < 3) {
-            apellido.setError("El apellido debe tener al menos 3 caracteres.");
-            valido = false;
-        }
-
-        return valido;
+    public void volverARegistro(View view) {
+        finish();
     }
 
-    public boolean verificarEdad(){
-        String texto_edad=edad.getText().toString().trim();
-        if (texto_edad.isEmpty()){
+    public void inicio(View view) {
+        Toast.makeText(this, "Ir a inicio de sesión", Toast.LENGTH_SHORT).show();
+    }
+
+    public void registrarse(View view) {
+        String nombre = nombreUsuario.getText().toString().trim();
+        String apellido = apellidoUsuario.getText().toString().trim();
+        String edadStr = edad.getText().toString().trim();
+        String dniStr = dni.getText().toString().trim();
+        String password = contra.getText().toString();
+        String confirmarPass = confirmarContra.getText().toString();
+
+        // Validaciones
+        if (TextUtils.isEmpty(nombre)) {
+            nombreUsuario.setError("El nombre es obligatorio");
+            return;
+        }
+        if (TextUtils.isEmpty(apellido)) {
+            apellidoUsuario.setError("El apellido es obligatorio");
+            return;
+        }
+        if (TextUtils.isEmpty(edadStr)) {
             edad.setError("La edad es obligatoria");
-            return false;
-        }else {
-            try {
-                int num_edad = Integer.parseInt(texto_edad);
-                if (num_edad < 13) {
-                    edad.setError("debes tener más de 13 añoas para registrarte");
-                    return false;
-                } else if (num_edad > 99) {
-                    edad.setError("edad inválida");
-                    return false;
-                }else return true;
-            } catch (NumberFormatException e) {
-                edad.setError("Edad inválida.");
-                return false;
-            }
+            return;
         }
-    }
-
-
-    public boolean verificarDni(){
-        String texto_dniNum = dniNum.getText().toString().trim();
-        if (texto_dniNum.isEmpty()){
-            dniNum.setError("El DNI es obligatorio");
-            return false;
-        } else{
-            try {
-                if (texto_dniNum.length()<8) {
-                    dniNum.setError("El DNI debe tener 8 dígitos");
-                    return false;
-                }if(!texto_dniNum.matches("\\d+")){
-                    dniNum.setError("solo números");
-                    return false;
-                }else return true;
-            }catch (NumberFormatException e){
-                dniNum.setError("DNI inválido");
-                return false;
-            }
+        if (TextUtils.isEmpty(dniStr)) {
+            dni.setError("El DNI es obligatorio");
+            return;
         }
-    }
 
+        if (TextUtils.isEmpty(password)) {
+            contra.setError("La contraseña es obligatoria");
+            return;
+        }
+        if (!password.equals(confirmarPass)) {
+            confirmarContra.setError("Las contraseñas no coinciden");
+            return;
+        }
 
-    public boolean verificarContra(EditText contra){
-        String texto_contra = contra.getText().toString().trim();
-        String patron = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$";
-        return texto_contra.matches(patron);
-    }
-
-    public boolean compararContras(EditText contra, EditText confirContra) {
-        String texto_contra = contra.getText().toString().trim();
-        String texto_conf_contra = confirContra.getText().toString().trim();
-        boolean valido = true;
-
+        int edadInt;
+        int dniInt;
         try {
-            if (verificarContra(contra)) {
-                contra.setError("La contraseña debe tener al menos 8 caracteres, una mayúscula y un número");
-                valido = false;
-            }
-            if (verificarContra(confirContra)) {
-                confirContra.setError("La contraseña debe tener al menos 8 caracteres, una mayúscula y un número");
-                valido = false;
-            }
-            if (!texto_contra.equals(texto_conf_contra)) {
-                contra.setError("Las contraseñas no coinciden.");
-                confirContra.setError("Las contraseñas no coinciden.");
-                valido = false;
-            }
-            if (texto_contra.isEmpty() || texto_conf_contra.isEmpty()){
-                contra.setError("Ingrese una contraseña");
-                confirContra.setError("Confirme la contraseña");
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(contra.getContext(), "Error al verificar las contraseñas", Toast.LENGTH_SHORT).show();
-            valido = false;
+            edadInt = Integer.parseInt(edadStr);
+        } catch (NumberFormatException e) {
+            edad.setError("La edad debe ser un número");
+            return;
         }
-        return valido;
-    }
-
-    public void registrarse(View view){
-
-        try{
-            boolean nombreValido = verificarNombreApellido();
-            boolean edadValida = verificarEdad();
-            boolean dniValido = verificarDni();
-            boolean contrasValidas = compararContras(contra,confirContra);
-
-            if(!nombreValido || !edadValida || !dniValido || !contrasValidas){
-                Toast.makeText(this, "Error al crear la cuenta, revise los campos", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this,"registro con exito",Toast.LENGTH_SHORT).show();
-            }
-        }catch (Exception e){
-            Toast.makeText(this,"Error inesperado al crear la cuenta",Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    public void inicio(View view){
         try {
-            inicio_btn.setTextColor(Color.parseColor("#E25683"));
-            Intent intent = new Intent(this,Login.class);
-            startActivity(intent);
-        }catch (NumberFormatException e){
-            Toast.makeText(this,"No se pude volver al Login",Toast.LENGTH_SHORT).show();
+            dniInt = Integer.parseInt(dniStr);
+        } catch (NumberFormatException e) {
+            dni.setError("El DNI debe ser un número");
+            return;
         }
+        SharedPreferences preferences = getSharedPreferences("mis_preferencias", MODE_PRIVATE);
+        String emailGuardado = preferences.getString("email", "");
 
+        // Crear DTO para enviar al backend
+        RegistroDatosPersonalesDTO dto = new RegistroDatosPersonalesDTO( emailGuardado,  password,  nombre,  apellido,  Integer.parseInt(dniStr),  Integer.parseInt(edadStr));
+
+
+        // Llamada a API
+        ApiService apiService = ApiClient.getInstance().getApiService();
+        Call<ResponseBody> call = apiService.registrarDatosPersonales(dto);
+
+        // Mostrar mensaje de carga (opcional)
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(RegistroUsuario.this, "Registro exitoso", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(RegistroUsuario.this, "Error en registro: " + response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(RegistroUsuario.this, "Fallo en conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
-    public void volverARegistro(View view){
-        Intent intent = new Intent(this,Registro.class);
-        startActivity(intent);
-    }
+
 }
