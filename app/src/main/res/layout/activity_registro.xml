@@ -208,9 +208,10 @@
         android:textColor="@color/rosa_rojo"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/ingreseAlias"
-        app:layout_constraintBottom_toTopOf="@id/btn_usuario"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.1"
         android:visibility="invisible"
 
         />
@@ -227,12 +228,12 @@
         android:fontFamily="@font/quicksand_book"
         android:textStyle="bold"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/ingreseAlias"
+        app:layout_constraintTop_toBottomOf="@+id/notifText1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintVertical_bias="0.1"
 
         android:onClick="seleccionarUsuario"
         />
@@ -248,11 +249,11 @@
         android:fontFamily="@font/quicksand_bold"
         android:textStyle="bold"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/ingreseAlias"
+        app:layout_constraintTop_toBottomOf="@+id/notifText1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_usuario"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintVertical_bias="0.1"
 
         android:onClick="seleccionarAlumno"
         />
@@ -293,5 +294,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.1"
+
+        android:onClick="verificarDatos"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
