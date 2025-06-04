@@ -44,28 +44,36 @@
 
     <string name="notif_verificar">Al presionar <font color="#E25683"> <u>Verificar Datos</u></font> ,  Se enviará un mail con un código para finalizar la registración. Este codigo expira en 24 horas.</string>
 
-    <string name="saludoRecuperarContra">Recuperar Contraseña</string>
+    <string name="saludoRecuperarContra">Restaurar Contraseña</string>
 
-    <string name="info_layoutRecuperarContra">Por favor, ingrese su Mail para poder seguir con la recuperación</string>
+    <string name="info_layoutRecuperarContra">Por favor, ingrese el código que el enviamos al Mail para seguir con la recuperación</string>
 
     <string name="mensajeCodigo">Ingrese el código que le enviamos al Mail</string>
+
     <string name="enviarCodigo">Enviar</string>
+
     <string name="codigo">Código</string>
+
     <string name="contraNueva">Ingrese contraseña</string>
 
     <string name="titulo_registroUsuario">Usuario</string>
+
     <string name="titulo_registroAlumno">Alumno</string>
 
     <string name="infoRegistroUsuario">Por favor ingrese sus datos para finalizar con el registro</string>
+
     <string name="infoRegistroAlumno">Ingrese un método de pago y foto de su DNI para convertirse en Alumno </string>
 
     <string name="nombre">Nombre</string>
+
     <string name="apellido">Apellido</string>
 
     <string name="contra">Contraseña</string>
+
     <string name="confContra">Confirmar Contraseña</string>
 
     <string name="edad">Edad</string>
+
     <string name="dni">DNI</string>
 
     <string name="crearcuenta">Crear Cuenta</string>
@@ -73,10 +81,10 @@
     <string name="terminos">Al presionar <font color="#E25683"> Crear Cuenta </font>,  Estas aceptando nuestros
         <font color="#E25683">Términos y condiciones</font> asi como las <font color="#E25683">Políticas de Privacidad</font></string>
 
-
     <string name="numeroTarjeta"> N° de tarjeta </string>
 
     <string name="fotoFrente">DNI Frente</string>
+
     <string name="fotoDorso">DNI Dorso</string>
 
     <string name="infoDni">Suba foto de su DNI</string>
@@ -86,6 +94,16 @@
     <string name="cuentacorriente">Cuenta Corriente</string>
 
     <string name="notifRegisAlumno">Registrarse como alumno es <font color="#E25683"> Gratuito </font>. Solo se cobrará si te inscribes en un curso.</string>
+
+    <string name="saludoCodigo">Verifique su cuenta</string>
+
+    <string name="codigoRecuperarContra">Recuperar contraseña</string>
+
+    <string name="aceptar">Aceptar</string>
+
+    <string name="ingreseContraseñaNueva">Ingrese la contraseña nueva</string>
+
+
 </resources>
 
 
