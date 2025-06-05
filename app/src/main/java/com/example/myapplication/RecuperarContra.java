@@ -86,4 +86,9 @@ public class RecuperarContra extends AppCompatActivity {
         Intent intent = new Intent(RecuperarContra.this, RecuperarContra2.class);
         startActivity(intent);
     }
+    public void irALogin(View view) {
+        Intent intent = new Intent(RecuperarContra.this, Login.class);
+        startActivity(intent);
+    }
+
 }

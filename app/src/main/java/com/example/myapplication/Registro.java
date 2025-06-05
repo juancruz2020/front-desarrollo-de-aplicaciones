@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,10 +74,15 @@ public class Registro extends AppCompatActivity {
         String emailText = mail.getText().toString().trim();
         String aliasText = alias.getText().toString().trim();
 
-
         if (emailText.isEmpty() || aliasText.isEmpty() || tipoSeleccionado.isEmpty()) {
             notif.setVisibility(View.VISIBLE);
             notif.setText("Todos los campos son obligatorios.");
+            return;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
+            notif.setVisibility(View.VISIBLE);
+            notif.setText("El correo ingresado no es válido.");
             return;
         }
 
@@ -97,17 +103,12 @@ public class Registro extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    // Parsear el JSON de error
                     try {
                         String errorJson = response.errorBody().string();
-
                         Gson gson = new Gson();
-
-                        // Parseamos el JSON como List<String>
                         Type listType = new TypeToken<List<String>>() {}.getType();
                         List<String> errores = gson.fromJson(errorJson, listType);
 
-                        // Concatenamos todos los mensajes en un solo string
                         StringBuilder mensajeError = new StringBuilder("Nombres Posibles:\n");
                         for (String error : errores) {
                             mensajeError.append("- ").append(error).append("\n");

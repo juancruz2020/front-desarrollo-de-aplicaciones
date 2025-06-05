@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -35,7 +34,6 @@ public class Login extends AppCompatActivity {
     TextView notifContra;
     int intentos = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +44,28 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mail = findViewById(R.id.mail);
-        recordarme = findViewById(R.id.recuerdame);
         contra = findViewById(R.id.contra);
+        recordarme = findViewById(R.id.recuerdame);
         notifContra = findViewById(R.id.olvidasteContra);
+
+        // ✅ Verificar si ya hay datos guardados
+        SharedPreferences preferences = getSharedPreferences("mis_preferencias", MODE_PRIVATE);
+        boolean recordado = preferences.getBoolean("recordarme", false);
+
+        if (recordado) {
+            String emailGuardado = preferences.getString("email", "");
+            String passGuardada = preferences.getString("password", "");
+            mail.setText(emailGuardado);
+            contra.setText(passGuardada);
+            recordarme.setChecked(true);
+
+            // Auto-login directo
+            iniciarSesion(null); // Pasamos null porque no usamos el botón directamente
+        }
     }
 
     public void iniciarSesion(View view) {
+         
         String email = mail.getText().toString().trim();
         String password = contra.getText().toString().trim();
 
@@ -61,7 +75,6 @@ public class Login extends AppCompatActivity {
         }
 
         ApiService apiService = ApiClient.getInstance().getApiService();
-
         LoginDTO loginDTO = new LoginDTO(email, email, password);
 
         apiService.login(loginDTO).enqueue(new Callback<ResponseBody>() {
@@ -69,14 +82,26 @@ public class Login extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
-                        String mensaje = response.body().string();
-                        SharedPreferences preferences = getSharedPreferences("mis_preferencias", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("email", mensaje); // "mensaje" es lo que devuelve el servidor
-                        editor.apply(); // o editor.commit();
+                        if (intentos <= 5) {
+                            String mensaje = response.body().string();
 
-                        Toast.makeText(Login.this, "Login exitoso: " + mensaje, Toast.LENGTH_LONG).show();
-                        // Aquí rediriges o lo que necesites
+                            SharedPreferences preferences = getSharedPreferences("mis_preferencias", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            if (recordarme.isChecked()) {
+                                editor.putString("email", email);
+                                editor.putString("password", password);
+                                editor.putBoolean("recordarme", true);
+                            } else {
+                                editor.clear(); // Borrar si no quiere recordar
+                            }
+                            editor.apply();
+
+                            Toast.makeText(Login.this, "Login exitoso: " + mensaje, Toast.LENGTH_LONG).show();
+
+                            // Redireccionar después del login
+                            Intent intent = new Intent(Login.this, RecuperarContra.class); // O la clase que uses
+                            startActivity(intent);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                         Toast.makeText(Login.this, "Error al leer respuesta", Toast.LENGTH_SHORT).show();
@@ -95,7 +120,7 @@ public class Login extends AppCompatActivity {
 
     private void manejarIntentoFallido() {
         intentos++;
-        if (intentos < 5) {
+        if (intentos <= 5) {
             contra.setError("Contraseña incorrecta. Intento " + intentos + " de 5");
         } else {
             SpannableString spannable = new SpannableString("Excediste el límite de intentos! \nOlvidaste tu contraseña? ve a Recuperar contraseña");
