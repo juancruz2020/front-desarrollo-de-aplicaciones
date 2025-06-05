@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.1"
-        
+
         />
 
     <ImageView
@@ -155,7 +155,7 @@
         android:text="@string/iniciarSesion"
         android:textAllCaps="false"
         android:fontFamily="@font/quicksand_bold"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/recuerdame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
