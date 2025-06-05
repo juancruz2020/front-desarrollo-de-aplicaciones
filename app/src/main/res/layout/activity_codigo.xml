@@ -30,12 +30,12 @@
         />
 
 
-    <TextView
+        <TextView
         android:id="@+id/saludo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_bold"
-        android:text="asd"
+        android:text="@string/codigoValidacionUsuario"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -55,12 +55,11 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:text="@string/info_layoutRecuperarContra"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:fontFamily="@font/quicksand_book"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/saludo"
+        app:layout_constraintTop_toTopOf="@id/saludo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,10 +85,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintVertical_bias="0.1"
 
         />
-
 
 
     <ImageView
@@ -120,7 +118,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0.75"
 
         android:onClick="validarcodigo"
 
