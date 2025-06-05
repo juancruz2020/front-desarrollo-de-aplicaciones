@@ -15,7 +15,7 @@
 
     <string name="checkbox">Recordarme</string>
 
-    <string name="iniciarSesion"><u>Iniciar Sesión</u></string>
+       <string name="iniciarSesion">Iniciar Sesión</string>
 
     <string name="datosOlvidados">Usuiario nuevo? Por favor </string>
 
