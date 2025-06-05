@@ -73,11 +73,14 @@ public class Codigo extends AppCompatActivity {
 
                     Intent intent = getIntent();
                     String tipoUsuario = intent.getStringExtra("tipoUsuario");
-                    if (tipoUsuario.equals("usuario")){
-                        startActivity(new Intent(Codigo.this, RegistroUsuario.class));
-                    }
-                    else if (tipoUsuario.equals("alumno")){
-                        startActivity(new Intent(Codigo.this, RegistroAlumno.class));
+                    if ("usuario".equals(tipoUsuario)) {
+                        Intent intent2 = new Intent(Codigo.this, RegistroUsuario.class);
+                        intent2.putExtra("tipoUsuario", tipoUsuario);
+                        startActivity(intent2);
+                    } else if ("alumno".equals(tipoUsuario)) {
+                        Intent intent2 = new Intent(Codigo.this, RegistroUsuario.class);
+                        intent2.putExtra("tipoUsuario", tipoUsuario);
+                        startActivity(intent2);
                     }
 
                     finish();

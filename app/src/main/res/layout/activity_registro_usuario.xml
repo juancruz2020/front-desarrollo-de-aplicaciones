@@ -27,27 +27,6 @@
 
         app:srcCompat="@drawable/outline_arrow_back_ios"  />
 
-    <Button
-        android:id="@+id/volverInicio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:fontFamily="@font/quicksand_book"
-        android:text="@string/iniciarSesion"
-        android:textAllCaps="false"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintVertical_bias="0.02"
-        android:letterSpacing="0.05"
-        android:onClick="inicio"
-        />
-
     <TextView
         android:id="@+id/saludo"
         android:layout_width="wrap_content"

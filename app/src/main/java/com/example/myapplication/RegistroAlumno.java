@@ -143,6 +143,7 @@ public class RegistroAlumno extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Toast.makeText(RegistroAlumno.this, "Alumno registrado", Toast.LENGTH_SHORT).show();
                                 limpiarCampos();
+
                                 Intent intent = new Intent(RegistroAlumno.this, Login.class);
                                 startActivity(intent);
                             } else {

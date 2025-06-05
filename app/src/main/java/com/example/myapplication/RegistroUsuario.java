@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -114,6 +115,17 @@ public class RegistroUsuario extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(RegistroUsuario.this, "Registro exitoso", Toast.LENGTH_LONG).show();
+                    Intent intent = getIntent();
+                    String tipoUsuario = intent.getStringExtra("tipoUsuario");
+                    if (tipoUsuario.equals("usuario")){
+                        Intent intent2 = new Intent(RegistroUsuario.this, Login.class);
+                        startActivity(intent2);
+                    }
+                    else if (tipoUsuario.equals("alumno")){
+                        Intent intent2 = new Intent(RegistroUsuario.this, RegistroAlumno.class);
+                        intent.putExtra("tipoUsuario", tipoUsuario);
+                        startActivity(intent2);
+                    }
 
                 } else {
                     Toast.makeText(RegistroUsuario.this, "Error en registro: " + response.code(), Toast.LENGTH_LONG).show();
