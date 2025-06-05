@@ -12,8 +12,8 @@
 
     <ImageButton
         android:id="@+id/btn_volver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:background="@drawable/btn_volver"
         android:contentDescription="@string/regresar"
         android:contextClickable="true"
@@ -22,15 +22,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:srcCompat="@drawable/outline_arrow_back_ios"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0"
+        app:srcCompat="@drawable/chevron_left__1_"
 
 
         />
 
 
-        <TextView
+    <TextView
         android:id="@+id/saludo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,6 +90,7 @@
         />
 
 
+
     <ImageView
         android:id="@+id/codigo_image"
         android:layout_width="32dp"
@@ -125,3 +126,4 @@
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
