@@ -28,7 +28,7 @@
 
         app:srcCompat="@drawable/chevron_left__1_" />
 
-        <TextView
+      <TextView
         android:id="@+id/saludo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -37,6 +37,7 @@
         android:fontFamily="@font/quicksand_bold"
         android:textStyle="bold"
         android:textColor="@color/white"
+        android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
