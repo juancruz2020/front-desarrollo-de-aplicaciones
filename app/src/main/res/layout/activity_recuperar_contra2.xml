@@ -29,7 +29,7 @@
         app:srcCompat="@drawable/outline_arrow_back_ios" />
 
 
-    <TextView
+        <TextView
         android:id="@+id/saludo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,16 +51,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mensajeCodigo"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:fontFamily="@font/quicksand_book"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/saludo"
+        app:layout_constraintTop_toTopOf="@id/saludo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.2" />
 
 
     <EditText
@@ -82,10 +81,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintVertical_bias="0.1"
 
         />
-
     <TextView
         android:id="@+id/validarCodigo"
         android:layout_width="wrap_content"
@@ -201,7 +199,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.6"
 
         android:onClick="iniciarSesion"
 
