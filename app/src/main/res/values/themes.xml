@@ -7,4 +7,10 @@
 
     <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
+    <style name="Theme.App.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>
