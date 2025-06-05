@@ -28,7 +28,7 @@
 
         app:srcCompat="@drawable/chevron_left__1_" />
 
-    <TextView
+        <TextView
         android:id="@+id/saludo"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
 
         />
 
-     <TextView
+    <TextView
         android:id="@+id/info1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
