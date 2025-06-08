@@ -44,4 +44,44 @@ public interface ApiService {
     @POST("usuarios/cambiar-contrasena")
     Call<ResponseBody> cambiarContrasena(@Body CambioContrasenaDTO dto);
 
+    @GET("recetas")
+    Call<List<RecetaDTO>> listarTodas();
+
+    @GET("recetas/{id}")
+    Call<RecetaDTO> obtenerReceta(@Path("id") Long id);
+
+    @GET("recetas/filtrar-nombre")
+    Call<List<RecetaDTO>> filtrarPorNombre(@Query("nombre") String nombre);
+
+    @GET("recetas/filtrar-categoria")
+    Call<List<RecetaDTO>> filtrarPorCategoria(@Query("categoria") String categoria);
+
+    @GET("recetas/filtrar-ingrediente")
+    Call<List<RecetaDTO>> filtrarPorIngrediente(
+            @Query("ingrediente") String ingrediente,
+            @Query("contiene") boolean contiene
+    );
+
+    @GET("recetas/filtrar-usuario")
+    Call<List<RecetaDTO>> filtrarPorUsuario(@Query("nickname") String nickname);
+
+    @Multipart
+    @POST("/recetas/cargar")
+    Call<ResponseBody> cargarReceta(
+            @Part MultipartBody.Part datos,
+            @Part List<MultipartBody.Part> imagenes
+    );
+
+    @PUT("recetas/modificar")
+    Call<ResponseBody> modificarReceta(@Body RecetaDTO dto);
+
+    @DELETE("recetas/eliminar")
+    Call<ResponseBody> eliminarReceta(@Query("nombre") String nombre);
+
+    @PUT("recetas/multiplicar")
+    Call<ResponseBody> multiplicarReceta(
+            @Query("idReceta") Long idReceta,
+            @Query("multiplicador") double multiplicador
+    );
+
 }

@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EADDCC">
+
+    <!-- Imagen de receta // falta opcion para ver todas las imagenes-->
+    <ImageView
+        android:id="@+id/imgReceta"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ensalada_pollo" />
+
+    <!-- Overlay Gradient -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/gradient_overlay" />
+
+    <!-- Botón cerrar -->
+    <ImageButton
+        android:id="@+id/btnCerrar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/btn_background"
+        android:src="@drawable/x"
+        android:layout_gravity="top|start"
+        app:tint="#000000"
+        android:scaleType="centerInside"
+        android:padding="10dp"/>
+
+    <!-- Botón favorito -->
+    <FrameLayout
+        android:id="@+id/bookmarkContainer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="30dp"
+        android:layout_gravity="top|end"
+        android:background="@drawable/btn_background">
+
+        <ImageView
+            android:id="@+id/bookmarkEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_bookmark_regular"
+            app:tint="#000000" />
+
+        <ImageView
+            android:id="@+id/bookmarkFilled"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_bookmark_solid"
+            android:visibility="gone"
+            app:tint="#E8C207" />
+
+    </FrameLayout>
+
+
+    <!-- Contenido scrolleable -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="260dp"
+        android:background="#EADDCC"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Barrita gris -->
+            <View
+                android:layout_width="60dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:alpha="0.6"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#A0A1A0"
+                android:elevation="2dp"
+                android:clipToOutline="true"
+                android:background="@drawable/barrita_curva" />
+
+            <!-- Título y Tiempo en una misma línea -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical">
+
+                <!-- Título -->
+                <TextView
+                    android:id="@+id/txtTitulo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ensalada de Pollo"
+                    android:textSize="24sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold" />
+
+                <!-- Tiempo -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_marginEnd="6dp"
+                        android:src="@drawable/reloj"
+                        app:tint="#748189" />
+
+                    <TextView
+                        android:id="@+id/tvTiempoValor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15"
+                        android:textColor="#748189"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvTiempoUnidad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Min"
+                        android:textColor="#748189"
+                        android:textSize="14sp"
+                        android:layout_marginStart="2dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Descripción -->
+            <TextView
+                android:id="@+id/descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#748189"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp"/>
+
+
+            <!-- Tabs -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="4dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:backgroundTint="#A0A1A0"
+                android:elevation="2dp"
+                android:clipToOutline="true"
+                android:background="@drawable/tab_group_bg">
+
+                <TextView
+                    android:id="@+id/btnIngredientes"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/tab_activo"
+                    android:text="Ingredientes"
+                    android:textSize="16sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btnInstrucciones"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@drawable/tab_inactivo"
+                    android:text="Instrucciones"
+                    android:textSize="16sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutIngredientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Ingredientes -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ingredientes"
+                    android:textSize="20sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Porciones -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Porciones"
+                        android:textSize="16sp"
+                        android:textColor="#748189"
+                        android:layout_marginEnd="12dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnMenosPorciones"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/btn_background"
+                        android:src="@drawable/ic_menos"
+                        app:tint="#E25683"
+                        android:scaleType="fitCenter"
+                        android:padding="6dp"
+                        android:layout_marginEnd="6dp"/>
+
+                    <TextView
+                        android:id="@+id/tvCantidadPorciones"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textSize="16sp"
+                        android:textColor="#0A2533"
+                        android:textStyle="bold"
+                        android:layout_marginEnd="6dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnMasPorciones"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/btn_background"
+                        android:src="@drawable/ic_mas"
+                        app:tint="#E25683"
+                        android:scaleType="centerInside"
+                        android:padding="6dp"/>
+                </LinearLayout>
+
+                <!-- Ingrediente 1 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginVertical="8dp"
+                    app:strokeColor="#FFFFFF"
+                    app:strokeWidth="0dp"
+                    android:background="@drawable/rounded_white_shadow">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Pechuga de Pollo (gramos)"
+                            android:textSize="16sp"
+                            android:textColor="#0A2533"/>
+
+                        <ImageButton
+                            android:id="@+id/btnMenosCantidad"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/btn_background"
+                            android:src="@drawable/ic_menos"
+                            app:tint="#E25683"
+                            android:scaleType="centerInside"
+                            android:padding="6dp"
+                            android:layout_marginEnd="6dp"/>
+
+                        <TextView
+                            android:id="@+id/tvCantidadIngrediente"
+                            android:layout_width="32dp"
+                            android:layout_height="wrap_content"
+                            android:text="300"
+                            android:textSize="16sp"
+                            android:textColor="#0A2533"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="6dp" />
+
+                        <ImageButton
+                            android:id="@+id/btnMasCantidad"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/btn_background"
+                            android:src="@drawable/ic_mas"
+                            app:tint="#E25683"
+                            android:scaleType="centerInside"
+                            android:padding="6dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+
+            </LinearLayout>
+            <!-- Intstrucciones -->
+            <LinearLayout
+                android:id="@+id/layoutInstrucciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Paso 1 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paso 1:"
+                    android:textSize="16sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cortar la pechuga de pollo en cubos y dorarla en una sartén con aceite de oliva, sal y pimienta."
+                    android:textSize="14sp"
+                    android:textColor="#0A2533"
+                    android:layout_marginBottom="12dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@drawable/pollocortado"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/rounded_white_shadow"
+                    android:clipToOutline="true"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Paso 2 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paso 2:"
+                    android:textSize="16sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lavar y cortar los vegetales: tomate en cubos, zanahoria rallada, pepino en rodajas finas, cebolla morada en pluma y la lechuga trozada."
+                    android:textSize="14sp"
+                    android:textColor="#0A2533"
+                    android:layout_marginBottom="12dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@drawable/vegetales"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/rounded_white_shadow"
+                    android:clipToOutline="true"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Paso 3 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paso 3:"
+                    android:textSize="16sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="En un bowl, mezclar todos los vegetales con el pollo cocido."
+                    android:textSize="14sp"
+                    android:textColor="#0A2533"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Paso 4 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paso 4:"
+                    android:textSize="16sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Preparar el aderezo mezclando la mayonesa, la mostaza, la miel, sal y pimienta"
+                    android:textSize="14sp"
+                    android:textColor="#0A2533"
+                    android:layout_marginBottom="12dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:src="@drawable/mezcla"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/rounded_white_shadow"
+                    android:clipToOutline="true"
+                    android:layout_marginBottom="16dp"/>
+
+                <!-- Paso 5 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paso 5:"
+                    android:textSize="16sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar el aderezo a la ensalada, mezclar bien y servir"
+                    android:textSize="14sp"
+                    android:textColor="#0A2533"
+                    android:layout_marginBottom="12dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#FFFFFF"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Info Chef -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chef"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#0A2533"
+                android:layout_marginTop="24dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/avatar_border"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/circle_mask"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/camipollo" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CamiPollo"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Soy la creadora de la receta."
+                        android:textSize="14sp"
+                        android:textColor="#748189"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Valoración y Calificaciones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Valoración"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.5/5"
+                        android:textSize="24sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Calificaciones"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="180"
+                        android:textSize="24sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Valorar -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valorar"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#0A2533"
+                android:layout_marginTop="24dp" />
+
+            <!-- Estrellas -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp">
+
+                <LinearLayout
+                    android:id="@+id/ratingLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="0dp">
+
+                    <ImageView
+                        android:id="@+id/star1"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/star_empty"
+                        android:padding="4dp" />
+
+                    <ImageView
+                        android:id="@+id/star2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/star_empty"
+                        android:padding="4dp" />
+
+                    <ImageView
+                        android:id="@+id/star3"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/star_empty"
+                        android:padding="4dp" />
+
+                    <ImageView
+                        android:id="@+id/star4"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/star_empty"
+                        android:padding="4dp" />
+
+                    <ImageView
+                        android:id="@+id/star5"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/star_empty"
+                        android:padding="4dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!-- Comentario Usuario -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mala"
+                    android:textSize="14sp"
+                    android:textColor="#748189"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="Excelente"
+                    android:textSize="14sp"
+                    android:textColor="#748189"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/rounded_white_shadow"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/avatar_border"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/circle_mask"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/gordon" />
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Escribir comentario…"
+                    android:background="@android:color/transparent"
+                    android:textColor="#0A2533"
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:minHeight="56dp"/>
+            </LinearLayout>
+
+            <!-- Comentario 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/avatar_border"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/circle_mask"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/cocinandoando" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CocinandoAndo"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fresca y liviana, ideal para los días de calor."
+                        android:textSize="14sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="2dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Comentario 2  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/avatar_border"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/circle_mask"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/lareinadelaensalada" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LaReinaDeLaEnsalada"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Le puse zanahoria rallada y le dio una croancia buenisima."
+                        android:textSize="14sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="2dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Comentario 3 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/avatar_border"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/circle_mask"
+                        android:scaleType="centerCrop"
+                        android:clipToOutline="true"
+                        android:src="@drawable/masterpollo23" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MasterPollo23"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="La pechuga quedo super tierna, le agregue un toque de limon y quedo espectacular."
+                        android:textSize="14sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="2dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
