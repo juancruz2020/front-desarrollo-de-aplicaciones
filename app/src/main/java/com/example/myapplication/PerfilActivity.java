@@ -14,11 +14,15 @@ public class PerfilActivity extends AppCompatActivity {
         String tipoUsuario = "alumno"; // puede ser: "visitante", "usuario" o "alumno"
 
         switch (tipoUsuario) {
-            case "visitante":
+           case "visitante":
                 setContentView(R.layout.activity_perfil_visitante);
+                Intent inicioSesion = new Intent(this, Login.class);
+                startActivity(inicioSesion);
                 break;
             case "usuario":
                 setContentView(R.layout.activity_perfil_usuario);
+                Intent usuarioAlumno = new Intent(this, RegistroAlumno.class);
+                startActivity(usuarioAlumno);
                 break;
             case "alumno":
                 setContentView(R.layout.activity_perfil_alumno);
