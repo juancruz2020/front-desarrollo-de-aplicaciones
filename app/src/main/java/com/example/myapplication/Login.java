@@ -99,7 +99,7 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, "Login exitoso: " + mensaje, Toast.LENGTH_LONG).show();
 
                             // Redireccionar después del login
-                            Intent intent = new Intent(Login.this, RecuperarContra.class); // O la clase que uses
+                            Intent intent = new Intent(Login.this, InicioActivity.class); // O la clase que uses
                             startActivity(intent);
                         }
                     } catch (IOException e) {
