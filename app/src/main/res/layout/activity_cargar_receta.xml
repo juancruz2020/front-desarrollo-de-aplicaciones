@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F5E9DC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Título -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp">
+            <!-- Flechita -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
+                android:contentDescription="Volver"
+                android:scaleType="centerInside"
+                android:padding="0dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cargar Receta"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#0A2533" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Nombre del Plato -->
+        <EditText
+            android:id="@+id/etNombrePlato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del Plato"
+            android:textColorHint="#0A2533" />
+
+        <!-- Descripción -->
+        <EditText
+            android:id="@+id/etDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="top"
+            android:hint="Describa su receta aquí"
+            android:inputType="textMultiLine"
+            android:paddingTop="8dp"
+            android:layout_marginTop="12dp"
+            android:textColorHint="#0A2533" />
+
+        <!-- Tipo de Plato -->
+        <Spinner
+            android:id="@+id/spinnerTipoPlato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <!-- Cantidad de Porciones -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cantidad de Porciones"
+            android:layout_marginTop="16dp"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp">
+
+            <ImageButton
+                android:id="@+id/btnMenosPorciones"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_menos" />
+
+            <TextView
+                android:id="@+id/tvCantidadPorciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="18sp"
+                android:padding="8dp"
+                android:textColorHint="#0A2533"
+                android:textColor="#0A2533" />
+
+            <ImageButton
+                android:id="@+id/btnMasPorciones"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_mas" />
+        </LinearLayout>
+
+        <!-- Tiempo de preparación -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiempo de Preparación"
+            android:layout_marginTop="16dp"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <EditText
+                android:id="@+id/etTiempoPreparacion"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Tiempo"
+                android:textColorHint="#0A2533"
+                android:textColor="#0A2533" />
+
+            <Spinner
+                android:id="@+id/spinnerTiempo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Ingredientes -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingrediente"
+            android:layout_marginTop="16dp"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533" />
+
+        <EditText
+            android:id="@+id/etIngrediente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del ingrediente"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533" />
+
+        <!-- Cantidad + Unidad -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cantidad"
+                android:textColorHint="#0A2533"
+                android:textColor="#0A2533" />
+
+            <ImageButton
+                android:id="@+id/btnMenosCantidad"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_menos" />
+
+            <TextView
+                android:id="@+id/tvCantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:padding="8dp"
+                android:textColorHint="#0A2533"
+                android:textColor="#0A2533" />
+
+            <ImageButton
+                android:id="@+id/btnMasCantidad"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_mas" />
+
+            <Spinner
+                android:id="@+id/spinnerUnidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Botón Agregar Ingrediente -->
+        <Button
+            android:id="@+id/btnAgregarIngrediente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Agregar Ingrediente"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#E59797"
+            android:textColor="#FFFFFF" />
+
+        <!-- Lista de ingredientes (recycler o layout dinamico) -->
+        <LinearLayout
+            android:id="@+id/layoutIngredientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp" />
+
+        <!-- Instrucciones -->
+        <EditText
+            android:id="@+id/etInstruccion"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="Describa el paso aquí"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#C4C4C4"
+            android:padding="12dp"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533" />
+
+        <LinearLayout
+            android:id="@+id/layoutArchivoAdjunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:background="@drawable/bg_pill"
+            android:padding="8dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvNombreArchivo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="nombrearchivo.mp4"
+                android:textColor="#5E5E5E"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <ImageButton
+                android:id="@+id/btnEliminarArchivo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_close"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Eliminar archivo"
+                app:tint="#5E5E5E" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533">
+
+            <Button
+                android:id="@+id/btnAgregarMedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar Imagen/Video"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="#E59797"
+                android:textColor="#ffffff"/>
+
+            <Button
+                android:id="@+id/btnAgregarPaso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar Paso"
+                android:backgroundTint="#E59797"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+        <!-- Lista de pasos -->
+        <LinearLayout
+            android:id="@+id/layoutPasos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533"/>
+
+        <!-- Portada -->
+        <TextView
+            android:id="@+id/tvTituloPortada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fotos y Videos de Portada"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533"/>
+
+        <Button
+            android:id="@+id/btnAgregarPortada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agregar Imagen/Video"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#E59797"
+            android:textColor="#ffffff"/>
+
+        <LinearLayout
+            android:id="@+id/layoutPortadas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:textColorHint="#0A2533"
+            android:textColor="#0A2533"/>
+
+        <Button
+            android:id="@+id/btnSubirReceta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subir Receta"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#E59797"
+            android:textColor="#ffffff"/>
+
+
+
+    </LinearLayout>
+</ScrollView>
