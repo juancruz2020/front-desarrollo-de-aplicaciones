@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -98,6 +99,9 @@ public class Registro extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(Registro.this, "Registro exitoso", Toast.LENGTH_LONG).show();
+                    SharedPreferences.Editor editor = getSharedPreferences("mis_preferencias", MODE_PRIVATE).edit();
+                    editor.putString("email", emailText);
+                    editor.apply();
                     Intent intent = new Intent(Registro.this, Codigo.class);
                     intent.putExtra("tipoUsuario", tipoSeleccionado);
                     startActivity(intent);
