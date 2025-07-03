@@ -322,6 +322,7 @@
                 <!-- Sede -->
                 <Spinner
                     android:id="@+id/spinnerSedeCurso"
+                    style="@style/SpinnerDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp" />
@@ -498,6 +499,49 @@
                             android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_tarjeta"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tvNumeroTarjeta"
+                        android:text="**** **** **** 4567"
+                        android:textSize="16sp"
+                        android:textColor="#0A2533"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:text="Editar"
+                        android:textSize="12sp"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#E59797"
+                        android:elevation="2dp"
+                        android:padding="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/abonarEnSede"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Deseo Abonar en la sede"
+                    android:fontFamily="@font/quicksand_bold"
+                    android:textColor="#748189"
+                    android:textSize="17sp"
+                    app:buttonTint="@color/checkbox_tint" />
 
                 <!-- Medio de Pago -->
                 <LinearLayout

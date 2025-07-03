@@ -76,7 +76,7 @@
         <activity android:name=".CursosActivity"
             android:theme="@style/Theme.MyApplication"/>
         <activity android:name=".DetalleCursosInscripcionActivity"
-            android:theme="@style/Theme.MyApplication"/>
+            android:theme="@style/Theme.MiApp.Dark"/>
     </application>
 
 </manifest>

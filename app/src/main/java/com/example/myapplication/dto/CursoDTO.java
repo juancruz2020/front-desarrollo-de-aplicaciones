@@ -1,6 +1,7 @@
 package com.example.myapplication.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CursoDTO implements Serializable {
     public String nombre;
@@ -22,10 +23,13 @@ public class CursoDTO implements Serializable {
     public String nombreProfesor;
     public String descripcionProfesor;
 
+    public List<String> sedes;
+
+
     public CursoDTO(String nombre, String descripcion, String precio, String modalidad, String dia,
                     String horario, String fechaInicio, String fechaFin, String objetivo, String temas,
                     String insumos, String montoFinal, int imagenResId, int iconoModalidadResId,
-                    int fotoProfesorResId, String nombreProfesor, String descripcionProfesor) {
+                    int fotoProfesorResId, String nombreProfesor, String descripcionProfesor, List<String> sedes) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -43,5 +47,6 @@ public class CursoDTO implements Serializable {
         this.fotoProfesorResId = fotoProfesorResId;
         this.nombreProfesor = nombreProfesor;
         this.descripcionProfesor = descripcionProfesor;
+        this.sedes = sedes;
     }
 }

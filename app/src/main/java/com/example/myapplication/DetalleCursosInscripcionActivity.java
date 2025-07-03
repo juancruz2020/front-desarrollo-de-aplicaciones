@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.dto.CursoDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetalleCursosInscripcionActivity extends AppCompatActivity {
 
     Spinner spSedeCurso;
@@ -51,30 +54,15 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
         imgReceta = findViewById(R.id.imgReceta);
 
 
-        // Cargar sedes al spinner
-        cargarSedes();
-
         //Boton para retroceder
         ImageButton btnBack = findViewById(R.id.btnCerrar);
         btnBack.setOnClickListener(v -> finish());
 
-        // Capturar selección del spinner
-        spSedeCurso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String sedeSeleccionada = parent.getItemAtPosition(position).toString();
-                Log.d("SPINNER_SEDE", "Seleccionaste: " + sedeSeleccionada);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // nada
-            }
-        });
 
         CursoDTO curso = (CursoDTO) getIntent().getSerializableExtra("curso");
-
         if (curso != null) {
+            cargarSedes(curso);
             txtTitulo.setText(curso.nombre);
             descripcion.setText(curso.descripcion);
             tvTiempoValor.setText("3");
@@ -101,19 +89,56 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
 
         }
 
+        // Capturar selección del spinner
+        spSedeCurso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String sedeSeleccionada = parent.getItemAtPosition(position).toString();
+
+                // Si tiene "Sede Palermo" aplicar nuevo precio final
+                if (sedeSeleccionada.contains("Sede Palermo")) {
+                    int precio = Integer.parseInt(curso.precio.replace("$", "").replace(".", ""));
+                    int precioConDescuento = precio - (precio * 30 / 100);
+                    MontoFinalCurso.setText("$" + precioConDescuento);
+                } else {
+                    MontoFinalCurso.setText(curso.precio);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
 
     }
 
-    private void cargarSedes() {
+    private void cargarSedes(CursoDTO curso) {
+        // Armo una lista nueva con o sin descuento
+        List<String> sedesConPrecio = new ArrayList<>();
+        // Descuento
+        int precio = Integer.parseInt(curso.precio.replace("$", "").replace(".", ""));
+        int precioConDescuento = precio - (precio * 30 / 100);
+
+        // Aplica descuento y cambia el nombre
+        for (String sede : curso.sedes) {
+            if (sede.equals("Sede Palermo")) {
+                sedesConPrecio.add(sede + " (Total: $" + precioConDescuento + ")");
+            } else {
+                sedesConPrecio.add(sede);
+            }
+        }
+
+        // Cargo spinner con la lista armada
         ArrayAdapter<String> adapterSedes = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
-                new String[]{"Sede Palermo", "Sede Caballito", "Sede Microcentro", "Sede Devoto"}
+                R.layout.spinner_item_dark,
+                sedesConPrecio
         );
         adapterSedes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spSedeCurso.setAdapter(adapterSedes);
-        spSedeCurso.setSelection(0); // preselecciona Palermo
+        spSedeCurso.setSelection(0);
     }
+
 
 
 }

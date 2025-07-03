@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.dto.CursoDTO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CursosActivity extends AppCompatActivity {
@@ -95,7 +96,8 @@ public class CursosActivity extends AppCompatActivity {
                 R.drawable.ic_presencial,
                 R.drawable.imagenpromocionalinicio2,
                 "Carlos Nápoles",
-                "Maestro pizzero napolitano con 20 años de experiencia."
+                "Maestro pizzero napolitano con 20 años de experiencia.",
+                Arrays.asList("Sede Palermo", "Sede Caballito", "Sede Microcentro", "Sede Devoto", "Sede Retiro", "Sede Barrio Mitre")
         ));
 
         cursos.add(new CursoDTO(
@@ -115,7 +117,8 @@ public class CursosActivity extends AppCompatActivity {
                 R.drawable.ic_presencial,
                 R.drawable.camipollo,
                 "Laura Dulcetti",
-                "Pastelera profesional y profesora de cocina dulce."
+                "Pastelera profesional y profesora de cocina dulce.",
+                Arrays.asList("Sede Palermo", "Sede Caballito", "Sede Devoto")
         ));
 
         cursos.add(new CursoDTO(
@@ -135,7 +138,8 @@ public class CursosActivity extends AppCompatActivity {
                 R.drawable.ic_online,
                 R.drawable.fotopromocionaliniciocursos,
                 "Martín Verde",
-                "Chef especializado en cocina vegetariana y saludable."
+                "Chef especializado en cocina vegetariana y saludable.",
+                Arrays.asList("Sede Caballito", "Sede Barrio Mitre")
         ));
 
         cursos.add(new CursoDTO(
@@ -155,7 +159,8 @@ public class CursosActivity extends AppCompatActivity {
                 R.drawable.ic_presencial,
                 R.drawable.cocinafacil,
                 "Kenji Yamato",
-                "Sushiman profesional con formación en Japón."
+                "Sushiman profesional con formación en Japón.",
+                Arrays.asList("Sede Microcentro", "Sede Retiro")
         ));
 
         cursos.add(new CursoDTO(
@@ -175,7 +180,8 @@ public class CursosActivity extends AppCompatActivity {
                 R.drawable.ic_online,
                 R.drawable.cocinandoando,
                 "Sofía Leudante",
-                "Panadera artesanal especialista en fermentación natural."
+                "Panadera artesanal especialista en fermentación natural.",
+                Arrays.asList("Sede Palermo", "Sede Devoto", "Sede Barrio Mitre")
         ));
 
 
@@ -207,6 +213,21 @@ public class CursosActivity extends AppCompatActivity {
         tvDescuento.setText(""); // opcional
         imgCurso.setImageResource(curso.imagenResId);
         icModalidad.setImageResource(curso.iconoModalidadResId);
+
+        // Si tiene Sede Palermo, calcular 30% de descuento
+        if (curso.sedes != null && curso.sedes.contains("Sede Palermo")) {
+            try {
+                // Parsear el precio quitando el '$'
+                int precio = Integer.parseInt(curso.precio.replace("$", "").replace(".", ""));
+                int precioConDescuento = precio - (precio * 30 / 100);
+                tvDescuento.setText("(Descuento en Sede Palermo: $" + precioConDescuento + ")");
+            } catch (NumberFormatException e) {
+                tvDescuento.setText(""); // si hay algún error, no se muestra descuento
+            }
+        } else {
+            tvDescuento.setText("");
+        }
+
 
         item.setOnClickListener(v -> {
             Intent intent = new Intent(CursosActivity.this, DetalleCursosInscripcionActivity.class);

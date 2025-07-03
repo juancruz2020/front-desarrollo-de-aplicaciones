@@ -213,6 +213,7 @@
                 android:layout_marginEnd="8dp"/>
 
             <TextView
+                android:id="@+id/tvNumeroTarjeta"
                 android:text="**** **** **** 4567"
                 android:textSize="16sp"
                 android:textColor="#0A2533"
