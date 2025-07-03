@@ -113,7 +113,7 @@
 
 
 
-            <!-- Contenedor Favoritas -->
+            <!-- Contenedor Descubrir -->
             <LinearLayout
                 android:id="@+id/contenedorDescubrir"
                 android:layout_width="411dp"
@@ -1261,6 +1261,7 @@
 
         <!-- Cursos -->
         <LinearLayout
+            android:id="@+id/btnCursos"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

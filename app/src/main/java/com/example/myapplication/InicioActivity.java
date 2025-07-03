@@ -78,6 +78,7 @@ public class InicioActivity extends AppCompatActivity {
         ImageView btnBuscarHeader = findViewById(R.id.btnBuscar);
         LinearLayout btnBuscarFooter = findViewById(R.id.btnFooterBuscar);
         LinearLayout btnPerfil = findViewById(R.id.btnFooterPerfil);
+        LinearLayout btnCursos = findViewById(R.id.btnCursos);
 
         tabOptions.post(() -> {
             int anchoMitad = tabOptions.getWidth() / 2;
@@ -164,6 +165,10 @@ public class InicioActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        btnCursos.setOnClickListener(v -> {
+            Intent intent = new Intent(InicioActivity.this, CursosActivity.class);
+            startActivity(intent);
+        });
     }
 
     private Runnable sliderRunnable = new Runnable() {

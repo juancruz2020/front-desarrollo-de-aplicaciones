@@ -79,6 +79,8 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
     implementation("com.github.bumptech.glide:glide:4.15.1")
     kapt("com.github.bumptech.glide:compiler:4.15.1")
+    implementation ("androidx.cardview:cardview:1.0.0")
+
 
 
 }}
