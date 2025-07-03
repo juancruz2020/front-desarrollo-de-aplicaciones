@@ -136,6 +136,87 @@
                 android:textSize="16sp"
                 android:layout_marginTop="8dp"/>
 
+            <!-- Asistencia al Curso -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- Asistencia al Curso -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Asistencia al Curso"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:id="@+id/AsistenciaAlCurso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Para registrar tu asistencia, escaneá el código QR ubicado en el ingreso de la sede y del aula. Recordá que necesitás asistir al menos al 75% de las clases para aprobar."
+                        android:textSize="16sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- QR -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- QR -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Asistencia al Curso"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <!-- Botón QR -->
+                    <ImageButton
+                        android:id="@+id/QR"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="30dp"
+                        android:background="@drawable/btn_background"
+                        android:src="@drawable/qr"
+                        android:layout_gravity="center_horizontal"
+                        app:tint="#000000"
+                        android:scaleType="centerInside" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Al tocar este botón se abrirá la cámara para escanear el código QR."
+                        android:textSize="16sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
             <!-- DATOS -->
             <LinearLayout
                 android:id="@+id/layoutDatosCurso"
@@ -466,131 +547,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Medio de Pago -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="24dp">
-
-                    <!-- Medio De Pago -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Medio de Pago"
-                            android:textSize="24sp"
-                            android:textStyle="bold"
-                            android:textColor="#0A2533" />
-
-                        <TextView
-                            android:id="@+id/MedioDePagoCurso"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tarjeta Registrada"
-                            android:textSize="16sp"
-                            android:textColor="#748189"
-                            android:layout_marginTop="4dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="24dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_tarjeta"
-                        android:layout_marginEnd="8dp"/>
-
-                    <TextView
-                        android:id="@+id/tvNumeroTarjeta"
-                        android:text="**** **** **** 4567"
-                        android:textSize="16sp"
-                        android:textColor="#0A2533"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:text="Editar"
-                        android:textSize="12sp"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#E59797"
-                        android:elevation="2dp"
-                        android:padding="4dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-                <CheckBox
-                    android:id="@+id/abonarEnSede"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:text="Deseo Abonar en la sede"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textColor="#748189"
-                    android:textSize="17sp"
-                    app:buttonTint="@color/checkbox_tint" />
-
-                <!-- Medio de Pago -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="24dp">
-
-                    <!-- Medio De Pago -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Monto Final"
-                            android:textSize="24sp"
-                            android:textStyle="bold"
-                            android:textColor="#0A2533" />
-
-                        <TextView
-                            android:id="@+id/MontoFinalCurso"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$7000"
-                            android:textSize="16sp"
-                            android:textColor="#748189"
-                            android:layout_marginTop="4dp"/>
-
-                        <Button
-                            android:id="@+id/btnTerminos"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Confirmar Inscripcion"
-                            android:textColor="#FFFFFF"
-                            android:backgroundTint="#E59797"
-                            android:textStyle="bold"
-                            android:elevation="2dp"
-                            android:layout_marginTop="20dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-
             </LinearLayout>
 
             <View
@@ -598,7 +554,7 @@
                 android:layout_height="1dp"
                 android:background="#FFFFFF"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="16dp"/>
+                />
 
             <!-- Info Chef -->
             <TextView
@@ -659,6 +615,111 @@
                         android:textColor="#748189"/>
                 </LinearLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#FFFFFF"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Darse de baja -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- baja -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Darse de Baja del Curso"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:id="@+id/Baja"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Podés cancelar tu inscripción hasta 10 días hábiles antes del inicio para obtener un reintegro completo.\n\nPolíticas de reembolso:\n• Hasta 10 días antes: 100%\n• Entre 9 y 1 día antes: 70%\n• El día de inicio: 50%\n• Una vez iniciado: Sin reembolso"
+                        android:textSize="16sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Darse de baja -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- baja -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="¿Cómo preferís recibir tu reintegro?"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxTarjeta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="A la tarjeta de crédito"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:textColor="#748189"
+                        android:textSize="17sp"
+                        app:buttonTint="@color/checkbox_tint" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxSaldoEnCuenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="Dejar saldo en cuenta para otro curso"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:textColor="#748189"
+                        android:textSize="17sp"
+                        app:buttonTint="@color/checkbox_tint" />
+
+                    <Button
+                        android:id="@+id/btnDarseDeBaja"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Confirmar Baja"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="#CE2B2B"
+                        android:textStyle="bold"
+                        android:elevation="2dp"
+                        android:padding="8dp"
+                        android:layout_marginBottom="8dp"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

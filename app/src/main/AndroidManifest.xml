@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
@@ -76,6 +77,10 @@
         <activity android:name=".CursosActivity"
             android:theme="@style/Theme.MyApplication"/>
         <activity android:name=".DetalleCursosInscripcionActivity"
+            android:theme="@style/Theme.MiApp.Dark"/>
+        <activity android:name=".BusquedaCursosActivity"
+            android:theme="@style/Theme.MiApp.Dark"/>
+        <activity android:name=".DetalleMisCursosActivity"
             android:theme="@style/Theme.MiApp.Dark"/>
     </application>
 

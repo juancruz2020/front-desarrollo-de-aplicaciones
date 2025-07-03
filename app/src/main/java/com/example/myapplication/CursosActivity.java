@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,8 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.dto.CursoDTO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class CursosActivity extends AppCompatActivity {
@@ -25,6 +29,8 @@ public class CursosActivity extends AppCompatActivity {
     LinearLayout tabOptions;
 
     List<CursoDTO> cursos = new ArrayList<>();  // Lista de cursos
+
+    LinearLayout contenedorEnCurso, contenedorFinalizados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,10 @@ public class CursosActivity extends AppCompatActivity {
         contenedorMisCursos = findViewById(R.id.contenedorMisCursos);
         lineaSelector = findViewById(R.id.lineaSelector);
         tabOptions = findViewById(R.id.tabOptions);
+        contenedorEnCurso = findViewById(R.id.ContenedorEnCurso);
+        contenedorFinalizados = findViewById(R.id.ContenedorFinalizados);
+        ImageView btnBuscarHeader = findViewById(R.id.btnBuscar);
+        LinearLayout btnBuscarFooter = findViewById(R.id.btnFooterBuscar);
 
         // Ajustamos ancho de lineaSelector según la mitad del ancho del tabOptions
         tabOptions.post(() -> {
@@ -73,6 +83,15 @@ public class CursosActivity extends AppCompatActivity {
         tabMisCursos.setTextColor(Color.parseColor("#FFFFFF"));
 
         cargarCursosDescubrir();
+        cargarMisCursos();
+
+        View.OnClickListener irABusqueda = v -> {
+            Intent intent = new Intent(CursosActivity.this, BusquedaCursosActivity.class);
+            startActivity(intent);
+        };
+        btnBuscarHeader.setOnClickListener(irABusqueda);
+        btnBuscarFooter.setOnClickListener(irABusqueda);
+
 
     }
 
@@ -193,6 +212,58 @@ public class CursosActivity extends AppCompatActivity {
         }
     }
 
+    private void cargarMisCursos() {
+        // Simulamos cursos inscriptos (los mismos u otros)
+        List<CursoDTO> misCursos = new ArrayList<>();
+
+        misCursos.add(new CursoDTO(
+                "Curso de Pizza Napolitana",
+                "Aprendé la técnica original de pizza al horno de leña.",
+                "$12000",
+                "Presencial",
+                "Sábado",
+                "19:00 hs",
+                "05/06/2025",
+                "19/06/2025",
+                "Dominar pizza napolitana desde la masa hasta la cocción.",
+                "• Harinas y levaduras\n• Fermentación lenta\n• Cocción en horno de leña",
+                "• Harina 000 (Empresa)\n• Levadura fresca (Empresa)\n• Pala de pizza (Alumno)",
+                "$9500",
+                R.drawable.imagenpromocionalinicio2,
+                R.drawable.ic_presencial,
+                R.drawable.imagenpromocionalinicio2,
+                "Carlos Nápoles",
+                "Maestro pizzero napolitano.",
+                Arrays.asList("Sede Palermo")
+        ));
+
+        misCursos.add(new CursoDTO(
+                "Pastelería Clásica Argentina",
+                "Tortas, postres y dulces tradicionales.",
+                "$15000",
+                "Presencial",
+                "Miércoles",
+                "18:00 hs",
+                "10/06/2025",
+                "24/08/2025",
+                "Dominar técnicas base de pastelería clásica.",
+                "• Bizcochuelos\n• Cremas\n• Baños y decoraciones",
+                "• Harinas y azúcar (Empresa)\n• Molde desmontable (Alumno)",
+                "$12000",
+                R.drawable.imagenpromocionalinicio1,
+                R.drawable.ic_presencial,
+                R.drawable.imagenpromocionalinicio1,
+                "Marta Dulce",
+                "Chef pastelera con 25 años de experiencia.",
+                Arrays.asList("Sede Devoto")
+        ));
+
+        // Recorremos y los agregamos al contenedor de Mis Cursos
+        for (CursoDTO curso : misCursos) {
+            agregarCursoAMisCursos(curso);
+        }
+    }
+
     private void agregarCursoAlBody(CursoDTO curso) {
         View item = getLayoutInflater().inflate(R.layout.item_curso, contenedorDescubrir, false);
 
@@ -237,6 +308,56 @@ public class CursosActivity extends AppCompatActivity {
 
         contenedorDescubrir.addView(item);
     }
+
+    private void agregarCursoAMisCursos(CursoDTO curso) {
+        View item = getLayoutInflater().inflate(R.layout.item_mis_cursos, contenedorMisCursos, false);
+
+        TextView tvTitulo = item.findViewById(R.id.tvTituloCurso);
+        TextView tvDescripcion = item.findViewById(R.id.tvDescripcionCurso);
+        TextView tvFecha = item.findViewById(R.id.tvFechaCurso);
+        TextView tvEstadoSede = item.findViewById(R.id.tvEstadoSedeFecha);
+        TextView tvModalidad = item.findViewById(R.id.tvModalidad);
+        ImageView imgCurso = item.findViewById(R.id.imgCurso);
+        ImageView icModalidad = item.findViewById(R.id.icModalidad);
+
+
+        tvTitulo.setText(curso.nombre);
+        tvDescripcion.setText(curso.descripcion);
+        tvEstadoSede.setText(curso.sedes.get(0));
+        tvFecha.setText(curso.dia + " " + curso.horario);
+        tvModalidad.setText(curso.modalidad);
+        imgCurso.setImageResource(curso.imagenResId);
+        icModalidad.setImageResource(curso.iconoModalidadResId);
+
+        item.setOnClickListener(v -> {
+            Intent intent = new Intent(CursosActivity.this, DetalleMisCursosActivity.class);
+            intent.putExtra("curso", curso);
+            startActivity(intent);
+        });
+
+        // Verificar fecha
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date fechaFinCurso = formato.parse(curso.fechaFin);
+            Date fechaActual = new Date();
+
+            if (fechaFinCurso != null && fechaFinCurso.after(fechaActual)) {
+                // En curso → mostrar sede (por ahora pongo la primera de la lista)
+                tvEstadoSede.setText(curso.sedes.get(0));
+                contenedorEnCurso.addView(item);
+            } else {
+                // Finalizado → mostrar la fecha de finalización
+                tvEstadoSede.setText("Finalizado el: " + curso.fechaFin);
+                contenedorFinalizados.addView(item);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Si falla el parseo, lo mando a En Curso por default
+            contenedorEnCurso.addView(item);
+        }
+    }
+
 
 
 

@@ -129,10 +129,40 @@
                 android:orientation="vertical"
                 android:padding="16dp"
                 android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/ContenedorEnCurso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="En Curso:"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ContenedorFinalizados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Finalizados:"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
             </LinearLayout>
-
-
-
 
         </LinearLayout>
     </ScrollView>
