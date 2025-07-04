@@ -186,11 +186,13 @@
 
         <!-- Inicio -->
         <LinearLayout
+            android:id="@+id/btnFooterInicio"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irInicio">
 
             <ImageView
                 android:src="@drawable/inicio"
@@ -209,11 +211,13 @@
 
         <!-- Cursos -->
         <LinearLayout
+            android:id="@+id/btnFooterCursos"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irCursos">
 
             <ImageView
                 android:src="@drawable/cursos"
@@ -239,7 +243,8 @@
             android:background="@drawable/circle_button"
             android:layout_gravity="center"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:onClick="cargarReceta">
 
             <ImageView
                 android:src="@drawable/libro"
@@ -257,7 +262,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irBusqueda">
 
             <ImageView
                 android:src="@drawable/busquedaxml"
@@ -281,7 +287,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irPerfil">
 
             <ImageView
                 android:src="@drawable/perfil"
