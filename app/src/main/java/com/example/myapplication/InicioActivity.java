@@ -153,6 +153,11 @@ public class InicioActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // ir a cursos
+        btnCursos.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CursosActivity.class);
+            startActivity(intent);
+        });
 
         //Agrega la receta creada al inicio.
         Receta receta = (Receta) getIntent().getSerializableExtra("receta");
@@ -171,6 +176,29 @@ public class InicioActivity extends AppCompatActivity {
         });
     }
 
+    public void irInicio(View view){
+        Intent intent= new Intent(this, InicioActivity.class);
+        startActivity(intent);
+    }
+    public void irPerfil(View view){
+        Intent intent= new Intent(this, PerfilActivity.class);
+        startActivity(intent);
+    }
+
+    public void cargarReceta(View view){
+        Intent intent= new Intent(this, CargarRecetaActivity.class);
+        startActivity(intent);
+    }
+
+    public void irCursos(View view){
+        Intent intent= new Intent(this, CursosActivity.class);
+        startActivity(intent);
+    }
+
+    public void irBusqueda(View view){
+        Intent intent= new Intent(this, BusquedaActivity.class);
+        startActivity(intent);
+    }
     private Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
@@ -206,28 +234,7 @@ public class InicioActivity extends AppCompatActivity {
 
         contenedor.addView(item, 0); // al principio de la lista
     }
-public void irInicio(View view){
-        Intent intent= new Intent(this, InicioActivity.class);
-        startActivity(intent);
-    }
-    public void irPerfil(View view){
-        Intent intent= new Intent(this, PerfilActivity.class);
-        startActivity(intent);
-    }
 
-    public void cargarReceta(View view){
-        Intent intent= new Intent(this, CargarRecetaActivity.class);
-        startActivity(intent);
-    }
 
-    public void irCursos(View view){
-        Intent intent= new Intent(this, CursosActivity.class);
-        startActivity(intent);
-    }
-
-    public void irBusqueda(View view){
-        Intent intent= new Intent(this, BusquedaActivity.class);
-        startActivity(intent);
-    }
 
 }

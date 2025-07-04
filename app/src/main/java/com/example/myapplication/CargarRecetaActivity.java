@@ -92,7 +92,29 @@ public class CargarRecetaActivity extends AppCompatActivity {
         cargarUnidades();
         configurarEventos();
     }
+    public void irInicio(View view){
+        Intent intent= new Intent(this, InicioActivity.class);
+        startActivity(intent);
+    }
+    public void irPerfil(View view){
+        Intent intent= new Intent(this, PerfilActivity.class);
+        startActivity(intent);
+    }
 
+    public void cargarReceta(View view){
+        Intent intent= new Intent(this, CargarRecetaActivity.class);
+        startActivity(intent);
+    }
+
+    public void irCursos(View view){
+        Intent intent= new Intent(this, CursosActivity.class);
+        startActivity(intent);
+    }
+
+    public void irBusqueda(View view){
+        Intent intent= new Intent(this, BusquedaActivity.class);
+        startActivity(intent);
+    }
     private void inicializarUI() {
         etNombre = findViewById(R.id.etNombrePlato);
         etDescripcion = findViewById(R.id.etDescripcion);

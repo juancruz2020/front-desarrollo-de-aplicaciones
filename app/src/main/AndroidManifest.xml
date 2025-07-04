@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -18,20 +21,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".DetalleSedeActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.App.Splash">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".InicioActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
         <activity
             android:name=".Codigo"
             android:exported="false" />
@@ -57,31 +62,37 @@
             android:exported="false" />
         <activity
             android:name=".Login"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".Registro"
             android:exported="false" />
         <activity
             android:name=".RecuperarContra"
             android:exported="false" />
-
-        <activity android:name=".DetalleRecetaActivity"
-            android:theme="@style/Theme.MyApplication"/>
-        <activity android:name=".CargarRecetaActivity"
-            android:theme="@style/Theme.MyApplication"/>
-        <activity android:name=".BusquedaActivity"
-            android:theme="@style/Theme.MyApplication"/>
-        <activity android:name=".PerfilActivity"
-            android:theme="@style/Theme.MyApplication"/>
-        <activity android:name=".CursosActivity"
-            android:theme="@style/Theme.MyApplication"/>
-        <activity android:name=".DetalleCursosInscripcionActivity"
-            android:theme="@style/Theme.MiApp.Dark"/>
-        <activity android:name=".BusquedaCursosActivity"
-            android:theme="@style/Theme.MiApp.Dark"/>
-        <activity android:name=".DetalleMisCursosActivity"
-            android:theme="@style/Theme.MiApp.Dark"/>
+        <activity
+            android:name=".DetalleRecetaActivity"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".CargarRecetaActivity"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".BusquedaActivity"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".PerfilActivity"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".CursosActivity"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".DetalleCursosInscripcionActivity"
+            android:theme="@style/Theme.MiApp.Dark" />
+        <activity
+            android:name=".BusquedaCursosActivity"
+            android:theme="@style/Theme.MiApp.Dark" />
+        <activity
+            android:name=".DetalleMisCursosActivity"
+            android:theme="@style/Theme.MiApp.Dark" />
     </application>
 
 </manifest>

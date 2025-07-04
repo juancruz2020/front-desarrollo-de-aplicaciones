@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,5 +44,6 @@ public class PerfilActivity extends AppCompatActivity {
         // Botón volver
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
     }
+
 }
 

@@ -85,6 +85,7 @@ public class CursosActivity extends AppCompatActivity {
         cargarCursosDescubrir();
         cargarMisCursos();
 
+        //buscar cursos
         View.OnClickListener irABusqueda = v -> {
             Intent intent = new Intent(CursosActivity.this, BusquedaCursosActivity.class);
             startActivity(intent);
@@ -92,7 +93,31 @@ public class CursosActivity extends AppCompatActivity {
         btnBuscarHeader.setOnClickListener(irABusqueda);
         btnBuscarFooter.setOnClickListener(irABusqueda);
 
+    }
 
+    //navegacion
+    public void irInicio(View view){
+        Intent intent= new Intent(this, InicioActivity.class);
+        startActivity(intent);
+    }
+    public void irPerfil(View view){
+        Intent intent= new Intent(this, PerfilActivity.class);
+        startActivity(intent);
+    }
+
+    public void cargarReceta(View view){
+        Intent intent= new Intent(this, CargarRecetaActivity.class);
+        startActivity(intent);
+    }
+
+    public void irCursos(View view){
+        Intent intent= new Intent(this, CursosActivity.class);
+        startActivity(intent);
+    }
+
+    public void irBusqueda(View view){
+        Intent intent= new Intent(this, BusquedaActivity.class);
+        startActivity(intent);
     }
 
     private void cargarCursosDescubrir() {
@@ -299,7 +324,7 @@ public class CursosActivity extends AppCompatActivity {
             tvDescuento.setText("");
         }
 
-
+        // ver detalle curso
         item.setOnClickListener(v -> {
             Intent intent = new Intent(CursosActivity.this, DetalleCursosInscripcionActivity.class);
             intent.putExtra("curso", curso);
@@ -358,30 +383,7 @@ public class CursosActivity extends AppCompatActivity {
         }
     }
 
-//navegacion
-    public void irInicio(View view){
-        Intent intent= new Intent(this, InicioActivity.class);
-        startActivity(intent);
-    }
-    public void irPerfil(View view){
-        Intent intent= new Intent(this, PerfilActivity.class);
-        startActivity(intent);
-    }
 
-    public void cargarReceta(View view){
-        Intent intent= new Intent(this, CargarRecetaActivity.class);
-        startActivity(intent);
-    }
-
-    public void irCursos(View view){
-        Intent intent= new Intent(this, CursosActivity.class);
-        startActivity(intent);
-    }
-
-    public void irBusqueda(View view){
-        Intent intent= new Intent(this, BusquedaActivity.class);
-        startActivity(intent);
-    }
 
 
 }

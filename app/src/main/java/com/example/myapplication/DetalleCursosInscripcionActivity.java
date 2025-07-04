@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -111,7 +112,6 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
 
 
     }
-
     private void cargarSedes(CursoDTO curso) {
         // Armo una lista nueva con o sin descuento
         List<String> sedesConPrecio = new ArrayList<>();

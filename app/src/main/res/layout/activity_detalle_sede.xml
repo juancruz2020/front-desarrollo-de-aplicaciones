@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalleSedeActivity"
+    android:background="#FFF3E6">
+
+
+    <ImageView
+        android:id="@+id/imgReceta"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sedepalermo" />
+
+    <!-- Overlay Gradient -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/gradient_overlay" />
+
+    <!-- Botón cerrar -->
+    <ImageButton
+        android:id="@+id/btnCerrar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/btn_background"
+        android:src="@drawable/x"
+        android:layout_gravity="top|start"
+        app:tint="#000000"
+        android:scaleType="centerInside"
+        android:padding="10dp"
+        android:onClick="cerrar"/>
+
+    <!-- Botón favorito -->
+    <ImageButton
+        android:id="@+id/modalidad"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/btn_background"
+        android:src="@drawable/ic_presencial"
+        android:layout_gravity="top|end"
+        app:tint="#000000"
+        android:scaleType="centerInside"
+        android:padding="10dp"/>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="260dp"
+        android:background="#EADDCC"
+        android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Barrita gris -->
+        <View
+            android:layout_width="60dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:alpha="0.6"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#A0A1A0"
+            android:elevation="2dp"
+            android:clipToOutline="true"
+            android:background="@drawable/barrita_curva" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical">
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sede Palermo"
+                android:textSize="24sp"
+                android:textColor="#0A2533"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Descripción -->
+        <TextView
+            android:id="@+id/descripcion"
+            android:text="Nuestra moderna sede ubicada en el corazon de palermo cuenta con las herramientas que necesitas para aprender."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#748189"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"/>
+
+        <!-- DATOS -->
+        <LinearLayout
+            android:id="@+id/layoutDatosCurso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Fila 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- Direccion -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dirección"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:id="@+id/DireccionCurso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cabildo 123"
+                        android:textSize="16sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+                <!-- Telefono -->
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Teléfono"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <TextView
+                        android:id="@+id/telefonoCurso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4005-9234"
+                        android:textSize="16sp"
+                        android:textColor="#748189"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        <!-- Fila 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="24dp">
+
+            <!-- Dias -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dias"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#0A2533" />
+
+                <TextView
+                    android:id="@+id/DiaCurso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lunes - Sábados"
+                    android:textSize="16sp"
+                    android:textColor="#748189"
+                    android:layout_marginTop="4dp"/>
+
+            </LinearLayout>
+            <!-- Horarios -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Horarios"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="#0A2533" />
+
+                <TextView
+                    android:id="@+id/HorarioCurso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="07:00 hs - 22:00 hs"
+                    android:textSize="16sp"
+                    android:textColor="#748189"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <!-- Fila 3 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- Cursos -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cursos"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+
+                    <!-- contenido -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Fila 4 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- Promos -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Promociones"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+                    <!-- contenido -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Fila 5 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="24dp">
+
+                <!-- Aranceles -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aranceles (Preguntar día de entrega)"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0A2533" />
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

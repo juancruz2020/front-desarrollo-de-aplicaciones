@@ -1,15 +1,29 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BusquedaCursosActivity extends AppCompatActivity {
+    TextView btnSedePalermo, btnSedeCaballito, btnSedeDevoto, btnSedeMicrocentro, btnSedeRetiro, btnSedeBarrioMitre, btnSedeNunez, btnSedeMonserrat;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busqueda_cursos);
+
+        btnSedePalermo=findViewById(R.id.btnSedePalermo);
+        btnSedeCaballito=findViewById(R.id.btnSedeCaballito);
+        btnSedeDevoto= findViewById(R.id.btnSedeDevoto);
+        btnSedeMicrocentro=findViewById(R.id.btnSedeMicrocentro);
+        btnSedeRetiro=findViewById(R.id.btnSedeRetiro);
+        btnSedeBarrioMitre=findViewById(R.id.btnSedeBarrioMitre);
+        btnSedeNunez=findViewById(R.id.btnSedeNunez);
+        btnSedeMonserrat=findViewById(R.id.btnSedeMonserrat);
 
         // Este botón flecha (back).
         // cierra esta pantalla y vuelve a la anterior.
@@ -17,8 +31,12 @@ public class BusquedaCursosActivity extends AppCompatActivity {
         btnBackSearch.setOnClickListener(v -> {
             finish(); // Vuelve a la pantalla anterior sin abrir una nueva.
         });
+
+
+
     }
-     public void irInicio(View view){
+    //navegacion
+    public void irInicio(View view){
         Intent intent= new Intent(this, InicioActivity.class);
         startActivity(intent);
     }
