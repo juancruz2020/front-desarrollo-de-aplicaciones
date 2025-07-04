@@ -19,7 +19,7 @@
         android:layout_height="300dp"
         android:background="@drawable/gradient_overlay" />
 
-    <!-- Botón cerrar -->
+     <!-- Botón cerrar -->
     <ImageButton
         android:id="@+id/btnCerrar"
         android:layout_width="50dp"
@@ -30,8 +30,8 @@
         android:layout_gravity="top|start"
         app:tint="#000000"
         android:scaleType="centerInside"
-        android:padding="10dp"/>
-
+        android:padding="10dp"
+        android:onClick="cerrar"/>
     <!-- Botón favorito -->
     <ImageButton
         android:id="@+id/modalidad"
