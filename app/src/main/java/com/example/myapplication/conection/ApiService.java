@@ -68,8 +68,9 @@ public interface ApiService {
     @Multipart
     @POST("/recetas/cargar")
     Call<ResponseBody> cargarReceta(
-            @Part MultipartBody.Part datos,
-            @Part List<MultipartBody.Part> imagenes
+            @Part("datos") RequestBody datos,
+            @Part List<MultipartBody.Part> imagenes,
+            @Part MultipartBody.Part imagenReceta
     );
 
     @PUT("recetas/modificar")

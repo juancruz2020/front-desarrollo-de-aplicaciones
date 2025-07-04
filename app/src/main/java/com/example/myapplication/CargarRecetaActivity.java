@@ -31,6 +31,7 @@ import com.example.myapplication.dto.RecetaDTO;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -285,6 +286,7 @@ public class CargarRecetaActivity extends AppCompatActivity {
         });
 
         btnSubirReceta.setOnClickListener(v -> {
+            // 1️⃣ Crear la receta y convertirla a DTO
             Receta receta = new Receta();
             receta.nombrePlato = etNombre.getText().toString();
             receta.descripcion = etDescripcion.getText().toString();
@@ -293,12 +295,12 @@ public class CargarRecetaActivity extends AppCompatActivity {
             receta.tiempoUnidad = spTiempoUnidad.getSelectedItem().toString();
             receta.ingredientes = listaIngredientes;
             receta.pasos = pasosList;
-            receta.portadaPath = uriPortada != null ? uriPortada.toString() : null;
-            String categoria = "Pastas";
-            String nickname = "Usuario 1";
 
+            String categoria = "Postres"; // Cambiá según corresponda
+            String nickname = "juancho"; // Cambiá según corresponda
+
+            // Crear DTO para la request
             AtomicInteger indexPasos = new AtomicInteger(1);
-
             List<PasoDTO> pasosDto = receta.pasos.stream()
                     .map(p -> {
                         p.setNumeroPaso(indexPasos.get());
@@ -306,49 +308,59 @@ public class CargarRecetaActivity extends AppCompatActivity {
                     })
                     .collect(Collectors.toList());
 
-
             List<IngredienteDTO> ingredientesDto = receta.ingredientes.stream()
-                    .map(i -> {
-                        return new IngredienteDTO(i.nombre, (int) i.cantidad, i.unidad, " ");
-                    })
+                    .map(i -> new IngredienteDTO(i.nombre, (int) i.cantidad, i.unidad, ""))
                     .collect(Collectors.toList());
 
-            RecetaDTO dto = new RecetaDTO(nickname, receta.nombrePlato, categoria, ingredientesDto, pasosDto, receta.descripcion);
+            RecetaDTO dto = new RecetaDTO(nickname, receta.nombrePlato, categoria, receta.descripcion, receta.cantidadPorciones, ingredientesDto, pasosDto);
 
-            Gson gson = new Gson();
-            String recetaJson = gson.toJson(dto);
-
-            RequestBody recetaRequestBody = RequestBody.create(
-                    recetaJson,
-                    MediaType.parse("application/json; charset=utf-8")
+            // 2️⃣ Crear JSON para "datos"
+            String recetaJson = new Gson().toJson(dto);
+            RequestBody datosBody = RequestBody.create(
+                    MediaType.parse("application/json; charset=utf-8"),
+                    recetaJson
             );
 
-            MultipartBody.Part datosPart = MultipartBody.Part.createFormData("datos", null, recetaRequestBody);
+            Log.d("API", "JSON ENVIADO:\n" + recetaJson);
 
-            // Por ahora no estás enviando imágenes, así que podés dejarla vacía
+
+            // 3️⃣ Crear MultipartBody.Part para "imagenReceta" si existe
+            MultipartBody.Part imagenRecetaPart = null;
+            if (uriPortada != null) {
+                try {
+                    File file = new File(new URI(uriPortada.toString()));
+                    RequestBody requestFile = RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
+                    imagenRecetaPart = MultipartBody.Part.createFormData("imagenReceta", file.getName(), requestFile);
+                } catch (Exception e) {
+                    Log.e("API", "Error al crear la imagen de portada: " + e.getMessage());
+                }
+            }
+
+            // 4️⃣ Crear la lista para otras imagenes (puede ir vacía si no tenés otras fotos de pasos)
             List<MultipartBody.Part> imagenesParts = new ArrayList<>();
 
-            Log.d("DEBUG", "Ingredientes: " + new Gson().toJson(listaIngredientes));
-            Log.d("DEBUG", "JSON enviado: " + recetaJson);
-
+            // 5️⃣ Llamada al API
             ApiService apiService = ApiClient.getInstance().getApiService();
-            Call<ResponseBody> call = apiService.cargarReceta(datosPart, imagenesParts);
+            Call<ResponseBody> call = apiService.cargarReceta(datosBody, imagenesParts, imagenRecetaPart);
 
             call.enqueue(new Callback<ResponseBody>() {
-                 @Override
-                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                     if (response.isSuccessful()) {
-                         Log.d("API", "Receta subida con éxito");
-                     } else {
-                         Log.e("API", "Error al subir receta: " + response.code());
-                     }
-                 }
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("API", "Receta subida con éxito");
+                        // 👉 Acá podés navegar a otra Activity, actualizar la UI, etc.
+                    } else {
+                        Log.e("API", "Error al subir receta: " + response.code() + " -> " + response.message());
+                        // 👉 Acá podés mostrar un mensaje en un TextView de error
+                    }
+                }
 
-                 @Override
-                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                     Log.e("API", "Fallo de conexión: " + t.getMessage());
-                 }
-             });
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("API", "Fallo de conexión: " + t.getMessage());
+                    // 👉 Acá podés mostrar un mensaje de error en la pantalla
+                }
+            });
 
             Intent intent = new Intent(CargarRecetaActivity.this, DetalleRecetaActivity.class);
             intent.putExtra("receta", receta);
