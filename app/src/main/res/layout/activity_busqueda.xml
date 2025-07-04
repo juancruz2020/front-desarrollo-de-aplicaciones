@@ -486,14 +486,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Inicio -->
+       <!-- Inicio -->
         <LinearLayout
             android:id="@+id/btnFooterInicio"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irInicio">
             <ImageView
                 android:src="@drawable/inicio"
                 android:layout_width="24dp"
@@ -514,7 +515,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irCursos">
             <ImageView
                 android:src="@drawable/cursos"
                 android:layout_width="24dp"
@@ -538,7 +540,8 @@
             android:background="@drawable/circle_button"
             android:layout_gravity="center"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:onClick="cargarReceta">
             <ImageView
                 android:src="@drawable/libro"
                 android:layout_width="32dp"
@@ -553,7 +556,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irBusqueda">
             <ImageView
                 android:src="@drawable/busquedaxml"
                 android:layout_width="24dp"
@@ -574,7 +578,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:onClick="irPerfil">
             <ImageView
                 android:src="@drawable/perfil"
                 android:layout_width="24dp"
