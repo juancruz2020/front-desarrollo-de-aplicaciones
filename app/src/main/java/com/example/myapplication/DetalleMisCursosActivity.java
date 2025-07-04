@@ -47,5 +47,9 @@ public class DetalleMisCursosActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
     }
+    private void cerrar(View view){
+        Intent intent = new Intent(this, CursosActivity.class);
+        startActivity(intent);
+    }
 
 }
