@@ -14,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.dto.CursoDTO;
+import com.example.myapplication.dto.SedeDTO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import java.util.List;
 public class DetalleSedeActivity extends AppCompatActivity {
 
     LinearLayout contenedorCursos, contenedorPromos;
+    private SedeDTO sedeSeleccionada;
 
     List<CursoDTO> cursos = new ArrayList<>();
 
@@ -31,10 +33,26 @@ public class DetalleSedeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_detalle_sede);
 
+        sedeSeleccionada = (SedeDTO) getIntent().getSerializableExtra("sede");
+
         contenedorCursos=findViewById(R.id.contenedorCursos);
         contenedorPromos=findViewById(R.id.contenedorPromos);
 
-        cargarCursosDescubrir();
+        TextView tvNombreSede = findViewById(R.id.tvNombreSede);
+        TextView tvDescripcion = findViewById(R.id.tvDescripcionSede);
+        TextView tvDireccion = findViewById(R.id.tvDireccion);
+        TextView tvTelefono = findViewById(R.id.tvTelefono);
+        TextView tvDias = findViewById(R.id.tvDias);
+        TextView tvHorario = findViewById(R.id.tvHorario);
+
+        tvNombreSede.setText(sedeSeleccionada.nombre);
+        tvDescripcion.setText(sedeSeleccionada.descripcion);
+        tvDireccion.setText(sedeSeleccionada.direccion);
+        tvTelefono.setText(sedeSeleccionada.telefono);
+        tvDias.setText(sedeSeleccionada.dias);
+        tvHorario.setText(sedeSeleccionada.horarios);
+
+        cargarCursos();
 
     }
 
@@ -43,7 +61,7 @@ public class DetalleSedeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void cargarCursosDescubrir() {
+    private void cargarCursos() {
         cursos.clear(); // por si se recarga
 
         cursos.add(new CursoDTO(
@@ -89,6 +107,48 @@ public class DetalleSedeActivity extends AppCompatActivity {
         ));
 
         cursos.add(new CursoDTO(
+                "Curso de Cocina Vegetariana",
+                "Recetas prácticas y nutritivas sin carne.",
+                "$8000",
+                "Virtual",
+                "Sábado",
+                "15:30 hs",
+                "05/06/2025",
+                "31/12/2025",
+                "Incorporar platos vegetarianos balanceados.",
+                "• Proteínas vegetales\n• Sustitutos caseros\n• Recetas rápidas",
+                "• Lista de compras sugerida en PDF",
+                "$7000",
+                R.drawable.imagenpromocionalinicio2,
+                R.drawable.ic_online,
+                R.drawable.fotopromocionaliniciocursos,
+                "Martín Verde",
+                "Chef especializado en cocina vegetariana y saludable.",
+                Arrays.asList("Sede Caballito", "Sede Barrio Mitre")
+        ));
+
+        cursos.add(new CursoDTO(
+                "Curso de Sushi en Casa",
+                "Aprendé a hacer rolls y nigiris desde cero.",
+                "$10000",
+                "Presencial",
+                "Viernes",
+                "20:00 hs",
+                "14/06/2025",
+                "21/06/2025",
+                "Dominar técnicas base de sushi casero.",
+                "• Arroz perfecto\n• Rolls tradicionales\n• Tempura y nigiris",
+                "• Arroz para sushi (Empresa)\n• Esterilla (Alumno)\n• Pescados frescos (Empresa)",
+                "$8500",
+                R.drawable.imagenpromocionalinicio1,
+                R.drawable.ic_presencial,
+                R.drawable.cocinafacil,
+                "Kenji Yamato",
+                "Sushiman profesional con formación en Japón.",
+                Arrays.asList("Sede Microcentro", "Sede Retiro")
+        ));
+
+        cursos.add(new CursoDTO(
                 "Panadería Artesanal",
                 "Fermentos, masa madre y panes caseros.",
                 "$9000",
@@ -114,7 +174,9 @@ public class DetalleSedeActivity extends AppCompatActivity {
         // Agregar mas cursos aca
 
         for (CursoDTO curso : cursos) {
-            agregarCursoAlBody(curso);
+            if (curso.sedes != null && curso.sedes.contains(sedeSeleccionada.nombre)) {
+                agregarCursoAlBody(curso);
+            }
         }
     }
 

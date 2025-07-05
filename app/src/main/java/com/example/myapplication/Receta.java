@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Receta implements Serializable {
-    public Long idReceta;
     public String nombrePlato;
     public String descripcion;
     public int cantidadPorciones;
@@ -19,7 +18,6 @@ public class Receta implements Serializable {
     public Receta(){}
 
     public Receta(RecetaDTO dto) {
-        this.idReceta = dto.getIdReceta();
         this.nombrePlato = dto.getNombre();
         this.descripcion = dto.getDescripcion();
         this.portadaPath = null;

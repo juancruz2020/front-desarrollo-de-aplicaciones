@@ -3,50 +3,25 @@ package com.example.myapplication.dto;
 import java.util.List;
 
 public class RecetaDTO {
-    private Long idReceta;
     private String nickname;
     private String nombre;
     private String categoria;
-    private String descripcion;
     private List<IngredienteDTO> ingredientes;
     private List<PasoDTO> pasos;
-    private Integer porciones;
-    private String urlImagen;
+    private String descripcion;
 
-
-    public RecetaDTO(Long idReceta, String nickname, String nombre, String categoria, String descripcion, Integer porciones, List<IngredienteDTO> ingredientes, List<PasoDTO> pasos) {
-        this.idReceta = idReceta;
+    public RecetaDTO(String nickname, String nombre, String categoria, List<IngredienteDTO> ingredientes, List<PasoDTO> pasos, String descripcion) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.categoria = categoria;
         this.ingredientes = ingredientes;
         this.pasos = pasos;
         this.descripcion = descripcion;
-        this.porciones = porciones;
     }
 
-    public RecetaDTO(String nickname, String nombre, String categoria, String descripcion, Integer porciones, List<IngredienteDTO> ingredientes, List<PasoDTO> pasos) {
-        this.nickname = nickname;
-        this.nombre = nombre;
-        this.categoria = categoria;
-        this.ingredientes = ingredientes;
-        this.pasos = pasos;
-        this.descripcion = descripcion;
-        this.porciones = porciones;
-    }
     public RecetaDTO() {}
 
     // Getters y setters
-
-
-    public Long getIdReceta() {
-        return idReceta;
-    }
-
-    public void setIdReceta(Long idReceta) {
-        this.idReceta = idReceta;
-    }
-
     public String getNickname() { return nickname; }
     public void setNickname(String nickname) { this.nickname = nickname; }
 
@@ -64,11 +39,4 @@ public class RecetaDTO {
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-
-    public Integer getPorciones() {
-        return porciones;
-    }
-    public void setPorciones(Integer porciones) {
-        this.porciones = porciones;
-    }
 }
