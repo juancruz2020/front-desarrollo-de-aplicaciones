@@ -32,10 +32,14 @@ public class BusquedaCursosActivity extends AppCompatActivity {
             finish(); // Vuelve a la pantalla anterior sin abrir una nueva.
         });
 
-
+        btnSedePalermo.setOnClickListener(v ->{
+            Intent intent = new Intent(this, DetalleSedeActivity.class);
+            startActivity(intent);
+        });
 
     }
-    //navegacion
+
+
     public void irInicio(View view){
         Intent intent= new Intent(this, InicioActivity.class);
         startActivity(intent);
