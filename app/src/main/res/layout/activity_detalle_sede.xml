@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/imgReceta"
+        android:id="@+id/imgSede"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
@@ -84,7 +84,7 @@
 
             <!-- Título -->
             <TextView
-                android:id="@+id/txtTitulo"
+                android:id="@+id/tvNombreSede"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -97,7 +97,7 @@
 
         <!-- Descripción -->
         <TextView
-            android:id="@+id/descripcion"
+            android:id="@+id/tvDescripcionSede"
             android:text="Nuestra moderna sede ubicada en el corazon de palermo cuenta con las herramientas que necesitas para aprender."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                         android:textColor="#0A2533" />
 
                     <TextView
-                        android:id="@+id/DireccionCurso"
+                        android:id="@+id/tvDireccion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Cabildo 123"
@@ -163,7 +163,7 @@
                         android:textColor="#0A2533" />
 
                     <TextView
-                        android:id="@+id/telefonoCurso"
+                        android:id="@+id/tvTelefono"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4005-9234"
@@ -199,7 +199,7 @@
                     android:textColor="#0A2533" />
 
                 <TextView
-                    android:id="@+id/DiaCurso"
+                    android:id="@+id/tvDias"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lunes - Sábados"
@@ -225,7 +225,7 @@
                     android:textColor="#0A2533" />
 
                 <TextView
-                    android:id="@+id/HorarioCurso"
+                    android:id="@+id/tvHorario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="07:00 hs - 22:00 hs"
@@ -262,14 +262,20 @@
 
                     <!-- contenido -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:id="@+id/contenedorBody"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
+                            android:id="@+id/contenedorCursos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:visibility="visible">
 
                         </LinearLayout>
                     </LinearLayout>
@@ -284,6 +290,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+
                 android:gravity="center_vertical"
                 android:layout_marginTop="24dp">
 
@@ -304,13 +311,19 @@
 
                     <!-- contenido -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:id="@+id/contenedorPromos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:visibility="visible">
 
 
                         </LinearLayout>
