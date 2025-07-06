@@ -43,7 +43,6 @@ public class DetalleRecetaActivity extends AppCompatActivity {
     int rating = 0;
     private final Map<String, Double> incrementos = new HashMap<>();
     private final Map<String, Double> valoresDefault = new HashMap<>();
-    Receta receta; // Declaración de la variable para el objeto Receta local
     ImageView imgRecetaPortada;
 
     // Aquí declaramos el ID de la receta que vamos a buscar en la API
@@ -86,8 +85,10 @@ public class DetalleRecetaActivity extends AppCompatActivity {
             return;
         }
 
+
         // Asigna el ID para usarlo en la llamada a la API
         idRecetaActual = recetaDesdeIntent.idReceta;
+
 
         // **Paso 2: Realizar la llamada a la API para obtener el detalle completo**
         ApiClient.getInstance().getApiService().obtenerReceta(idRecetaActual).enqueue(new Callback<RecetaDTO>() {
@@ -95,8 +96,10 @@ public class DetalleRecetaActivity extends AppCompatActivity {
             public void onResponse(Call<RecetaDTO> call, Response<RecetaDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     RecetaDTO recetaDTO = response.body();
+                    Receta receta = new Receta(recetaDTO);
+                    Log.e("Receta obtenida", recetaDTO.toString());
                     // Convierte el DTO a tu objeto Receta local para usarlo en la UI
-                    receta = new Receta(recetaDTO); // Asegúrate de tener un constructor en Receta que reciba RecetaDTO
+
 
                     // **Paso 3: Ahora que tienes la receta completa, rellena la UI**
                     txtTitulo.setText(receta.nombrePlato);
@@ -109,13 +112,15 @@ public class DetalleRecetaActivity extends AppCompatActivity {
                     }
 
                     // Cargar imagen de portada con Glide
-                    if (receta.portadaPath != null && !receta.portadaPath.isEmpty()) {
+                    if (recetaDTO.getUrlImagen() != null && !recetaDTO.getUrlImagen().isEmpty()) {
+                        Log.d("GlideDebug", "Intentando cargar imagen desde: " + recetaDTO.getUrlImagen());
                         Glide.with(DetalleRecetaActivity.this)
-                                .load(receta.portadaPath)
+                                .load(recetaDTO.getUrlImagen())
                                 .placeholder(R.drawable.ic_default)
                                 .error(R.drawable.ic_default)
                                 .into(imgRecetaPortada);
                     } else {
+                        Log.d("GlideDebug", "Portada path está vacio");
                         imgRecetaPortada.setImageResource(R.drawable.ic_default);
                     }
 

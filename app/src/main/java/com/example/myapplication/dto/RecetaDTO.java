@@ -71,4 +71,23 @@ public class RecetaDTO {
     public void setPorciones(Integer porciones) {
         this.porciones = porciones;
     }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    @Override
+    public String toString() {
+        return "RecetaDTO{" +
+                "idReceta=" + idReceta +
+                ", nickname='" + nickname + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", ingredientes=" + ingredientes +
+                ", pasos=" + pasos +
+                ", porciones=" + porciones +
+                ", urlImagen='" + urlImagen + '\'' +
+                '}';
+    }
 }
