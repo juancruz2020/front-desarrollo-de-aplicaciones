@@ -44,7 +44,7 @@ public class DetalleMisCursosActivity extends AppCompatActivity {
 
     }
 
-    private void cerrar(View view){
+    public void cerrar(View view){
         Intent intent = new Intent(this, CursosActivity.class);
         startActivity(intent);
     }

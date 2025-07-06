@@ -41,8 +41,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Cabildo 123",
                     "4005-9234",
                     "Lunes - Sábados",
-                    "07:00 hs - 22:00 hs,  Sábados: 8:00 hs - 13:00 hs",
-                    R.drawable.sedepalermo
+                    "07:00 hs - 22:00 hs,  Sábados: 8:00 hs - 13:00 hs"
             );
             DetalleSede(sede);
         });
@@ -54,8 +53,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Avenida Directorio 1662",
                     "4005-9234",
                     "Lunes - Jueves",
-                    "07:00 hs - 20:00 hs",
-                    R.drawable.sedecaballito
+                    "07:00 hs - 20:00 hs"
             );
             DetalleSede(sede);
         });
@@ -67,8 +65,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Belisario Roldan 4950",
                     "4774-5476",
                     "Lunes - Viernes",
-                    "07:00 hs - 22:00 hs",
-                    R.drawable.sededevoto
+                    "07:00 hs - 22:00 hs"
             );
             DetalleSede(sede);
         });
@@ -80,8 +77,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Esmeralda 141",
                     "4005-9234",
                     "Lunes - Viernes",
-                    "07:00 hs - 20:00 hs",
-                    R.drawable.sedemicrocentro
+                    "07:00 hs - 20:00 hs"
             );
             DetalleSede(sede);
         });
@@ -93,8 +89,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Cabildo 123",
                     "4005-9234",
                     "Lunes - Sábados",
-                    "09:00 hs - 18:00 hs, Sábados: 8:00 hs - 13:00 hs",
-                    R.drawable.sederetiro
+                    "09:00 hs - 18:00 hs, Sábados: 8:00 hs - 13:00 hs"
             );
             DetalleSede(sede);
         });
@@ -106,8 +101,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Correa 3930",
                     "4005-9234",
                     "Lunes - Viernes",
-                    "09:00 hs - 20:00 hs",
-                    R.drawable.sedebarriomitre
+                    "09:00 hs - 20:00 hs"
             );
             DetalleSede(sede);
         });
@@ -119,8 +113,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Cabildo 123Av. Intendente Cantilo y Arroyo Medrano (1429)",
                     "4704-9272",
                     "Martes - Viernes",
-                    "07:00 hs - 22:00 hs",
-                    R.drawable.sedenunez
+                    "07:00 hs - 22:00 hs"
             );
             DetalleSede(sede);
         });
@@ -132,8 +125,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
                     "Lima 757",
                     "4005-9234",
                     "Lunes - Sábados",
-                    "07:00 hs - 22:00 hs, Sábados: 8:00 hs - 13:00 hs",
-                    R.drawable.sedemonserrat
+                    "07:00 hs - 22:00 hs, Sábados: 8:00 hs - 13:00 hs"
             );
             DetalleSede(sede);
         });
@@ -167,7 +159,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
     }
 
     public void irBusqueda(View view){
-        Intent intent= new Intent(this, BusquedaActivity.class);
+        Intent intent= new Intent(this, BusquedaCursosActivity.class);
         startActivity(intent);
     }
 }

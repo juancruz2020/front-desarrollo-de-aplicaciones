@@ -1,12 +1,10 @@
 package com.example.myapplication;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +31,6 @@ import com.example.myapplication.dto.RecetaDTO;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,12 +77,10 @@ public class CargarRecetaActivity extends AppCompatActivity {
     Uri uriPortada = null;
     LinearLayout layoutPortadas;
     List<Uri> portadasUri = new ArrayList<>();
-    private List<PasoDTO> pasosList = new ArrayList<>();
-    private List<IngredienteDTO> listaIngredientes = new ArrayList<>(); //Almacena los ingredientes
+    private List<Paso> pasosList = new ArrayList<>();
+    private List<Ingrediente> listaIngredientes = new ArrayList<>(); //Almacena los ingredientes
     Map<String, Double> incrementos = new HashMap<>(); //Maneja los incrementos segun la unidad
     Map<String, Double> valoresDefault = new HashMap<>();
-
-    Receta recetaSubida;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -159,19 +154,19 @@ public class CargarRecetaActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
         //Lista desplegable
         ArrayAdapter<String> adapterPlatos = new ArrayAdapter<>(this,
-                R.layout.spinner_item_dark,
+                android.R.layout.simple_spinner_item,
                 new String[]{"Entradas", "Pastas", "Carnes", "Pescados", "Ensaladas", "Postres", "Bebidas", "Guarnicion"});
         adapterPlatos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTipoPlato.setAdapter(adapterPlatos);
         //Lista desplegable de tiempo
         ArrayAdapter<String> adapterTiempo = new ArrayAdapter<>(this,
-                R.layout.spinner_item_dark,
+                android.R.layout.simple_spinner_item,
                 new String[]{"Min", "Hor"});
         adapterTiempo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTiempoUnidad.setAdapter(adapterTiempo);
         //Lista desplegable de unidades
         ArrayAdapter<String> adapterUnidades = new ArrayAdapter<>(this,
-                R.layout.spinner_item_dark,
+                android.R.layout.simple_spinner_item,
                 new String[]{"g", "kg", "ml", "u", "cda", "cdita", "pizca", "taza", "diente", "hoja", "rama"});
         adapterUnidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spUnidadIngrediente.setAdapter(adapterUnidades);
@@ -239,7 +234,7 @@ public class CargarRecetaActivity extends AppCompatActivity {
             String nombre = etIngrediente.getText().toString().trim();
             if (!nombre.isEmpty()) {
                 agregarIngrediente(nombre, cantidadActual, unidadActual);
-                listaIngredientes.add(new IngredienteDTO(nombre, (int) cantidadActual, unidadActual, ""));
+                listaIngredientes.add(new Ingrediente(nombre, cantidadActual, unidadActual));
                 etIngrediente.setText("");
                 cantidadActual = valoresDefault.get(unidadActual);
                 actualizarCantidadTexto();
@@ -255,12 +250,12 @@ public class CargarRecetaActivity extends AppCompatActivity {
 
             if (currentPasoIndex == -1) {
                 // Nuevo paso
-                PasoDTO nuevoPaso = new PasoDTO(0, descripcion, media);
+                Paso nuevoPaso = new Paso(0, descripcion, media);
                 pasosList.add(nuevoPaso);
             } else {
                 // Editar paso
-                pasosList.get(currentPasoIndex).setTexto(descripcion);
-                pasosList.get(currentPasoIndex).setUrl(media);
+                pasosList.get(currentPasoIndex).descripcion = descripcion;
+                pasosList.get(currentPasoIndex).mediaPath = media;
                 currentPasoIndex = -1;
             }
 
@@ -284,13 +279,12 @@ public class CargarRecetaActivity extends AppCompatActivity {
 
         btnAgregarPortada.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*");
+            intent.setType("*/*");
             intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"image/*", "video/*"});
             startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen o video"), REQUEST_PORTADA_PICK);
         });
 
         btnSubirReceta.setOnClickListener(v -> {
-            // 1️⃣ Crear la receta y convertirla a DTO
             Receta receta = new Receta();
             receta.nombrePlato = etNombre.getText().toString();
             receta.descripcion = etDescripcion.getText().toString();
@@ -299,125 +293,66 @@ public class CargarRecetaActivity extends AppCompatActivity {
             receta.tiempoUnidad = spTiempoUnidad.getSelectedItem().toString();
             receta.ingredientes = listaIngredientes;
             receta.pasos = pasosList;
+            receta.portadaPath = uriPortada != null ? uriPortada.toString() : null;
+            String categoria = "Pastas";
+            String nickname = "Usuario 1";
 
-
-            String categoria = spTipoPlato.getSelectedItem().toString(); // Cambiá según corresponda
-            String nickname = "juancho"; // Cambiá según corresponda
-
-            // Crear DTO para la request
             AtomicInteger indexPasos = new AtomicInteger(1);
+
             List<PasoDTO> pasosDto = receta.pasos.stream()
                     .map(p -> {
-                        p.setNroPaso(indexPasos.get());
-                        return new PasoDTO(indexPasos.getAndIncrement(), p.getTexto(), p.getUrl());
+                        p.setNumeroPaso(indexPasos.get());
+                        return new PasoDTO(indexPasos.getAndIncrement(), p.descripcion, p.mediaPath);
                     })
                     .collect(Collectors.toList());
 
+
             List<IngredienteDTO> ingredientesDto = receta.ingredientes.stream()
-                    .map(i -> new IngredienteDTO(i.getNombre(), i.getCantidad(), i.getUnidad(), i.getObservaciones()))
+                    .map(i -> {
+                        return new IngredienteDTO(i.nombre, (int) i.cantidad, i.unidad, " ");
+                    })
                     .collect(Collectors.toList());
 
-            RecetaDTO dto = new RecetaDTO(nickname, receta.nombrePlato, categoria, receta.descripcion, receta.cantidadPorciones, ingredientesDto, pasosDto);
+            RecetaDTO dto = new RecetaDTO(nickname, receta.nombrePlato, categoria, ingredientesDto, pasosDto, receta.descripcion);
 
-            // 2️⃣ Crear JSON para "datos"
-            String recetaJson = new Gson().toJson(dto);
-            RequestBody datosBody = RequestBody.create(
-                    MediaType.parse("application/json; charset=utf-8"),
-                    recetaJson
+            Gson gson = new Gson();
+            String recetaJson = gson.toJson(dto);
+
+            RequestBody recetaRequestBody = RequestBody.create(
+                    recetaJson,
+                    MediaType.parse("application/json; charset=utf-8")
             );
 
-            Log.d("API", "JSON ENVIADO:\n" + recetaJson);
+            MultipartBody.Part datosPart = MultipartBody.Part.createFormData("datos", null, recetaRequestBody);
 
-
-            // 3️⃣ Crear MultipartBody.Part para "imagenReceta" si existe
-            MultipartBody.Part imagenRecetaPart = null;
-            if (uriPortada != null) {
-                try {
-                    String filePath = null;
-                    // Revisa tipo de URI
-                    if ("content".equalsIgnoreCase(uriPortada.getScheme())) {
-                        // Obtiene columnas de DATA
-                        String[] projection = { MediaStore.Images.Media.DATA };
-                        Cursor cursor = null;
-                        try {
-
-                            cursor = this.getContentResolver().query(uriPortada, projection, null, null, null);
-                            if (cursor != null && cursor.moveToFirst()) {
-                                // index de columna para DATA
-                                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                                // Extrae el path
-                                filePath = cursor.getString(columnIndex);
-                            }
-                        } finally {
-                            if (cursor != null) {
-                                cursor.close();
-                            }
-                        }
-                    } else if ("file".equalsIgnoreCase(uriPortada.getScheme())) {
-                        // Si es File URI
-                        filePath = uriPortada.getPath();
-                    }
-
-                    if (filePath != null) {
-                        File file = new File(filePath);
-                        if (file.exists() && file.canRead()) {
-                            RequestBody requestFile = RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
-                            imagenRecetaPart = MultipartBody.Part.createFormData("imagenReceta", file.getName(), requestFile);
-                        } else {
-                            Log.e("API", "Error: El archivo no existe o no se puede leer en la ruta: " + filePath);
-                        }
-                    } else {
-                        Log.e("API", "Error: No se pudo obtener la ruta del archivo desde la URI: " + uriPortada.toString());
-                    }
-
-                } catch (Exception e) {
-                    Log.e("API", "Error al crear la imagen de portada: " + e.getMessage());
-                }
-            }
-
-            // 4️⃣ Crear la lista para otras imagenes (puede ir vacía si no tenés otras fotos de pasos)
+            // Por ahora no estás enviando imágenes, así que podés dejarla vacía
             List<MultipartBody.Part> imagenesParts = new ArrayList<>();
 
-            // 5️⃣ Llamada al API
+            Log.d("DEBUG", "Ingredientes: " + new Gson().toJson(listaIngredientes));
+            Log.d("DEBUG", "JSON enviado: " + recetaJson);
 
             ApiService apiService = ApiClient.getInstance().getApiService();
-            Call<ResponseBody> call = apiService.cargarReceta(datosBody, imagenesParts, imagenRecetaPart);
-
+            Call<ResponseBody> call = apiService.cargarReceta(datosPart, imagenesParts);
 
             call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        Log.d("API", "Receta subida con éxito");
-                        // 👉 Acá podés navegar a otra Activity, actualizar la UI, etc.
-                        try {
-                            String responseBodyString = response.body().string();
-                            Log.d("API", "Response Body: " + responseBodyString);
+                 @Override
+                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                     if (response.isSuccessful()) {
+                         Log.d("API", "Receta subida con éxito");
+                     } else {
+                         Log.e("API", "Error al subir receta: " + response.code());
+                     }
+                 }
 
-                            // Use Gson to parse the JSON into your Recipe object
-                            Gson gson = new Gson();
-                            recetaSubida = gson.fromJson(responseBodyString, Receta.class);
+                 @Override
+                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                     Log.e("API", "Fallo de conexión: " + t.getMessage());
+                 }
+             });
 
-                            Intent intent = new Intent(CargarRecetaActivity.this, DetalleRecetaActivity.class);
-                            intent.putExtra("receta", recetaSubida);
-                            startActivity(intent);
-
-                        } catch (Exception e) {
-                            Log.e("API", "Error parsing response: " + e.getMessage());
-                        }
-                    } else {
-                        Log.e("API", "Error al subir receta: " + response.code() + " -> " + response.message());
-                        // 👉 Acá podés mostrar un mensaje en un TextView de error
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.e("API", "Fallo de conexión: " + t.getMessage());
-                    // 👉 Acá podés mostrar un mensaje de error en la pantalla
-                }
-            });
-
+            Intent intent = new Intent(CargarRecetaActivity.this, DetalleRecetaActivity.class);
+            intent.putExtra("receta", receta);
+            startActivity(intent);
         });
 
 
@@ -661,23 +596,23 @@ public class CargarRecetaActivity extends AppCompatActivity {
         layoutPasos.removeAllViews();
 
         for (int i = 0; i < pasosList.size(); i++) {
-            PasoDTO paso = pasosList.get(i);
+            Paso paso = pasosList.get(i);
             View itemPaso = LayoutInflater.from(this).inflate(R.layout.item_paso, null);
 
             TextView tvDescripcionPaso = itemPaso.findViewById(R.id.tvDescripcionPaso);
-            tvDescripcionPaso.setText("Paso " + (i + 1) + ": " + paso.getTexto());
+            tvDescripcionPaso.setText("Paso " + (i + 1) + ": " + paso.descripcion);
 
             ImageView imgMedia = itemPaso.findViewById(R.id.imgPasoMedia);
             TextView tvNombreArchivo = itemPaso.findViewById(R.id.tvNombreArchivo);
             LinearLayout layoutArchivo = itemPaso.findViewById(R.id.layoutArchivoAdjunto);
 
-            if (paso.getUrl() != null) {
-                Uri mediaUri = Uri.parse(paso.getUrl());
+            if (paso.mediaPath != null) {
+                Uri mediaUri = Uri.parse(paso.mediaPath);
                 imgMedia.setImageURI(mediaUri);
                 imgMedia.setVisibility(View.VISIBLE);
 
                 layoutArchivo.setVisibility(View.VISIBLE);
-                tvNombreArchivo.setText(new File(paso.getUrl()).getName());
+                tvNombreArchivo.setText(new File(paso.mediaPath).getName());
 
                 // Guardar URI en tag del itemPaso
                 itemPaso.setTag(R.id.imgPasoMedia, mediaUri);
@@ -691,11 +626,11 @@ public class CargarRecetaActivity extends AppCompatActivity {
 
             int finalI = i;
             btnEditarPaso.setOnClickListener(v -> {
-                etInstruccion.setText(paso.getTexto());
-                if (paso.getUrl() != null) {
+                etInstruccion.setText(paso.descripcion);
+                if (paso.mediaPath != null) {
                     layoutArchivoAdjunto.setVisibility(View.VISIBLE);
-                    tvNombreArchivo.setText(new File(paso.getUrl()).getName());
-                    uriArchivoSeleccionado = Uri.parse(paso.getUrl());
+                    tvNombreArchivo.setText(new File(paso.mediaPath).getName());
+                    uriArchivoSeleccionado = Uri.parse(paso.mediaPath);
                     mediaUri = uriArchivoSeleccionado;
                 } else {
                     layoutArchivoAdjunto.setVisibility(View.GONE);
@@ -725,3 +660,4 @@ public class CargarRecetaActivity extends AppCompatActivity {
 
 
 }
+

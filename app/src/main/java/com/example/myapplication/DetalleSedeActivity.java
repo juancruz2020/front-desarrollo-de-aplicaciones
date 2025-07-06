@@ -44,7 +44,6 @@ public class DetalleSedeActivity extends AppCompatActivity {
         TextView tvTelefono = findViewById(R.id.tvTelefono);
         TextView tvDias = findViewById(R.id.tvDias);
         TextView tvHorario = findViewById(R.id.tvHorario);
-        ImageView imgSede = findViewById(R.id.imgSede);
 
         tvNombreSede.setText(sedeSeleccionada.nombre);
         tvDescripcion.setText(sedeSeleccionada.descripcion);
@@ -52,7 +51,6 @@ public class DetalleSedeActivity extends AppCompatActivity {
         tvTelefono.setText(sedeSeleccionada.telefono);
         tvDias.setText(sedeSeleccionada.dias);
         tvHorario.setText(sedeSeleccionada.horarios);
-        imgSede.setImageResource(sedeSeleccionada.imagenResId);
 
         cargarCursos();
 
