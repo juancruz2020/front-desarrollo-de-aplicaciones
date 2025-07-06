@@ -110,6 +110,26 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        // Editar Tarjeta
+        Button btnEditar = findViewById(R.id.tvEditarNumeroTarjeta);
+        btnEditar.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.editar_tarjeta, null);
+            builder.setView(dialogView);
+
+            builder.setPositiveButton("Guardar", (dialog, which) -> {
+                EditText etNumero = dialogView.findViewById(R.id.etNumeroTarjeta);
+                String nuevoNumero = etNumero.getText().toString();
+                // actualizar TextView u operar con el dato
+                TextView tvNumero = findViewById(R.id.tvNumeroTarjeta);
+                tvNumero.setText("**** **** **** " + nuevoNumero.substring(nuevoNumero.length()-4));
+            });
+
+            builder.setNegativeButton("Cancelar", null);
+
+            builder.create().show();
+        });
+
 
     }
     private void cargarSedes(CursoDTO curso) {
