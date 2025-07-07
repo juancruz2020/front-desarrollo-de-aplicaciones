@@ -13,7 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.myapplication.dto.CursoDTO;
+import com.example.myapplication.dto.cursoFront;
 import com.example.myapplication.dto.SedeDTO;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class DetalleSedeActivity extends AppCompatActivity {
     LinearLayout contenedorCursos, contenedorPromos;
     private SedeDTO sedeSeleccionada;
 
-    List<CursoDTO> cursos = new ArrayList<>();
+    List<cursoFront> cursos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class DetalleSedeActivity extends AppCompatActivity {
     private void cargarCursos() {
         cursos.clear(); // por si se recarga
 
-        cursos.add(new CursoDTO(
+        cursos.add(new cursoFront(
                 "Curso de Pizza Napolitana",
                 "Aprendé la técnica original de pizza al horno de leña.",
                 "$12000",
@@ -87,7 +87,7 @@ public class DetalleSedeActivity extends AppCompatActivity {
                 Arrays.asList("Sede Palermo", "Sede Caballito", "Sede Microcentro", "Sede Devoto", "Sede Retiro", "Sede Barrio Mitre")
         ));
 
-        cursos.add(new CursoDTO(
+        cursos.add(new cursoFront(
                 "Pastelería Clásica Argentina",
                 "Tortas, postres y dulces tradicionales.",
                 "$15000",
@@ -108,7 +108,7 @@ public class DetalleSedeActivity extends AppCompatActivity {
                 Arrays.asList("Sede Palermo", "Sede Caballito", "Sede Devoto")
         ));
 
-        cursos.add(new CursoDTO(
+        cursos.add(new cursoFront(
                 "Curso de Cocina Vegetariana",
                 "Recetas prácticas y nutritivas sin carne.",
                 "$8000",
@@ -129,7 +129,7 @@ public class DetalleSedeActivity extends AppCompatActivity {
                 Arrays.asList("Sede Caballito", "Sede Barrio Mitre")
         ));
 
-        cursos.add(new CursoDTO(
+        cursos.add(new cursoFront(
                 "Curso de Sushi en Casa",
                 "Aprendé a hacer rolls y nigiris desde cero.",
                 "$10000",
@@ -150,7 +150,7 @@ public class DetalleSedeActivity extends AppCompatActivity {
                 Arrays.asList("Sede Microcentro", "Sede Retiro")
         ));
 
-        cursos.add(new CursoDTO(
+        cursos.add(new cursoFront(
                 "Panadería Artesanal",
                 "Fermentos, masa madre y panes caseros.",
                 "$9000",
@@ -175,14 +175,14 @@ public class DetalleSedeActivity extends AppCompatActivity {
 
         // Agregar mas cursos aca
 
-        for (CursoDTO curso : cursos) {
+        for (cursoFront curso : cursos) {
             if (curso.sedes != null && curso.sedes.contains(sedeSeleccionada.nombre)) {
                 agregarCursoAlBody(curso);
             }
         }
     }
 
-    private void agregarCursoAlBody(CursoDTO curso) {
+    private void agregarCursoAlBody(cursoFront curso) {
         View item = getLayoutInflater().inflate(R.layout.item_curso, contenedorCursos, false);
 
         TextView tvTitulo = item.findViewById(R.id.tvTituloCurso);

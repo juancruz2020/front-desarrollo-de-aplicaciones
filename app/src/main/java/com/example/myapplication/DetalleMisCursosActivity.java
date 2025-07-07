@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.dto.CursoDTO;
+import com.example.myapplication.dto.cursoFront;
 
 
 public class DetalleMisCursosActivity extends AppCompatActivity {
@@ -52,14 +52,14 @@ public class DetalleMisCursosActivity extends AppCompatActivity {
         qrButton.setOnClickListener(v -> abrirCamara());
 
         // Cargar datos si se pasa un curso desde otro activity
-        CursoDTO curso = (CursoDTO) getIntent().getSerializableExtra("curso");
+        cursoFront curso = (cursoFront) getIntent().getSerializableExtra("curso");
         if (curso != null) {
             cargarDatosCurso(curso);
         }
 
     }
 
-    private void cargarDatosCurso(CursoDTO curso) {
+    private void cargarDatosCurso(cursoFront curso) {
         // Vincular Views
         TextView tvTitulo = findViewById(R.id.txtTitulo);
         TextView tvDescripcion = findViewById(R.id.descripcion);

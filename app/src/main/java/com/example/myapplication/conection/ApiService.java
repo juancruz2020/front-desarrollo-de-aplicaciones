@@ -91,11 +91,11 @@ public interface ApiService {
 
     // 1. Cursos registrados (POST /cursos/cursos)
     @POST("cursos/cursos")
-    Call<List<?>> obtenerCursosRegistrados(@Body CursoDTO dto);
+    Call<List<curso>> obtenerCursosRegistrados(@Body CursoDTO dto);
 
     // 2. Obtener un curso por id (POST /cursos/un-curso)
     @POST("cursos/un-curso")
-    Call<CursoConCronogramasDTO> obtenerUnCurso(@Body IdCursosDTO dto);
+    Call<CursoPlanoConCronogramaDTO> obtenerUnCurso(@Body IdCursosDTO dto);
 
     // 3. Registrar inscripción (POST /cursos/registrar-inscripcion)
     @POST("cursos/registrar-inscripcion")
@@ -103,7 +103,7 @@ public interface ApiService {
 
     // 4. Cursos inscripto (POST /cursos/cursos-inscripto)
     @POST("cursos/cursos-inscripto")
-    Call<List<CronogramaCursos>> obtenerCursosInscripto(@Body CursoDTO dto);
+    Call<List<CronogramaCursoPlanoDTO>> obtenerCursosInscripto(@Body CursoDTO dto);
 
     // 5. Obtener curso inscripto uno (POST /cursos/curso-inscripto-uno)
     @POST("cursos/curso-inscripto-uno")

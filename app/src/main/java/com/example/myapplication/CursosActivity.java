@@ -9,10 +9,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.conection.ApiClient;
+import com.example.myapplication.conection.ApiService;
+import com.example.myapplication.dto.CronogramaCursoPlanoDTO;
 import com.example.myapplication.dto.CursoDTO;
+import com.example.myapplication.dto.curso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +26,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CursosActivity extends AppCompatActivity {
 
     TextView tabDescubrir, tabMisCursos;
@@ -28,12 +37,16 @@ public class CursosActivity extends AppCompatActivity {
     View lineaSelector;
     LinearLayout tabOptions;
 
-    List<CursoDTO> cursos = new ArrayList<>();  // Lista de cursos
+    List<curso> cursos = new ArrayList<>();  // Lista de cursos
+
+    List<CronogramaCursoPlanoDTO> cursosmios = new ArrayList<>();  // Lista de cursos
 
     LinearLayout contenedorEnCurso, contenedorFinalizados;
     LinearLayout bloqueo;
 
     String tipoUsuario="alumno";
+
+    int idcurso;
 
 
     @Override
@@ -133,175 +146,69 @@ public class CursosActivity extends AppCompatActivity {
     }
 
     private void cargarCursosDescubrir() {
-        cursos.clear(); // por si se recarga
+        cursos.clear(); // limpiamos los cursos actuales
 
-        cursos.add(new CursoDTO(
-                "Curso de Pizza Napolitana",
-                "Aprendé la técnica original de pizza al horno de leña.",
-                "$12000",
-                "Presencial",
-                "Sábado",
-                "19:00 hs",
-                "05/06/2025",
-                "19/06/2025",
-                "Dominar pizza napolitana desde la masa hasta la cocción.",
-                "• Harinas y levaduras\n• Fermentación lenta\n• Cocción en horno de leña",
-                "• Harina 000 (Empresa)\n• Levadura fresca (Empresa)\n• Pala de pizza (Alumno)",
-                "$9500",
-                R.drawable.imagenpromocionalinicio2,
-                R.drawable.ic_presencial,
-                R.drawable.imagenpromocionalinicio2,
-                "Carlos Nápoles",
-                "Maestro pizzero napolitano con 20 años de experiencia.",
-                Arrays.asList("Sede Palermo", "Sede Caballito", "Sede Microcentro", "Sede Devoto", "Sede Retiro", "Sede Barrio Mitre")
-        ));
+        CursoDTO body = new CursoDTO(); // si hace falta setear el mail, acá lo hacés
 
-        cursos.add(new CursoDTO(
-                "Pastelería Clásica Argentina",
-                "Tortas, postres y dulces tradicionales.",
-                "$15000",
-                "Presencial",
-                "Miércoles",
-                "18:00 hs",
-                "10/06/2025",
-                "24/06/2025",
-                "Dominar técnicas base de pastelería clásica.",
-                "• Bizcochuelos\n• Cremas\n• Baños y decoraciones",
-                "• Harinas y azúcar (Empresa)\n• Molde desmontable (Alumno)",
-                "$12000",
-                R.drawable.imagenpromocionalinicio1,
-                R.drawable.ic_presencial,
-                R.drawable.camipollo,
-                "Laura Dulcetti",
-                "Pastelera profesional y profesora de cocina dulce.",
-                Arrays.asList("Sede Palermo", "Sede Caballito", "Sede Devoto")
-        ));
+        body.setMail("juancruzm2004@gmail.com");
+        ApiService apiService = ApiClient.getInstance().getApiService();
 
-        cursos.add(new CursoDTO(
-                "Curso de Cocina Vegetariana",
-                "Recetas prácticas y nutritivas sin carne.",
-                "$8000",
-                "Virtual",
-                "Sábado",
-                "15:30 hs",
-                "05/06/2025",
-                "31/12/2025",
-                "Incorporar platos vegetarianos balanceados.",
-                "• Proteínas vegetales\n• Sustitutos caseros\n• Recetas rápidas",
-                "• Lista de compras sugerida en PDF",
-                "$7000",
-                R.drawable.imagenpromocionalinicio2,
-                R.drawable.ic_online,
-                R.drawable.fotopromocionaliniciocursos,
-                "Martín Verde",
-                "Chef especializado en cocina vegetariana y saludable.",
-                Arrays.asList("Sede Caballito", "Sede Barrio Mitre")
-        ));
+        Call<List<curso>> call = apiService.obtenerCursosRegistrados(body);
 
-        cursos.add(new CursoDTO(
-                "Curso de Sushi en Casa",
-                "Aprendé a hacer rolls y nigiris desde cero.",
-                "$10000",
-                "Presencial",
-                "Viernes",
-                "20:00 hs",
-                "14/06/2025",
-                "21/06/2025",
-                "Dominar técnicas base de sushi casero.",
-                "• Arroz perfecto\n• Rolls tradicionales\n• Tempura y nigiris",
-                "• Arroz para sushi (Empresa)\n• Esterilla (Alumno)\n• Pescados frescos (Empresa)",
-                "$8500",
-                R.drawable.imagenpromocionalinicio1,
-                R.drawable.ic_presencial,
-                R.drawable.cocinafacil,
-                "Kenji Yamato",
-                "Sushiman profesional con formación en Japón.",
-                Arrays.asList("Sede Microcentro", "Sede Retiro")
-        ));
+        call.enqueue(new Callback<List<curso>>() {
+            @Override
+            public void onResponse(Call<List<curso>> call, Response<List<curso>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (curso curso : response.body()) {
 
-        cursos.add(new CursoDTO(
-                "Panadería Artesanal",
-                "Fermentos, masa madre y panes caseros.",
-                "$9000",
-                "Virtual",
-                "Sábado",
-                "10:00 hs",
-                "01/06/2025",
-                "31/12/2025",
-                "Aprender a preparar pan artesanal en casa.",
-                "• Masa madre\n• Fermentación lenta\n• Técnicas de cocción",
-                "• Lista de insumos en PDF\n• Video paso a paso",
-                "9000",
-                R.drawable.imagenpromocionalinicio2,
-                R.drawable.ic_online,
-                R.drawable.cocinandoando,
-                "Sofía Leudante",
-                "Panadera artesanal especialista en fermentación natural.",
-                Arrays.asList("Sede Palermo", "Sede Devoto", "Sede Barrio Mitre")
-        ));
-
-
-
-        // Agregar mas cursos aca
-
-        for (CursoDTO curso : cursos) {
-            agregarCursoAlBody(curso);
-        }
+                        cursos.add(curso);
+                        agregarCursoAlBody(curso);
+                    }
+                } else {
+                    Toast.makeText(CursosActivity.this, "Error al obtener cursos", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<curso>> call, Throwable t) {
+                Toast.makeText(CursosActivity.this, "Fallo en la conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
 
     private void cargarMisCursos() {
-        // Simulamos cursos inscriptos (los mismos u otros)
-        List<CursoDTO> misCursos = new ArrayList<>();
+        cursos.clear(); // limpiamos los cursos actuales
 
-        misCursos.add(new CursoDTO(
-                "Curso de Pizza Napolitana",
-                "Aprendé la técnica original de pizza al horno de leña.",
-                "$12000",
-                "Presencial",
-                "Sábado",
-                "19:00 hs",
-                "05/06/2025",
-                "19/06/2025",
-                "Dominar pizza napolitana desde la masa hasta la cocción.",
-                "• Harinas y levaduras\n• Fermentación lenta\n• Cocción en horno de leña",
-                "• Harina 000 (Empresa)\n• Levadura fresca (Empresa)\n• Pala de pizza (Alumno)",
-                "$9500",
-                R.drawable.imagenpromocionalinicio2,
-                R.drawable.ic_presencial,
-                R.drawable.imagenpromocionalinicio2,
-                "Carlos Nápoles",
-                "Maestro pizzero napolitano.",
-                Arrays.asList("Sede Palermo")
-        ));
+        CursoDTO body = new CursoDTO(); // si hace falta setear el mail, acá lo hacés
 
-        misCursos.add(new CursoDTO(
-                "Pastelería Clásica Argentina",
-                "Tortas, postres y dulces tradicionales.",
-                "$15000",
-                "Presencial",
-                "Miércoles",
-                "18:00 hs",
-                "10/06/2025",
-                "24/08/2025",
-                "Dominar técnicas base de pastelería clásica.",
-                "• Bizcochuelos\n• Cremas\n• Baños y decoraciones",
-                "• Harinas y azúcar (Empresa)\n• Molde desmontable (Alumno)",
-                "$12000",
-                R.drawable.imagenpromocionalinicio1,
-                R.drawable.ic_presencial,
-                R.drawable.imagenpromocionalinicio1,
-                "Marta Dulce",
-                "Chef pastelera con 25 años de experiencia.",
-                Arrays.asList("Sede Devoto")
-        ));
+        body.setMail("juancruzm2004@gmail.com");
+        ApiService apiService = ApiClient.getInstance().getApiService();
 
-        // Recorremos y los agregamos al contenedor de Mis Cursos
-        for (CursoDTO curso : misCursos) {
-            agregarCursoAMisCursos(curso);
-        }
+        Call<List<CronogramaCursoPlanoDTO>> call = apiService.obtenerCursosInscripto(body);
+
+
+        call.enqueue(new Callback<List<CronogramaCursoPlanoDTO>>() {
+            @Override
+            public void onResponse(Call<List<CronogramaCursoPlanoDTO>> call, Response<List<CronogramaCursoPlanoDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    for (CronogramaCursoPlanoDTO curso : response.body()) {
+
+                        cursosmios.add(curso);
+                        agregarCursoAMisCursos(curso);
+                    }
+                } else {
+                    Toast.makeText(CursosActivity.this, "Error al obtener cursos", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<CronogramaCursoPlanoDTO>> call, Throwable t) {
+                Toast.makeText(CursosActivity.this, "Fallo en la conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
-    private void agregarCursoAlBody(CursoDTO curso) {
+    private void agregarCursoAlBody(curso curso) {
         View item = getLayoutInflater().inflate(R.layout.item_curso, contenedorDescubrir, false);
 
         TextView tvTitulo = item.findViewById(R.id.tvTituloCurso);
@@ -313,34 +220,21 @@ public class CursosActivity extends AppCompatActivity {
         ImageView imgCurso = item.findViewById(R.id.imgCurso);
         ImageView icModalidad = item.findViewById(R.id.icModalidad);
 
-        tvTitulo.setText(curso.nombre);
-        tvDescripcion.setText(curso.descripcion);
-        tvPrecio.setText(curso.precio);
-        tvFecha.setText(curso.horario);
-        tvModalidad.setText(curso.modalidad);
+        tvTitulo.setText(curso.getDescripcion());
+        tvDescripcion.setText(curso.getDescripcion());
+        tvPrecio.setText(String.valueOf(curso.getPrecio()));
+        tvFecha.setText(String.valueOf(curso.getDuracion()));
+        tvModalidad.setText(curso.getModalidad());
         tvDescuento.setText(""); // opcional
-        imgCurso.setImageResource(curso.imagenResId);
-        icModalidad.setImageResource(curso.iconoModalidadResId);
 
-        // Si tiene Sede Palermo, calcular 30% de descuento
-        if (curso.sedes != null && curso.sedes.contains("Sede Palermo")) {
-            try {
-                // Parsear el precio quitando el '$'
-                int precio = Integer.parseInt(curso.precio.replace("$", "").replace(".", ""));
-                int precioConDescuento = precio - (precio * 30 / 100);
-                tvDescuento.setText("(Descuento en Sede Palermo: $" + precioConDescuento + ")");
-            } catch (NumberFormatException e) {
-                tvDescuento.setText(""); // si hay algún error, no se muestra descuento
-            }
-        } else {
-            tvDescuento.setText("");
-        }
+
 
         // ver detalle curso
         item.setOnClickListener(v -> {
             if ("alumno".equals(tipoUsuario)) {
                 Intent intent = new Intent(CursosActivity.this, DetalleCursosInscripcionActivity.class);
                 intent.putExtra("curso", curso);
+                intent.putExtra("idCurso", curso.getIdCurso());
                 startActivity(intent);
             }
         });
@@ -348,7 +242,7 @@ public class CursosActivity extends AppCompatActivity {
         contenedorDescubrir.addView(item);
     }
 
-    private void agregarCursoAMisCursos(CursoDTO curso) {
+    private void agregarCursoAMisCursos(CronogramaCursoPlanoDTO curso) {
         View item = getLayoutInflater().inflate(R.layout.item_mis_cursos, contenedorMisCursos, false);
 
         TextView tvTitulo = item.findViewById(R.id.tvTituloCurso);
@@ -360,33 +254,34 @@ public class CursosActivity extends AppCompatActivity {
         ImageView icModalidad = item.findViewById(R.id.icModalidad);
 
 
-        tvTitulo.setText(curso.nombre);
-        tvDescripcion.setText(curso.descripcion);
-        tvEstadoSede.setText(curso.sedes.get(0));
-        tvFecha.setText(curso.dia + " " + curso.horario);
-        tvModalidad.setText(curso.modalidad);
-        imgCurso.setImageResource(curso.imagenResId);
-        icModalidad.setImageResource(curso.iconoModalidadResId);
+        tvTitulo.setText(curso.getDescripcion());
+        tvDescripcion.setText(curso.getDescripcion());
+        //tvEstadoSede.setText(curso.sedes.get(0));
+        tvFecha.setText(curso.getFechaInicio());
+        tvModalidad.setText(curso.getModalidad());
+       // imgCurso.setImageResource(curso.imagenResId);
+     //   icModalidad.setImageResource(curso.iconoModalidadResId);
 
         item.setOnClickListener(v -> {
             Intent intent = new Intent(CursosActivity.this, DetalleMisCursosActivity.class);
             intent.putExtra("curso", curso);
+            intent.putExtra("idCurso", curso.getIdCurso());
             startActivity(intent);
         });
 
         // Verificar fecha
         try {
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            Date fechaFinCurso = formato.parse(curso.fechaFin);
+            Date fechaFinCurso = formato.parse(curso.getFechaInicio());
             Date fechaActual = new Date();
 
             if (fechaFinCurso != null && fechaFinCurso.after(fechaActual)) {
                 // En curso → mostrar sede (por ahora pongo la primera de la lista)
-                tvEstadoSede.setText(curso.sedes.get(0));
+              //  tvEstadoSede.setText(curso.sedes.get(0));
                 contenedorEnCurso.addView(item);
             } else {
                 // Finalizado → mostrar la fecha de finalización
-                tvEstadoSede.setText("Finalizado el: " + curso.fechaFin);
+              //  tvEstadoSede.setText("Finalizado el: " + curso.fechaFin);
                 contenedorFinalizados.addView(item);
             }
 
