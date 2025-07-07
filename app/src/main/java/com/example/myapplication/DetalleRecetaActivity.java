@@ -19,10 +19,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.conection.ApiClient;
+import com.example.myapplication.dto.IngredienteDTO;
+import com.example.myapplication.dto.PasoDTO;
+import com.example.myapplication.dto.RecetaDTO;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetalleRecetaActivity extends AppCompatActivity {
     ImageButton btnCerrar;
@@ -36,6 +45,9 @@ public class DetalleRecetaActivity extends AppCompatActivity {
     private final Map<String, Double> valoresDefault = new HashMap<>();
     Receta receta;
     ImageView imgRecetaPortada;
+    private Long idRecetaActual;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +70,150 @@ public class DetalleRecetaActivity extends AppCompatActivity {
         TextView tvTiempoUnidad = findViewById(R.id.tvTiempoUnidad);
         ImageView imgReceta = findViewById(R.id.imgReceta);
         TextView tvCantidadPorciones = findViewById(R.id.tvCantidadPorciones);
-        imgRecetaPortada = findViewById(R.id.imgReceta);
-        cargarUnidades();
+
+        TextView descripcion = findViewById(R.id.descripcion); // Asegúrate de tener este ID en tu XML
+
+
+        cargarUnidades(); // Carga los valores para unidades
+
+        // **Paso 1: Obtener la receta preliminar o solo el ID del Intent**
+        // Es crucial que el Intent traiga al menos el ID de la receta.
+        Receta recetaDesdeIntent = (Receta) getIntent().getSerializableExtra("receta");
+
+        if (recetaDesdeIntent == null || recetaDesdeIntent.idReceta == null) {
+            Toast.makeText(this, "Error: No se recibió un ID de receta válido.", Toast.LENGTH_SHORT).show();
+            finish(); // Cierra la actividad si no hay un ID válido
+            return;
+        }
+
+
+        // Asigna el ID para usarlo en la llamada a la API
+        idRecetaActual = recetaDesdeIntent.idReceta;
+
+
+        // **Paso 2: Realizar la llamada a la API para obtener el detalle completo**
+        ApiClient.getInstance().getApiService().obtenerReceta(idRecetaActual).enqueue(new Callback<RecetaDTO>() {
+            @Override
+            public void onResponse(Call<RecetaDTO> call, Response<RecetaDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    RecetaDTO recetaDTO = response.body();
+                    Receta receta = new Receta(recetaDTO);
+                    Log.e("Receta obtenida", recetaDTO.toString());
+                    // Convierte el DTO a tu objeto Receta local para usarlo en la UI
+
+
+                    // **Paso 3: Ahora que tienes la receta completa, rellena la UI**
+                    txtTitulo.setText(receta.nombrePlato);
+                    tvCantidadPorciones.setText(String.valueOf(receta.cantidadPorciones));
+                    //tvTiempoValor.setText(receta.tiempoValor);
+                    //tvTiempoUnidad.setText(receta.tiempoUnidad);
+
+                    if (descripcion != null) {
+                        descripcion.setText(receta.descripcion);
+                    }
+
+                    // Cargar imagen de portada con Glide
+                    if (recetaDTO.getUrlImagen() != null && !recetaDTO.getUrlImagen().isEmpty()) {
+                        Log.d("GlideDebug", "Intentando cargar imagen desde: " + recetaDTO.getUrlImagen());
+                        Glide.with(DetalleRecetaActivity.this)
+                                .load(recetaDTO.getUrlImagen())
+                                .placeholder(R.drawable.ic_default)
+                                .error(R.drawable.ic_default)
+                                .into(imgReceta);
+                    } else {
+                        Log.d("GlideDebug", "Portada path está vacio");
+                        imgRecetaPortada.setImageResource(R.drawable.ic_default);
+                    }
+
+                    // Cargar Ingredientes
+                    if (recetaDTO.getIngredientes() != null) {
+                        layoutIngredientes.removeAllViews(); // Limpia antes de añadir
+                        for (IngredienteDTO ing : recetaDTO.getIngredientes()) {
+                            View itemView = LayoutInflater.from(DetalleRecetaActivity.this).inflate(R.layout.item_ingrediente, layoutIngredientes, false);
+                            TextView tvNombre = itemView.findViewById(R.id.tvNombreIngrediente);
+                            TextView tvCantidad = itemView.findViewById(R.id.tvCantidadIngrediente);
+                            ImageButton btnMasIng = itemView.findViewById(R.id.btnMasCantidad);
+                            ImageButton btnMenosIng = itemView.findViewById(R.id.btnMenosCantidad);
+
+                            tvNombre.setText(ing.getNombre() + " (" + ing.getUnidad() + ")");
+                            tvCantidad.setText(String.valueOf(ing.getCantidad()));
+
+                            double incremento = incrementos.containsKey(ing.getUnidad()) ? incrementos.get(ing.getUnidad()) : 1.0;
+
+                            btnMasIng.setOnClickListener(v -> {
+                                ing.setCantidad((int) (ing.getCantidad() + incremento));
+                                tvCantidad.setText(String.format(Locale.getDefault(), "%.2f", ing.getCantidad()));
+                            });
+
+                            btnMenosIng.setOnClickListener(v -> {
+                                ing.setCantidad((int) Math.max(0, ing.getCantidad() - incremento));
+                                tvCantidad.setText(String.format(Locale.getDefault(), "%.2f", ing.getCantidad()));
+                            });
+                            layoutIngredientes.addView(itemView);
+                        }
+                    }
+
+                    // Cargar Pasos
+                    if (recetaDTO.getPasos() != null) {
+                        layoutInstrucciones.removeAllViews(); // Limpia antes de añadir
+                        for (int i = 0; i < recetaDTO.getPasos().size(); i++) {
+                            PasoDTO paso = recetaDTO.getPasos().get(i);
+                            LinearLayout pasoContainer = new LinearLayout(DetalleRecetaActivity.this);
+                            pasoContainer.setOrientation(LinearLayout.VERTICAL);
+                            pasoContainer.setPadding(0, 16, 0, 16);
+
+                            TextView tvPaso = new TextView(DetalleRecetaActivity.this);
+                            tvPaso.setText("Paso " + paso.getNroPaso() + ": " + paso.getTexto());
+                            tvPaso.setTextSize(16);
+                            tvPaso.setTextColor(Color.BLACK);
+                            pasoContainer.addView(tvPaso);
+
+                            Log.d("GlideDebug", "Intentando cargar imagen de paso: " + paso.getUrl());
+
+                            if (paso.getUrl() != null && !paso.getUrl().isEmpty()) {
+                                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.MATCH_PARENT,
+                                        (int) getResources().getDimension(R.dimen.instruction_image_height)
+                                );
+
+                                ImageView imgPaso = new ImageView(DetalleRecetaActivity.this);
+                                params.topMargin = 16;
+                                imgPaso.setLayoutParams(params);
+                                imgPaso.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                                Glide.with(DetalleRecetaActivity.this)
+                                        .load(paso.getUrl())
+                                        .placeholder(R.drawable.ic_default)
+                                        .error(R.drawable.ic_default)
+                                        .into(imgPaso);
+                                pasoContainer.addView(imgPaso);
+                            }
+
+                            layoutInstrucciones.addView(pasoContainer);
+                        }
+                    }
+
+                } else {
+                    Toast.makeText(DetalleRecetaActivity.this, "Error al obtener detalles de la receta: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("API_ERROR", "Respuesta no exitosa: " + response.message() + " Código: " + response.code());
+                    finish(); // Cierra la actividad si no se puede obtener el detalle
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecetaDTO> call, Throwable t) {
+                Log.e("API_ERROR", "Fallo de conexión al obtener receta: " + t.getMessage(), t);
+                Toast.makeText(DetalleRecetaActivity.this, "Fallo conexión al detalle: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                finish(); // Cierra la actividad en caso de fallo de conexión
+            }
+        });
+
         //Animacion de favoritos xd
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.anim_scale);
         //boton para volver
         btnCerrar.setOnClickListener(v -> {
             Intent intent = new Intent(DetalleRecetaActivity.this, InicioActivity.class);
-            intent.putExtra("receta", receta);
+            intent.putExtra("receta", recetaDesdeIntent);
             startActivity(intent);
             finish();
         });
@@ -147,102 +295,7 @@ public class DetalleRecetaActivity extends AppCompatActivity {
             btnInstrucciones.setTextColor(Color.WHITE);
         });
 
-        receta = (Receta) getIntent().getSerializableExtra("receta");
 
-        if (receta == null) {
-            Toast.makeText(this, "No se recibió la receta", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
-
-        txtTitulo.setText(receta.nombrePlato);
-        tvCantidadPorciones.setText(String.valueOf(receta.cantidadPorciones));
-        tvTiempoValor.setText(receta.tiempoValor);
-        tvTiempoUnidad.setText(receta.tiempoUnidad);
-
-        // Descripción
-        TextView descripcion = findViewById(R.id.descripcion); // busca el id correcto
-        descripcion.setText(receta.descripcion);
-
-        // Ingredientes
-        for (Ingrediente ing : receta.ingredientes) {
-            View itemView = LayoutInflater.from(this).inflate(R.layout.item_ingrediente, layoutIngredientes, false);
-
-            TextView tvNombre = itemView.findViewById(R.id.tvNombreIngrediente);
-            TextView tvCantidad = itemView.findViewById(R.id.tvCantidadIngrediente);
-            ImageButton btnMasIng = itemView.findViewById(R.id.btnMasCantidad);
-            ImageButton btnMenosIng = itemView.findViewById(R.id.btnMenosCantidad);
-
-
-            tvNombre.setText(ing.nombre + " (" + ing.unidad + ")");
-            tvCantidad.setText(String.valueOf(ing.cantidad));
-
-            // Obtengo el incremento según la unidad
-            double incremento = incrementos.containsKey(ing.unidad) ? incrementos.get(ing.unidad) : 1.0;
-
-
-            btnMasIng.setOnClickListener(v -> {
-                ing.cantidad += incremento;
-                tvCantidad.setText(String.format(Locale.getDefault(), "%.2f", ing.cantidad));
-            });
-
-            btnMenosIng.setOnClickListener(v -> {
-                ing.cantidad = Math.max(0, ing.cantidad - incremento);
-                tvCantidad.setText(String.format(Locale.getDefault(), "%.2f", ing.cantidad));
-            });
-
-
-            layoutIngredientes.addView(itemView);
-        }
-
-
-        // Pasos con foto
-        for (int i = 0; i < receta.pasos.size(); i++) {
-            Paso paso = receta.pasos.get(i);
-            TextView tvPaso = new TextView(this);
-            tvPaso.setText("Paso " + (i + 1) + ": " + paso.getDescripcion());
-            layoutInstrucciones.addView(tvPaso);
-
-            if (paso.getMediaPath() != null) {
-                ImageView img = new ImageView(this);
-                Glide.with(this)
-                        .load(Uri.parse(paso.getMediaPath()))
-                        .into(img);
-
-                layoutInstrucciones.addView(img);
-            }
-            Log.d("Paso", "Media URI: " + paso.getMediaPath());
-
-        }
-
-        // Portada
-        if (receta.portadaPath != null) {
-            imgReceta.post(() -> imgReceta.setImageURI(Uri.parse(receta.portadaPath)));
-        } else {
-            imgReceta.setImageResource(R.drawable.ic_default);
-        }
-
-
-
-        // Recupera la receta
-        receta = (Receta) getIntent().getSerializableExtra("receta");
-
-        // Lógica para cargar la imagen de portada
-        if (receta != null && receta.portadaPath != null) {
-            try {
-                Uri imageUri = Uri.parse(receta.portadaPath);
-                imgRecetaPortada.setImageURI(imageUri);
-            } catch (Exception e) {
-                // Manejar cualquier error al parsear la URI o cargar la imagen
-                e.printStackTrace();
-                imgRecetaPortada.setImageResource(R.drawable.ic_default); // Usa una imagen por defecto en caso de error
-                Toast.makeText(this, "Error al cargar la imagen de portada", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // Si no hay portadaPath, muestra una imagen por defecto
-            imgRecetaPortada.setImageResource(R.drawable.ic_default); // Asegúrate de tener un drawable llamado ic_default
-        }
 
 
         star1.setTag(1); star2.setTag(2); star3.setTag(3); star4.setTag(4); star5.setTag(5);
