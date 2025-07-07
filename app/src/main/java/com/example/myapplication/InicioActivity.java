@@ -52,6 +52,7 @@ public class InicioActivity extends AppCompatActivity {
                     for (RecetaDTO recetaDTO : response.body()) {
                         Receta receta = new Receta(recetaDTO); // Asegurate de tener este constructor
                         agregarRecetaAlInicio(receta);
+                        Log.d("API_RESPONSE", "Receta agregada: " + receta.toString());
                     }
                 } else {
                     Toast.makeText(InicioActivity.this, "Error al obtener recetas", Toast.LENGTH_SHORT).show();

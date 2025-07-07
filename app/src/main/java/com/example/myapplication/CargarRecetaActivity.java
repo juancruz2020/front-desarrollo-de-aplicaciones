@@ -32,11 +32,7 @@ import com.example.myapplication.dto.PasoDTO;
 import com.example.myapplication.dto.RecetaDTO;
 import com.google.gson.Gson;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -387,6 +383,48 @@ public class CargarRecetaActivity extends AppCompatActivity {
 
             // 4️⃣ Crear la lista para otras imagenes (puede ir vacía si no tenés otras fotos de pasos)
             List<MultipartBody.Part> imagenesParts = new ArrayList<>();
+            int indexPaso = 0;
+            for (PasoDTO paso : receta.pasos) {
+                if (paso.getUrl() != null) {
+                    Uri mediaUriPaso = Uri.parse(paso.getUrl());
+                    try {
+                        String filePath = null;
+
+                        if ("content".equalsIgnoreCase(mediaUriPaso.getScheme())) {
+                            String[] projection = { MediaStore.Images.Media.DATA };
+                            Cursor cursor = null;
+                            try {
+                                cursor = this.getContentResolver().query(mediaUriPaso, projection, null, null, null);
+                                if (cursor != null && cursor.moveToFirst()) {
+                                    int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                                    filePath = cursor.getString(columnIndex);
+                                }
+                            } finally {
+                                if (cursor != null) cursor.close();
+                            }
+                        } else if ("file".equalsIgnoreCase(mediaUriPaso.getScheme())) {
+                            filePath = mediaUriPaso.getPath();
+                        }
+
+                        if (filePath != null) {
+                            File file = new File(filePath);
+                            if (file.exists() && file.canRead()) {
+                                // Usa un nombre único por cada archivo
+                                RequestBody requestFile = RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
+                                MultipartBody.Part part = MultipartBody.Part.createFormData("imagenesPasos", file.getName(), requestFile);
+                                imagenesParts.add(part);
+                                Log.d("API", "Imagen de paso agregada: " + file.getName());
+                            } else {
+                                Log.e("API", "No se puede leer archivo del paso: " + filePath);
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("API", "Error al procesar imagen de paso: " + e.getMessage(), e);
+                    }
+                }
+                indexPaso++;
+            }
 
             // 5️⃣ Llamada al API
 
