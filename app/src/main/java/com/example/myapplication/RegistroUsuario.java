@@ -117,6 +117,7 @@ public class RegistroUsuario extends AppCompatActivity {
                     Toast.makeText(RegistroUsuario.this, "Registro exitoso", Toast.LENGTH_LONG).show();
                     Intent intent = getIntent();
                     String tipoUsuario = intent.getStringExtra("tipoUsuario");
+                    String email = intent.getStringExtra("email"); // ⬅️ recuperás el mail que venía del intent anterior
                     if (tipoUsuario.equals("usuario")){
                         Intent intent2 = new Intent(RegistroUsuario.this, Login.class);
                         startActivity(intent2);
@@ -124,6 +125,7 @@ public class RegistroUsuario extends AppCompatActivity {
                     else if (tipoUsuario.equals("alumno")){
                         Intent intent2 = new Intent(RegistroUsuario.this, RegistroAlumno.class);
                         intent.putExtra("tipoUsuario", tipoUsuario);
+                        intent2.putExtra("email", email); // ⬅️ lo pasás
                         startActivity(intent2);
                     }
 

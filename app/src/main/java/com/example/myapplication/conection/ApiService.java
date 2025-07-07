@@ -10,6 +10,8 @@ import retrofit2.http.*;
 
 
 import java.util.List;
+import java.util.Map;
+
 public interface ApiService {
     // POST /usuarios/registro
     @POST("usuarios/registro")
@@ -84,4 +86,35 @@ public interface ApiService {
             @Query("multiplicador") double multiplicador
     );
 
+
+
+    // 1. Cursos registrados (POST /cursos/cursos)
+    @POST("cursos/cursos")
+    Call<List<?>> obtenerCursosRegistrados(@Body CursoDTO dto);
+
+    // 2. Obtener un curso por id (POST /cursos/un-curso)
+    @POST("cursos/un-curso")
+    Call<CursoConCronogramasDTO> obtenerUnCurso(@Body IdCursosDTO dto);
+
+    // 3. Registrar inscripción (POST /cursos/registrar-inscripcion)
+    @POST("cursos/registrar-inscripcion")
+    Call<Map<String, String>> registrarInscripcion(@Body InscripcionCursoDTO dto);
+
+    // 4. Cursos inscripto (POST /cursos/cursos-inscripto)
+    @POST("cursos/cursos-inscripto")
+    Call<List<CronogramaCursos>> obtenerCursosInscripto(@Body CursoDTO dto);
+
+    // 5. Obtener curso inscripto uno (POST /cursos/curso-inscripto-uno)
+    @POST("cursos/curso-inscripto-uno")
+    Call<cursoConCronograma2DTO> obtenerCursoInscriptoUno(@Body InscripcionConsultaDTO dto);
+
+    // 6. Baja de curso (POST /cursos/baja)
+    @POST("cursos/baja")
+    Call<Map<String, String>> bajaCurso(@Body InscripcionConsultaDTO dto);
+
+    // 7. Registrar asistencia (POST /cursos/asistencia)
+    @POST("cursos/asistencia")
+    Call<AsistenciaCursosDTO> registrarAsistencia(@Body InscripcionRequestDTO dto);
+
 }
+

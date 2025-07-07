@@ -104,6 +104,7 @@ public class Registro extends AppCompatActivity {
                     editor.apply();
                     Intent intent = new Intent(Registro.this, Codigo.class);
                     intent.putExtra("tipoUsuario", tipoSeleccionado);
+                    intent.putExtra("email", emailText); // 👉 agregás el mail
                     startActivity(intent);
                     finish();
                 } else {

@@ -73,13 +73,16 @@ public class Codigo extends AppCompatActivity {
 
                     Intent intent = getIntent();
                     String tipoUsuario = intent.getStringExtra("tipoUsuario");
+                    String email = intent.getStringExtra("email"); // ⬅️ recuperás el mail que venía del intent anterior
                     if ("usuario".equals(tipoUsuario)) {
                         Intent intent2 = new Intent(Codigo.this, RegistroUsuario.class);
                         intent2.putExtra("tipoUsuario", tipoUsuario);
+                        intent2.putExtra("email", email); // ⬅️ lo pasás
                         startActivity(intent2);
                     } else if ("alumno".equals(tipoUsuario)) {
                         Intent intent2 = new Intent(Codigo.this, RegistroUsuario.class);
                         intent2.putExtra("tipoUsuario", tipoUsuario);
+                        intent2.putExtra("email", email); // ⬅️ lo pasás
                         startActivity(intent2);
                     }
 
