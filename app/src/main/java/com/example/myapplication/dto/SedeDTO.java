@@ -12,7 +12,7 @@ public class SedeDTO implements Serializable {
     public int imagenResId;
     
 
-    public SedeDTO(String nombre, String descripcion, String direccion, String telefono, String dias, String horarios) {
+    public SedeDTO(String nombre, String descripcion, String direccion, String telefono, String dias, String horarios, int imagenResId) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.direccion = direccion;
