@@ -32,7 +32,10 @@ import com.example.myapplication.dto.PasoDTO;
 import com.example.myapplication.dto.RecetaDTO;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -284,7 +287,7 @@ public class CargarRecetaActivity extends AppCompatActivity {
 
         btnAgregarPortada.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("*");
+            intent.setType("*/*");
             intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"image/*", "video/*"});
             startActivityForResult(Intent.createChooser(intent, "Seleccionar imagen o video"), REQUEST_PORTADA_PICK);
         });
@@ -333,36 +336,41 @@ public class CargarRecetaActivity extends AppCompatActivity {
             MultipartBody.Part imagenRecetaPart = null;
             if (uriPortada != null) {
                 try {
+                    Log.d("API", "Intentando crear imagen de portada");
                     String filePath = null;
-                    // Revisa tipo de URI
+                    // Check if the URI is a content URI (typical for gallery images)
                     if ("content".equalsIgnoreCase(uriPortada.getScheme())) {
-                        // Obtiene columnas de DATA
+                        // Define which columns we want to retrieve (the DATA column holds the file path)
                         String[] projection = { MediaStore.Images.Media.DATA };
                         Cursor cursor = null;
                         try {
-
+                            // Query the ContentResolver
                             cursor = this.getContentResolver().query(uriPortada, projection, null, null, null);
                             if (cursor != null && cursor.moveToFirst()) {
-                                // index de columna para DATA
+                                // Get the column index for the DATA column
                                 int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                                // Extrae el path
+                                // Extract the file path
                                 filePath = cursor.getString(columnIndex);
                             }
                         } finally {
+                            // Always close the cursor to prevent memory leaks
                             if (cursor != null) {
                                 cursor.close();
                             }
                         }
                     } else if ("file".equalsIgnoreCase(uriPortada.getScheme())) {
-                        // Si es File URI
+                        // If it's already a file URI, just get its path directly
                         filePath = uriPortada.getPath();
                     }
 
+                    // If we successfully got a file path
                     if (filePath != null) {
                         File file = new File(filePath);
+                        // Ensure the file exists and is readable before trying to upload
                         if (file.exists() && file.canRead()) {
                             RequestBody requestFile = RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
                             imagenRecetaPart = MultipartBody.Part.createFormData("imagenReceta", file.getName(), requestFile);
+                            Log.d("API", "MultipartBody.Part para imagenReceta CREADO: " + file.getName());
                         } else {
                             Log.e("API", "Error: El archivo no existe o no se puede leer en la ruta: " + filePath);
                         }
@@ -371,8 +379,10 @@ public class CargarRecetaActivity extends AppCompatActivity {
                     }
 
                 } catch (Exception e) {
-                    Log.e("API", "Error al crear la imagen de portada: " + e.getMessage());
+                    Log.e("API", "Error al crear la imagen de portada: " + e.getMessage(), e);
                 }
+            } else {
+                Log.d("API", "No se proporcionó una imagen de portada");
             }
 
             // 4️⃣ Crear la lista para otras imagenes (puede ir vacía si no tenés otras fotos de pasos)
@@ -419,11 +429,6 @@ public class CargarRecetaActivity extends AppCompatActivity {
             });
 
         });
-
-
-
-
-
     }
 
     private void actualizarCantidadTexto() {

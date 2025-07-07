@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.conection.ApiClient;
 import com.example.myapplication.dto.RecetaDTO;
 import com.google.android.flexbox.FlexboxLayout;
@@ -42,7 +43,7 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-/*  GET DE RECETAS PARA MOSTRARLAS - FALTA CONSUMIR LAS IMAGENES!
+//  GET DE RECETAS PARA MOSTRARLAS - FALTA CONSUMIR LAS IMAGENES!
 
        ApiClient.getInstance().getApiService().listarTodas().enqueue(new Callback<List<RecetaDTO>>() {
             @Override
@@ -63,7 +64,7 @@ public class InicioActivity extends AppCompatActivity {
                 Toast.makeText(InicioActivity.this, "Fallo conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-*/
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
@@ -138,12 +139,6 @@ public class InicioActivity extends AppCompatActivity {
             }
         }); //Esto es el temporizador para que avance solo
 
-        //Esto esta HARDCODEADO, es para abrir la receta de ñoquis(BORRAR MAS ADELANTE)
-        LinearLayout itemRecetaNoquis = findViewById(R.id.itemRecetaNoquis);
-        itemRecetaNoquis.setOnClickListener(v -> {
-            Intent intent = new Intent(InicioActivity.this, DetalleRecetaActivity.class);
-            startActivity(intent);
-        });
 
         //Esto te manda a la pantalla para cargar receta
         btnCargarReceta.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +148,7 @@ public class InicioActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         // ir a cursos
         btnCursos.setOnClickListener(v -> {
             Intent intent = new Intent(this, CursosActivity.class);
@@ -220,10 +216,14 @@ public class InicioActivity extends AppCompatActivity {
         tvTitulo.setText(receta.nombrePlato);
         tvDescripcion.setText(receta.descripcion);
 
-        if (receta.portadaPath != null) {
-            imgReceta.setImageURI(Uri.parse(receta.portadaPath));
+        if (receta.portadaPath != null && !receta.portadaPath.isEmpty()) {
+            Glide.with(this)
+                    .load(receta.portadaPath)           // <-- AQUÍ VA LA URL DE CLOUDINARY
+                    .placeholder(R.drawable.ic_default) // Imagen de placeholder mientras carga
+                    .error(R.drawable.ic_default)       // Imagen si ocurre un error al cargar
+                    .into(imgReceta);
         } else {
-            imgReceta.setImageResource(R.drawable.ic_default);
+            imgReceta.setImageResource(R.drawable.ic_default); // Imagen por defecto si no hay URL
         }
 
         item.setOnClickListener(v -> {
