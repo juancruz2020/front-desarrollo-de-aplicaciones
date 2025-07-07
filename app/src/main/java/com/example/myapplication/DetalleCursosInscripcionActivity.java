@@ -2,9 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +10,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.dto.CursoDTO;
+import com.example.myapplication.conection.ApiClient;
+import com.example.myapplication.conection.ApiService;
+import com.example.myapplication.dto.CursoPlanoConCronogramaDTO;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +30,14 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
 
     Spinner spSedeCurso;
 
-    // Views para hardcodear datos
     TextView txtTitulo, descripcion, tvTiempoValor, tvTiempoUnidad,
             PrecioCurso, ModalidadCurso, DiaCurso, HorarioCurso,
             FechaInicioCurso, FechaFinCurso, ObjetivoCurso, TemasCurso,
             InsumosCurso, MedioDePagoCurso, MontoFinalCurso;
 
     ImageView imgReceta;
+
+    CursoPlanoConCronogramaDTO curso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,61 +63,19 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
         MontoFinalCurso = findViewById(R.id.MontoFinalCurso);
         imgReceta = findViewById(R.id.imgReceta);
 
-
-        //Boton para retroceder
+        // Botón para retroceder
         ImageButton btnBack = findViewById(R.id.btnCerrar);
         btnBack.setOnClickListener(v -> finish());
 
-
-
-        CursoDTO curso = (CursoDTO) getIntent().getSerializableExtra("curso");
-        if (curso != null) {
-            cargarSedes(curso);
-            txtTitulo.setText(curso.nombre);
-            descripcion.setText(curso.descripcion);
-            tvTiempoValor.setText("3");
-            tvTiempoUnidad.setText("Horas");
-            PrecioCurso.setText(curso.precio);
-            ModalidadCurso.setText(curso.modalidad);
-            DiaCurso.setText(curso.dia);
-            HorarioCurso.setText(curso.horario);
-            FechaInicioCurso.setText(curso.fechaInicio);
-            FechaFinCurso.setText(curso.fechaFin);
-            ObjetivoCurso.setText(curso.objetivo);
-            TemasCurso.setText(curso.temas);
-            InsumosCurso.setText(curso.insumos);
-            MontoFinalCurso.setText(curso.montoFinal);
-            imgReceta.setImageResource(curso.imagenResId);
-            ImageView fotoProfesor = findViewById(R.id.FotoProfesorCurso);
-            TextView nombreProfesor = findViewById(R.id.NombreProfesorCurso);
-            TextView descripcionProfesor = findViewById(R.id.DescripcionProfesorCurso);
-
-            fotoProfesor.setImageResource(curso.fotoProfesorResId);
-            nombreProfesor.setText(curso.nombreProfesor);
-            descripcionProfesor.setText(curso.descripcionProfesor);
-
-
+        // Obtener idCurso desde el Intent
+        int idCurso = getIntent().getIntExtra("idCurso", -1);
+        if (idCurso == -1) {
+            Toast.makeText(this, "No se recibió el id del curso", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
-        // Capturar selección del spinner
-        spSedeCurso.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String sedeSeleccionada = parent.getItemAtPosition(position).toString();
-
-                // Si tiene "Sede Palermo" aplicar nuevo precio final
-                if (sedeSeleccionada.contains("Sede Palermo")) {
-                    int precio = Integer.parseInt(curso.precio.replace("$", "").replace(".", ""));
-                    int precioConDescuento = precio - (precio * 30 / 100);
-                    MontoFinalCurso.setText("$" + precioConDescuento);
-                } else {
-                    MontoFinalCurso.setText(curso.precio);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        cargarCursoDesdeApi(idCurso);
 
         // Editar Tarjeta
         Button btnEditar = findViewById(R.id.tvEditarNumeroTarjeta);
@@ -123,45 +87,86 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
             builder.setPositiveButton("Guardar", (dialog, which) -> {
                 EditText etNumero = dialogView.findViewById(R.id.etNumeroTarjeta);
                 String nuevoNumero = etNumero.getText().toString();
-                // actualizar TextView u operar con el dato
                 TextView tvNumero = findViewById(R.id.tvNumeroTarjeta);
-                tvNumero.setText("**** **** **** " + nuevoNumero.substring(nuevoNumero.length()-4));
+                if (nuevoNumero.length() >= 4) {
+                    tvNumero.setText("**** **** **** " + nuevoNumero.substring(nuevoNumero.length() - 4));
+                }
             });
 
             builder.setNegativeButton("Cancelar", null);
-
             builder.create().show();
         });
-
-
     }
-    private void cargarSedes(CursoDTO curso) {
-        // Armo una lista nueva con o sin descuento
-        List<String> sedesConPrecio = new ArrayList<>();
-        // Descuento
-        int precio = Integer.parseInt(curso.precio.replace("$", "").replace(".", ""));
-        int precioConDescuento = precio - (precio * 30 / 100);
 
-        // Aplica descuento y cambia el nombre
-        for (String sede : curso.sedes) {
-            if (sede.equals("Sede Palermo")) {
-                sedesConPrecio.add(sede + " (Total: $" + precioConDescuento + ")");
-            } else {
-                sedesConPrecio.add(sede);
+    private void cargarCursoDesdeApi(int idCurso) {
+        ApiService apiService = ApiClient.getInstance().getApiService();
+
+        com.example.myapplication.dto.IdCursosDTO idCursosDTO = new com.example.myapplication.dto.IdCursosDTO();
+        idCursosDTO.setId(idCurso);
+
+        Call<CursoPlanoConCronogramaDTO> call = apiService.obtenerUnCurso(idCursosDTO);
+
+        call.enqueue(new Callback<CursoPlanoConCronogramaDTO>() {
+            @Override
+            public void onResponse(Call<CursoPlanoConCronogramaDTO> call, Response<CursoPlanoConCronogramaDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    curso = response.body();
+                    mostrarDatosCurso(curso);
+                } else {
+                    Toast.makeText(DetalleCursosInscripcionActivity.this, "Error al cargar el curso", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
-        }
 
-        // Cargo spinner con la lista armada
+            @Override
+            public void onFailure(Call<CursoPlanoConCronogramaDTO> call, Throwable t) {
+                Toast.makeText(DetalleCursosInscripcionActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+    }
+
+    private void mostrarDatosCurso(CursoPlanoConCronogramaDTO curso) {
+        txtTitulo.setText(curso.getDescripcion());
+        descripcion.setText(curso.getContenidos());
+
+        tvTiempoValor.setText(String.valueOf(curso.getDuracion()));
+        tvTiempoUnidad.setText("Horas");
+
+        PrecioCurso.setText("$" + curso.getPrecio());
+        ModalidadCurso.setText(curso.getModalidad());
+
+        DiaCurso.setText(""); // No disponible en DTO
+        HorarioCurso.setText(""); // No disponible en DTO
+
+        // Fechas como String
+        FechaInicioCurso.setText(curso.getFechaInicio() != null ? curso.getFechaInicio() : "");
+        FechaFinCurso.setText(curso.getFechaFin() != null ? curso.getFechaFin() : "");
+
+        ObjetivoCurso.setText(curso.getContenidos()); // Adaptar según datos reales
+        TemasCurso.setText(curso.getDescripcion());   // Adaptar según datos reales
+        InsumosCurso.setText(curso.getRequerimientos());
+        MedioDePagoCurso.setText("$" + curso.getPrecio());
+        MontoFinalCurso.setText("$" + curso.getPrecio());
+
+        cargarSede(curso);
+    }
+
+    private void cargarSede(CursoPlanoConCronogramaDTO curso) {
+        List<String> sedesLista = new ArrayList<>();
+        sedesLista.add(curso.getNombreSede() != null ? curso.getNombreSede() : "Sede no disponible");
+
         ArrayAdapter<String> adapterSedes = new ArrayAdapter<>(
                 this,
-                R.layout.spinner_item_dark,
-                sedesConPrecio
+                android.R.layout.simple_spinner_item,
+                sedesLista
         );
         adapterSedes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spSedeCurso.setAdapter(adapterSedes);
         spSedeCurso.setSelection(0);
+        spSedeCurso.setEnabled(false);  // deshabilitamos porque sólo hay una sede
+
+        // Precio final igual al precio base (sin descuentos ni variaciones)
+        MontoFinalCurso.setText("$" + curso.getPrecio());
     }
-
-
-
 }

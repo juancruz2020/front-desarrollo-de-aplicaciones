@@ -127,7 +127,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
 
         btnSedeMonserrat.setOnClickListener(v -> {
             SedeDTO sede = new SedeDTO(
-                    "Sede Monserrat",
+                    "s",
                     "Nuestra moderna sede ubicada en Monserrat cuenta con las herramientas que necesitás para aprender.",
                     "Lima 757",
                     "4005-9234",

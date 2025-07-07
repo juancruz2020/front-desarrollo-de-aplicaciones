@@ -97,6 +97,10 @@
             android:name=".DetalleSedeActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication"/>
+
+        <activity 
+            android:name=".TerminosYCondiciones"
+            android:theme="@style/Theme.MyApplication"/>
     </application>
 
 </manifest>
