@@ -124,9 +124,9 @@ public class InicioActivity extends AppCompatActivity {
         promoSlider = findViewById(R.id.promoSlider);
 
         imagenesPromo = new ArrayList<>();
-        imagenesPromo.add(R.drawable.fotopromocionaliniciocursos);
-        imagenesPromo.add(R.drawable.imagenpromocionalinicio1);
-        imagenesPromo.add(R.drawable.imagenpromocionalinicio2);
+        imagenesPromo.add(R.drawable.foto1);
+        imagenesPromo.add(R.drawable.foto2);
+        imagenesPromo.add(R.drawable.foto3);
 
         PromoAdapter adapter = new PromoAdapter(this, imagenesPromo);
         promoSlider.setAdapter(adapter);
