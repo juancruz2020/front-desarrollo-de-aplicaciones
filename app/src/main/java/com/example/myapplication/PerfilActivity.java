@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class PerfilActivity extends AppCompatActivity {
 
+    Button btnTerminos,btnContacto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
