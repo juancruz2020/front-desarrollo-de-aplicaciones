@@ -111,8 +111,13 @@ public class PerfilActivity extends AppCompatActivity {
             builder.create().show();
         });
 
+    }
 
+    // Terminos y Condiciones / Soporte
 
+    public void verTerminos(View v){
+        Intent intent = new Intent(this, TerminosYCondiciones.class);
+        startActivity(intent);
     }
 
 }

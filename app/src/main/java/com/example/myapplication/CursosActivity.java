@@ -31,6 +31,10 @@ public class CursosActivity extends AppCompatActivity {
     List<CursoDTO> cursos = new ArrayList<>();  // Lista de cursos
 
     LinearLayout contenedorEnCurso, contenedorFinalizados;
+    LinearLayout bloqueo;
+
+    String tipoUsuario="alumno";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,14 @@ public class CursosActivity extends AppCompatActivity {
         };
         btnBuscarHeader.setOnClickListener(irABusqueda);
         btnBuscarFooter.setOnClickListener(irABusqueda);
+
+        bloqueo= findViewById(R.id.bloqueoVisitante);
+
+        if (!"alumno".equals(tipoUsuario)) {
+            bloqueo.setVisibility(View.VISIBLE);
+        } else {
+            bloqueo.setVisibility(View.GONE);
+        }
 
     }
 
@@ -326,9 +338,11 @@ public class CursosActivity extends AppCompatActivity {
 
         // ver detalle curso
         item.setOnClickListener(v -> {
-            Intent intent = new Intent(CursosActivity.this, DetalleCursosInscripcionActivity.class);
-            intent.putExtra("curso", curso);
-            startActivity(intent);
+            if ("alumno".equals(tipoUsuario)) {
+                Intent intent = new Intent(CursosActivity.this, DetalleCursosInscripcionActivity.class);
+                intent.putExtra("curso", curso);
+                startActivity(intent);
+            }
         });
 
         contenedorDescubrir.addView(item);
