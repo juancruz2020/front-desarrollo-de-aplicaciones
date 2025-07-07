@@ -234,17 +234,19 @@ public class DetalleRecetaActivity extends AppCompatActivity {
             }
         });
         //Botones para modificar el numero de porciones
-        btnMas.setOnClickListener(v -> {
-            porciones++;
-            tvPorciones.setText(String.valueOf(porciones));
-        });
-
-        btnMenos.setOnClickListener(v -> {
-            if (porciones > 1) {
-                porciones--;
+        //if (!"invitado".equals(tipoUsuario)) {
+            btnMas.setOnClickListener(v -> {
+                porciones++;
                 tvPorciones.setText(String.valueOf(porciones));
-            }
-        });
+            });
+
+            btnMenos.setOnClickListener(v -> {
+                if (porciones > 1) {
+                    porciones--;
+                    tvPorciones.setText(String.valueOf(porciones));
+                }
+            });
+        //}
 
         //Estrellas
         star1 = findViewById(R.id.star1);
