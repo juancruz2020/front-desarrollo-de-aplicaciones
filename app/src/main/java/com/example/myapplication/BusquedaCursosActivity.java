@@ -167,7 +167,7 @@ public class BusquedaCursosActivity extends AppCompatActivity {
     }
 
     public void irBusqueda(View view){
-        Intent intent= new Intent(this, BusquedaActivity.class);
+        Intent intent= new Intent(this, BusquedaCursosActivity.class);
         startActivity(intent);
     }
 }

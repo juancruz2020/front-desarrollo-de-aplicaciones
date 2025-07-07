@@ -222,6 +222,7 @@
                 android:layout_height="wrap_content"/>
 
             <Button
+                android:id="@+id/tvEditarNumeroTarjeta"
                 android:text="Editar"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
@@ -264,7 +265,8 @@
             android:textStyle="bold"
             android:elevation="2dp"
             android:padding="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:onClick="verTerminos"/>
 
         <Button
             android:id="@+id/btnContacto"
@@ -276,7 +278,8 @@
             android:textStyle="bold"
             android:elevation="2dp"
             android:padding="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:onClick="verTerminos"/>
 
         <Button
             android:id="@+id/btnCerrarSesion"

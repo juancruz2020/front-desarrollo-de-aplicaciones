@@ -7,7 +7,7 @@
 
     <!-- Imagen de receta // falta opcion para ver todas las imagenes-->
     <ImageView
-        android:id="@+id/imgReceta"
+        android:id="@+id/imgCurso"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"

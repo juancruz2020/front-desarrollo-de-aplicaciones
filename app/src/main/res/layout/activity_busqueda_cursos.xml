@@ -71,7 +71,8 @@
                         android:layout_height="120dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
@@ -105,7 +106,8 @@
                         android:layout_width="0dp"
                         android:layout_height="120dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
@@ -148,7 +150,8 @@
                         android:layout_height="120dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
@@ -182,7 +185,8 @@
                         android:layout_width="0dp"
                         android:layout_height="120dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
@@ -225,7 +229,8 @@
                         android:layout_height="120dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
@@ -259,7 +264,8 @@
                         android:layout_width="0dp"
                         android:layout_height="120dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
@@ -301,7 +307,8 @@
                         android:layout_height="120dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
@@ -335,7 +342,8 @@
                         android:layout_width="0dp"
                         android:layout_height="120dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounded_corners"
+                        android:background="@drawable/border"
+                        android:clipToOutline="true"
                         android:clipChildren="true"
                         android:clipToPadding="false">
 
