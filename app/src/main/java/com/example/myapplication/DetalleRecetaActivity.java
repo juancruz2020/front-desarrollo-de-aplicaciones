@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.text.DecimalFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +39,7 @@ public class DetalleRecetaActivity extends AppCompatActivity {
     ImageView bookmarkEmpty, bookmarkFilled;
     FrameLayout bookmarkContainer;
     boolean isBookmarked = false;
-    int porciones = 6;
+    double porciones = 6;
     ImageView star1, star2, star3, star4, star5;
     int rating = 0;
     private final Map<String, Double> incrementos = new HashMap<>();
@@ -98,13 +99,14 @@ public class DetalleRecetaActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     RecetaDTO recetaDTO = response.body();
                     Receta receta = new Receta(recetaDTO);
-                    Log.e("Receta obtenida", recetaDTO.toString());
+                    Log.e("Receta obtenida", receta.toString());
                     // Convierte el DTO a tu objeto Receta local para usarlo en la UI
 
+                    porciones = receta.cantidadPorciones;
 
                     // **Paso 3: Ahora que tienes la receta completa, rellena la UI**
                     txtTitulo.setText(receta.nombrePlato);
-                    tvCantidadPorciones.setText(String.valueOf(receta.cantidadPorciones));
+                    tvCantidadPorciones.setText(Double.toString(receta.cantidadPorciones));
                     //tvTiempoValor.setText(receta.tiempoValor);
                     //tvTiempoUnidad.setText(receta.tiempoUnidad);
 
@@ -141,7 +143,7 @@ public class DetalleRecetaActivity extends AppCompatActivity {
                             double incremento = incrementos.containsKey(ing.getUnidad()) ? incrementos.get(ing.getUnidad()) : 1.0;
 
                             btnMasIng.setOnClickListener(v -> {
-                                ing.setCantidad((int) (ing.getCantidad() + incremento));
+                                ing.setCantidad(ing.getCantidad() + incremento);
                                 tvCantidad.setText(String.format(Locale.getDefault(), "%.2f", ing.getCantidad()));
                             });
 

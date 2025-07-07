@@ -193,12 +193,56 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"> <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Porciones"
+                android:textSize="16sp"
+                android:textColor="#748189"
+                android:layout_marginEnd="12dp" />
+
+                <ImageButton
+                    android:id="@+id/btnMenosPorciones"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_background"
+                    android:src="@drawable/ic_menos"
+                    app:tint="#E25683"
+                    android:scaleType="fitCenter"
+                    android:padding="6dp"
+                    android:layout_marginEnd="6dp"/>
+
+                <TextView
+                    android:id="@+id/tvCantidadPorciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="16sp"
+                    android:textColor="#0A2533"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="6dp" />
+
+                <ImageButton
+                    android:id="@+id/btnMasPorciones"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_background"
+                    android:src="@drawable/ic_mas"
+                    app:tint="#E25683"
+                    android:scaleType="centerInside"
+                    android:padding="6dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/layoutIngredientes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Ingredientes -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -208,67 +252,13 @@
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Porciones -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Porciones"
-                        android:textSize="16sp"
-                        android:textColor="#748189"
-                        android:layout_marginEnd="12dp" />
-
-                    <ImageButton
-                        android:id="@+id/btnMenosPorciones"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/btn_background"
-                        android:src="@drawable/ic_menos"
-                        app:tint="#E25683"
-                        android:scaleType="fitCenter"
-                        android:padding="6dp"
-                        android:layout_marginEnd="6dp"/>
-
-                    <TextView
-                        android:id="@+id/tvCantidadPorciones"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textSize="16sp"
-                        android:textColor="#0A2533"
-                        android:textStyle="bold"
-                        android:layout_marginEnd="6dp" />
-
-                    <ImageButton
-                        android:id="@+id/btnMasPorciones"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/btn_background"
-                        android:src="@drawable/ic_mas"
-                        app:tint="#E25683"
-                        android:scaleType="centerInside"
-                        android:padding="6dp"/>
-                </LinearLayout>
-
-
-
-
-
             </LinearLayout>
-            <!-- Intstrucciones -->
             <LinearLayout
                 android:id="@+id/layoutInstrucciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone">
-
 
             </LinearLayout>
 

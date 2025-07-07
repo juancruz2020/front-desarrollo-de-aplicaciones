@@ -7,13 +7,13 @@ public class RecetaDTO {
     private String nickname;
     private String nombre;
     private String categoria;
-    private int porciones;
+    private double porciones;
     private List<IngredienteDTO> ingredientes;
     private List<PasoDTO> pasos;
     private String descripcion;
     private String urlImagen;
 
-    public RecetaDTO(String nickname, String nombre, String categoria, String descripcion, int cantidadPorciones, List<IngredienteDTO> ingredientes, List<PasoDTO> pasos) {
+    public RecetaDTO(String nickname, String nombre, String categoria, String descripcion, double cantidadPorciones, List<IngredienteDTO> ingredientes, List<PasoDTO> pasos) {
         this.nickname = nickname;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -47,8 +47,8 @@ public class RecetaDTO {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public int getPorciones() { return porciones; }
-    public void setPorciones(int porciones) { this.porciones = porciones; }
+    public double getPorciones() { return porciones; }
+    public void setPorciones(double porciones) { this.porciones = porciones; }
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;

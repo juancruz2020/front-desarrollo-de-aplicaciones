@@ -11,7 +11,7 @@ public class Receta implements Serializable {
     public Long idReceta;
     public String nombrePlato;
     public String descripcion;
-    public int cantidadPorciones;
+    public double cantidadPorciones;
     public String tiempoValor;
     public String tiempoUnidad;
     public List<IngredienteDTO> ingredientes;
