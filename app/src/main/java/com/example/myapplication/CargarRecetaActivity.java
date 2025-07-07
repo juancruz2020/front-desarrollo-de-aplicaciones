@@ -154,19 +154,19 @@ public class CargarRecetaActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
         //Lista desplegable
         ArrayAdapter<String> adapterPlatos = new ArrayAdapter<>(this,
-                R.layout.spinner_item_dark,
+                android.R.layout.simple_spinner_item,
                 new String[]{"Entradas", "Pastas", "Carnes", "Pescados", "Ensaladas", "Postres", "Bebidas", "Guarnicion"});
         adapterPlatos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTipoPlato.setAdapter(adapterPlatos);
         //Lista desplegable de tiempo
         ArrayAdapter<String> adapterTiempo = new ArrayAdapter<>(this,
-                R.layout.spinner_item_dark,
+                android.R.layout.simple_spinner_item,
                 new String[]{"Min", "Hor"});
         adapterTiempo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spTiempoUnidad.setAdapter(adapterTiempo);
         //Lista desplegable de unidades
         ArrayAdapter<String> adapterUnidades = new ArrayAdapter<>(this,
-                R.layout.spinner_item_dark,
+                android.R.layout.simple_spinner_item,
                 new String[]{"g", "kg", "ml", "u", "cda", "cdita", "pizca", "taza", "diente", "hoja", "rama"});
         adapterUnidades.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spUnidadIngrediente.setAdapter(adapterUnidades);

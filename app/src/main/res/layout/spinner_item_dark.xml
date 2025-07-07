@@ -5,5 +5,4 @@
     android:layout_height="wrap_content"
     android:textColor="#67615A"
     android:padding="12dp"
-    android:textSize="16sp"
-    android:drawableEnd="@drawable/ic_arrow_down"/>
+    android:textSize="16sp" />

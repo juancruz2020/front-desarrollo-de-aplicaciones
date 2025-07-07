@@ -70,7 +70,6 @@
         <!-- Tipo de Plato -->
         <Spinner
             android:id="@+id/spinnerTipoPlato"
-            style="@style/SpinnerDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp" />
@@ -140,7 +139,6 @@
 
             <Spinner
                 android:id="@+id/spinnerTiempo"
-                style="@style/SpinnerDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp" />
@@ -201,7 +199,6 @@
 
             <Spinner
                 android:id="@+id/spinnerUnidad"
-                style="@style/SpinnerDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp" />

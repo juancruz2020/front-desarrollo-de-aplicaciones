@@ -222,7 +222,6 @@
                 android:layout_height="wrap_content"/>
 
             <Button
-                android:id="@+id/tvEditarNumeroTarjeta"
                 android:text="Editar"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
@@ -260,6 +259,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Términos y Condiciones"
+            android:onClick="irTerminos"
             android:textColor="#FFFFFF"
             android:backgroundTint="#E59797"
             android:textStyle="bold"
@@ -272,6 +272,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Contacto/Soporte"
+            android:onClick="irTerminos"
             android:textColor="#FFFFFF"
             android:backgroundTint="#E59797"
             android:textStyle="bold"

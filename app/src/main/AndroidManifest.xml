@@ -20,6 +20,7 @@
         android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".SplashScreen"
             android:exported="true"
@@ -90,11 +91,14 @@
         <activity
             android:name=".DetalleMisCursosActivity"
             android:theme="@style/Theme.MiApp.Dark" />
-
         <activity
             android:name=".DetalleSedeActivity"
             android:exported="false"
-            android:theme="@style/Theme.MyApplication"/>
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".TerminosYCondiciones"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
     </application>
 
 </manifest>

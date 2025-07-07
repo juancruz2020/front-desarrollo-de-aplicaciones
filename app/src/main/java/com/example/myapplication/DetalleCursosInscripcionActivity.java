@@ -6,14 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.dto.CursoDTO;
@@ -111,26 +108,6 @@ public class DetalleCursosInscripcionActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        // Editar Tarjeta
-        Button btnEditar = findViewById(R.id.tvEditarNumeroTarjeta);
-        btnEditar.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View dialogView = getLayoutInflater().inflate(R.layout.editar_tarjeta, null);
-            builder.setView(dialogView);
-
-            builder.setPositiveButton("Guardar", (dialog, which) -> {
-                EditText etNumero = dialogView.findViewById(R.id.etNumeroTarjeta);
-                String nuevoNumero = etNumero.getText().toString();
-                // actualizar TextView u operar con el dato
-                TextView tvNumero = findViewById(R.id.tvNumeroTarjeta);
-                tvNumero.setText("**** **** **** " + nuevoNumero.substring(nuevoNumero.length()-4));
-            });
-
-            builder.setNegativeButton("Cancelar", null);
-
-            builder.create().show();
         });
 
 
