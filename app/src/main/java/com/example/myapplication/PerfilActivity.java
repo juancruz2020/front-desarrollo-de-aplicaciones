@@ -52,6 +52,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         // Editar Perfil
         Button btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
+        if (btnEditarPerfil != null) {
         btnEditarPerfil.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             View dialogView = getLayoutInflater().inflate(R.layout.editar_perfil, null);
@@ -87,12 +88,14 @@ public class PerfilActivity extends AppCompatActivity {
 
             builder.create().show();
         });
+        }
 
 
 
 
         // Editar Tarjeta
         Button btnEditar = findViewById(R.id.tvEditarNumeroTarjeta);
+        if (btnEditar != null) {
         btnEditar.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             View dialogView = getLayoutInflater().inflate(R.layout.editar_tarjeta, null);
@@ -110,14 +113,25 @@ public class PerfilActivity extends AppCompatActivity {
 
             builder.create().show();
         });
+        }
 
-    }
+        // Terminos y condiciones / soporte
+        btnTerminos = findViewById(R.id.btnTerminos);
+        if (btnTerminos != null) {
+            btnTerminos.setOnClickListener(v -> {
+                Intent intent = new Intent(this, TerminosYCondiciones.class);
+                startActivity(intent);
+            });
+        }
 
-    // Terminos y Condiciones / Soporte
+        btnContacto = findViewById(R.id.btnContacto);
+        if (btnContacto != null) {
+            btnContacto.setOnClickListener(v -> {
+                Intent intent = new Intent(this, TerminosYCondiciones.class);
+                startActivity(intent);
+            });
+        }
 
-    public void verTerminos(View v){
-        Intent intent = new Intent(this, TerminosYCondiciones.class);
-        startActivity(intent);
     }
 
 }
