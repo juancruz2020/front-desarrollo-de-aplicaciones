@@ -714,6 +714,7 @@ public class CargarRecetaActivity extends AppCompatActivity {
             TextView tvNombreArchivo = itemPaso.findViewById(R.id.tvNombreArchivo);
             LinearLayout layoutArchivo = itemPaso.findViewById(R.id.layoutArchivoAdjunto);
 
+
             if (paso.getUrl() != null) {
                 Uri mediaUri = Uri.parse(paso.getUrl());
                 imgMedia.setImageURI(mediaUri);
@@ -727,6 +728,7 @@ public class CargarRecetaActivity extends AppCompatActivity {
             } else {
                 imgMedia.setVisibility(View.GONE);
                 layoutArchivo.setVisibility(View.GONE);
+                Log.d("API", "Paso sin imagen: " + paso.getNroPaso());
             }
 
             ImageButton btnEditarPaso = itemPaso.findViewById(R.id.btnEditarPaso);
@@ -744,6 +746,7 @@ public class CargarRecetaActivity extends AppCompatActivity {
                     layoutArchivoAdjunto.setVisibility(View.GONE);
                     uriArchivoSeleccionado = null;
                     mediaUri = null;
+                    Log.d("API", "No se proporcionó una imagen de paso en el paso: " + paso.getNroPaso());
                 }
                 currentPasoIndex = finalI;
             });
