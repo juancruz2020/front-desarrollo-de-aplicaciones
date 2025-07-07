@@ -36,8 +36,8 @@
         android:padding="10dp"
         android:onClick="cerrar"/>
 
-    <!-- Botón favorito -->
-    <ImageButton
+   <!-- Botón favorito -->
+    <!-- <ImageButton
         android:id="@+id/modalidad"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -47,7 +47,7 @@
         android:layout_gravity="top|end"
         app:tint="#000000"
         android:scaleType="centerInside"
-        android:padding="10dp"/>
+        android:padding="10dp"/> -->
 
 
     <androidx.core.widget.NestedScrollView
