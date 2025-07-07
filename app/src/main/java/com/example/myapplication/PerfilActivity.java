@@ -3,7 +3,11 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PerfilActivity extends AppCompatActivity {
@@ -43,9 +47,51 @@ public class PerfilActivity extends AppCompatActivity {
 
         // Botón volver
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
-    }
 
-    // Editar Tarjeta
+
+
+        // Editar Perfil
+        Button btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
+        btnEditarPerfil.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.editar_perfil, null);
+            builder.setView(dialogView);
+
+            // Capturar referencias a los EditText del dialog
+            EditText etAlias = dialogView.findViewById(R.id.etAlias);
+            EditText etNombre = dialogView.findViewById(R.id.etNombre);
+            EditText etMail = dialogView.findViewById(R.id.etMail);
+            EditText etDNI = dialogView.findViewById(R.id.etDNI);
+
+            // Mostrar el dialog
+            builder.setPositiveButton("Guardar", (dialog, which) -> {
+                // Obtener los valores ingresados
+                String alias = etAlias.getText().toString();
+                String nombre = etNombre.getText().toString();
+                String mail = etMail.getText().toString();
+                String dni = etDNI.getText().toString();
+
+                // Actualizar los TextView del perfil
+                TextView tvNombreUsuario = findViewById(R.id.tvNombreUsuario);
+                TextView tvNombreCompleto = findViewById(R.id.tvNombreCompleto);
+                TextView tvEmail = findViewById(R.id.tvEmail);
+                TextView tvDNI = findViewById(R.id.tvDNI);
+
+                if (!alias.isEmpty()) tvNombreUsuario.setText(alias);
+                if (!nombre.isEmpty()) tvNombreCompleto.setText(nombre);
+                if (!mail.isEmpty()) tvEmail.setText(mail);
+                if (!dni.isEmpty()) tvDNI.setText(dni);
+            });
+
+            builder.setNegativeButton("Cancelar", null);
+
+            builder.create().show();
+        });
+
+
+
+
+        // Editar Tarjeta
         Button btnEditar = findViewById(R.id.tvEditarNumeroTarjeta);
         btnEditar.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -64,6 +110,10 @@ public class PerfilActivity extends AppCompatActivity {
 
             builder.create().show();
         });
+
+
+
+    }
 
 }
 
